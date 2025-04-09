@@ -10,13 +10,16 @@ class RegisterPage extends StatelessWidget {
         title: const Text('Registro'),
         backgroundColor: Colors.blue,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: Center(
+        // Centra todo el contenido del body
         child: SingleChildScrollView(
-          child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment:
+                  MainAxisAlignment.center, // Centra verticalmente
+              crossAxisAlignment:
+                  CrossAxisAlignment.center, // Centra horizontalmente
               children: [
                 const SizedBox(height: 20),
                 const Text(
@@ -58,12 +61,16 @@ class RegisterPage extends StatelessWidget {
                   onPressed: () {
                     // Aquí puedes agregar la lógica para registrar al usuario
                   },
-                  child: const Text('Registrar'),
                   style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(double.infinity, 50),
-                    backgroundColor: Colors.blue, // Fixed error here
+                    minimumSize: const Size(
+                      double.infinity,
+                      50,
+                    ), // Botón de ancho completo
+                    backgroundColor: Colors.blue,
                   ),
+                  child: const Text('Registrar'),
                 ),
+                const SizedBox(height: 10),
                 // Opción para ir a la página de inicio de sesión
                 TextButton(
                   onPressed: () {
