@@ -8,8 +8,9 @@ class RegisterPage extends StatelessWidget {
     return Center(
       child: const Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [ 
+        children: [
           Text('Hola, soy la pagina de registro'),
+          SizedBox(width: 20),
           Icon(Icons.account_circle),
         ],
       ),
