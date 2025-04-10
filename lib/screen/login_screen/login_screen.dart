@@ -1,4 +1,4 @@
-import 'package:findoutmole/screen/login_screen/campos_usuario_passw.dart';
+import 'package:findoutmole/screen/login_screen/textfield_user.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
@@ -18,19 +18,18 @@ class LoginPage extends StatelessWidget {
           ),
 
           // Contenido encima de la imagen, protegido por SafeArea
-          SingleChildScrollView(
-            child: SafeArea(
+          SafeArea(
               child: Column(
                 // Organiza los widgets verticalmente
                 crossAxisAlignment:
                     CrossAxisAlignment
-                        .start, // Alinea el contenido de la columna a la izquierda (horizontalmente)
+                        .center, // Alinea el contenido de la columna a la izquierda (horizontalmente)
                 children: [
                   Padding(
                     // Padding solo para el texto superior
                     padding: EdgeInsets.only(
                       top: 10, // Píxeles de margen arriba
-                      left: 143, // Píxeles desde la izquierda
+                      left: 1, // Píxeles desde la izquierda
                       right: 10, // Píxeles desde la derecha
                     ),
                     child: Text(
@@ -69,7 +68,7 @@ class LoginPage extends StatelessWidget {
                   ),
 
                   // Espaciador grande para empujar hacia abajo el campo de usuario
-                  SizedBox(height: 300),
+                  Expanded(child: SizedBox(height: 280)),
 
                   // Campo de usuario
                   TexfieldUsuarioPassw(
@@ -93,7 +92,7 @@ class LoginPage extends StatelessWidget {
                   ), // Espacio entre el campo de contraseña y el botón
                   // Botón "Acceder"
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 200),
+                    padding: EdgeInsets.symmetric(horizontal: 50),
                     child: Container(
                       width: double.infinity,
                       height: 50,
@@ -141,20 +140,22 @@ class LoginPage extends StatelessWidget {
                     height: 5,
                   ), // Espacio inferior antes de "crear cuenta"
                   // Texto "Crear nuevo usuario"
-                  Center(
-                    child: Text(
-                      'Nuevo Usuario',
-                      style: TextStyle(
-                        color: Colors.black87,
-                        fontSize: 18,
-                        decoration: TextDecoration.underline,
+                  Container(
+                    margin: EdgeInsets.only(bottom: 20.0),
+                    child: Center(
+                      child: Text(
+                        'Nuevo Usuario',
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontSize: 18,
+                          decoration: TextDecoration.underline,
+                        ),
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-          ),
         ],
       ),
     );

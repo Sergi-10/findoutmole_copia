@@ -15,14 +15,13 @@ class TexfieldUsuarioPassw extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 200),
+      padding: EdgeInsets.symmetric(horizontal: 50),
       child: TextField(
         obscureText: obscureText,
         decoration: InputDecoration(
           // Constructor que indica que el borde sea de tipo contorno. Dentro del constructor se define aspecto del borde
           prefixIcon: Icon(icon), // Icono de usuario
-          hintText:
-              hintText, // Texto dentro del campo // Oculta el texto mientras se escribe (modo contraseña)
+          hintText:hintText, // Texto dentro del campo // Oculta el texto mientras se escribe (modo contraseña)
           filled: true, // Activa el fondo del campo de texto
           fillColor: const Color.fromRGBO(
             255,
