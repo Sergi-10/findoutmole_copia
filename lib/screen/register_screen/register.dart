@@ -1,4 +1,7 @@
+import 'package:findoutmole/screen/register_screen/confirmar_Contrase%C3%B1a.dart';
 import 'package:flutter/material.dart';
+import 'nombre_de_usuario.dart'; //importa la función de para el campo de usuario
+import 'contraseña.dart'; // importa la función para el campo de contraseña
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
@@ -26,15 +29,9 @@ class RegisterPage extends StatelessWidget {
                   'Registro de Usuario',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(height: 20),
+
                 // Campo para el nombre de usuario
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Nombre de usuario',
-                    border: OutlineInputBorder(),
-                    prefixIcon: const Icon(Icons.person),
-                  ),
-                ),
+                buildUsernameField(),
                 const SizedBox(height: 20),
                 // Campo para el correo electrónico
                 TextField(
@@ -46,15 +43,11 @@ class RegisterPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                // Campo para la contraseña
-                TextField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: 'Contraseña',
-                    border: OutlineInputBorder(),
-                    prefixIcon: const Icon(Icons.lock),
-                  ),
-                ),
+                // campo para la contraseña
+                PasswordField(),
+                const SizedBox(height: 20),
+                //Campo para confirmar contraseña
+                buildConfirmPasswordField(),
                 const SizedBox(height: 20),
                 // Botón para registrar
                 ElevatedButton(

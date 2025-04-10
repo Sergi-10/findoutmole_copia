@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-TextField buildConfirmPasswordField() {
+Widget buildConfirmPasswordField() {
   return TextField(
     obscureText: true,
     decoration: InputDecoration(
