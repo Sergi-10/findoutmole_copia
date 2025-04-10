@@ -1,3 +1,4 @@
+import 'package:findoutmole/screen/login_screen/text_find_out.dart';
 import 'package:findoutmole/screen/login_screen/textfield_user.dart';
 import 'package:flutter/material.dart';
 import 'package:findoutmole/screen/login_screen/text_mole.dart';
@@ -26,26 +27,7 @@ class LoginPage extends StatelessWidget {
                   CrossAxisAlignment
                       .center, // Alinea el contenido de la columna a la izquierda (horizontalmente)
               children: [
-                Padding(
-                  // Padding solo para el texto superior
-                  padding: EdgeInsets.only(
-                    top: 10, // Píxeles de margen arriba
-                    left: 1, // Píxeles desde la izquierda
-                    right: 10, // Píxeles desde la derecha
-                  ),
-                  child: Text(
-                    // Texto "Find Out" y sus características
-                    'Find Out',
-                    style: TextStyle(
-                      fontSize: 38, // Tamaño de la fuente
-                      fontWeight:
-                          FontWeight.w600, // Estilo de la fuente (negrita)
-                      color: Color(0xFF1A1A40), // Color del texto
-                      fontFamily: 'Georgia', // Estilo Texto
-                      height: 0.7, // Controla la separación vertical
-                    ),
-                  ),
-                ),
+                FindOutText(),
 
                 MoleText(),
 
@@ -141,3 +123,5 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
+
+
