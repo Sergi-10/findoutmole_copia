@@ -12,8 +12,8 @@ class AppHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: 
-      RegisterPage(),
-      //LoginPage(),
+      //RegisterPage(),
+      LoginPage(),
     );
   }
 }

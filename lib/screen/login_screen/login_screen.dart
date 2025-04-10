@@ -13,7 +13,7 @@ class LoginPage extends StatelessWidget {
           // Imagen de fondo ocupando toda la pantalla
           SizedBox.expand(
             // SizedBox.expand hace que el hijo (imagen) ocupe todo el espacio disponible
-            child: Image.asset('assets/login.png', fit: BoxFit.fitHeight),
+            child: Image.asset('assets/images/2.png', fit: BoxFit.fitHeight),
           ),
 
           // Contenido encima de la imagen, protegido por SafeArea
@@ -66,7 +66,7 @@ class LoginPage extends StatelessWidget {
                 ),
 
                 // Espaciador grande para empujar hacia abajo el campo de usuario
-                SizedBox(height: 435),
+                SizedBox(height: 300),
 
                 // Campo de usuario
                 Padding(
