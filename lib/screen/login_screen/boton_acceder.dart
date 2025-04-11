@@ -1,8 +1,15 @@
+import 'package:findoutmole/screen/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class BotonAcceder extends StatelessWidget {
+  final TextEditingController userController;
+  final TextEditingController passwordController;
+
+
   const BotonAcceder({
     super.key,
+    required this.userController,
+    required this.passwordController,
   });
 
   @override
@@ -22,7 +29,19 @@ class BotonAcceder extends StatelessWidget {
         ),
         child: TextButton(
           onPressed: () {
-            // Acción al pulsar el botón
+            final user = userController.text;
+            final password = passwordController.text;
+
+            if (user == 'admin' && password == 'admin') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomeScreenPage()),
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Usuario o contraseña incorrectos')),
+              );
+            }
           },
           child: Text(
             'Acceder',

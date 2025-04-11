@@ -5,19 +5,23 @@ class TexfieldUsuarioPassw extends StatelessWidget {
   final IconData icon;
   final bool obscureText;
 
+  final TextEditingController controller;
+
   const TexfieldUsuarioPassw({
     this.hintText = '',
     this.icon = Icons.person,
     this.obscureText = false,
+    required this.controller,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 50),
+      padding: const EdgeInsets.symmetric(horizontal: 50),
       child: TextField(
         obscureText: obscureText,
+        controller: controller,
         decoration: InputDecoration(
           // Constructor que indica que el borde sea de tipo contorno. Dentro del constructor se define aspecto del borde
           prefixIcon: Icon(icon), // Icono de usuario

@@ -11,6 +11,10 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final TextEditingController userController = TextEditingController();
+    final TextEditingController passController = TextEditingController();
+    
     return Scaffold(
       // Scaffold proporciona la estructura visual básica de la app (barra superior, body, etc.)
       body: Stack(
@@ -31,17 +35,23 @@ class LoginPage extends StatelessWidget {
                 TexfieldUsuarioPassw(
                   hintText: 'Usuario', // Texto dentro del campo
                   icon: Icons.person, // Icono de usuario
-                  obscureText:false,),
+                  obscureText:false,
+                  controller: userController),
 
                 SizedBox(height: 20),
 
                 TexfieldUsuarioPassw(
                   hintText: 'Contraseña', 
                   icon: Icons.lock,
-                  obscureText:true,),
+                  obscureText:true,
+                  controller: passController,),
 
                 SizedBox(height: 30), 
-                BotonAcceder(),
+                BotonAcceder( 
+                  userController: userController,
+                  passwordController: passController,
+                  
+                ),
                 SizedBox(height: 10),
                 BotonRecuperarContrasena(),
                 SizedBox(height: 5), 
