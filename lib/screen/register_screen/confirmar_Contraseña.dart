@@ -36,25 +36,61 @@ class _ConfirmPasswordFieldState extends State<ConfirmPasswordField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextField(
-          controller: _confirmPasswordController,
-          obscureText: _isObscured,
-          decoration: InputDecoration(
-            labelText: 'Confirmar Contraseña',
-            border: const OutlineInputBorder(),
-            prefixIcon: const Icon(Icons.lock),
-            suffixIcon: IconButton(
-              icon: Icon(
-                _isObscured ? Icons.visibility : Icons.visibility_off,
-              ),
-              onPressed: () {
-                setState(() {
-                  _isObscured = !_isObscured;
-                });
-              },
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12.0), // Bordes redondeados más pronunciados
+            gradient: LinearGradient(
+              colors: [
+                const Color.fromARGB(255, 252, 252, 252).withOpacity(0.3), // Color inicial con transparencia
+                const Color.fromARGB(255, 246, 246, 247).withOpacity(0.5), // Color final con más transparencia
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
+            boxShadow: [
+              BoxShadow(
+                color: const Color.fromARGB(255, 253, 253, 253).withOpacity(0.1), // Sombra ligera
+                blurRadius: 8.0, // Difuminado de la sombra
+                offset: const Offset(0, 4), // Desplazamiento de la sombra
+              ),
+            ],
           ),
-          onChanged: _validateConfirmPassword,
+          child: TextField(
+            controller: _confirmPasswordController,
+            obscureText: _isObscured,
+            decoration: InputDecoration(
+              labelText: 'Confirmar Contraseña',
+              labelStyle: const TextStyle(
+                color: Color.fromARGB(255, 253, 253, 253), // Color del texto del label
+                fontWeight: FontWeight.bold, // Negrita para el label
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12.0), // Bordes redondeados
+                borderSide: BorderSide.none, // Sin borde visible
+              ),
+              prefixIcon: const Icon(Icons.lock, color: Color.fromARGB(255, 252, 252, 252)), // Ícono con color azul
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _isObscured ? Icons.visibility : Icons.visibility_off,
+                  color: const Color.fromARGB(255, 255, 255, 255), // Ícono con color azul
+                ),
+                onPressed: () {
+                  setState(() {
+                    _isObscured = !_isObscured; // Alterna entre ocultar y mostrar el texto
+                  });
+                },
+              ),
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: 16.0,
+                horizontal: 10.0,
+              ), // Espaciado interno
+            ),
+            style: const TextStyle(
+              color: Colors.black, // Color del texto ingresado
+              fontSize: 16.0, // Tamaño del texto
+            ),
+            onChanged: _validateConfirmPassword,
+          ),
         ),
         if (_errorText != null)
           Padding(

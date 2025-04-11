@@ -4,7 +4,7 @@ class EmailField extends StatefulWidget {
   const EmailField({super.key});
 
   @override
-  _EmailFieldState createState() => _EmailFieldState(); 
+  _EmailFieldState createState() => _EmailFieldState();
 }
 
 class _EmailFieldState extends State<EmailField> {
@@ -35,15 +35,50 @@ class _EmailFieldState extends State<EmailField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextField(
-          controller: _controller,
-          keyboardType: TextInputType.emailAddress,
-          decoration: InputDecoration(
-            labelText: 'Correo electrónico',
-            border: const OutlineInputBorder(),
-            prefixIcon: const Icon(Icons.email),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12.0), // Bordes redondeados más pronunciados
+            gradient: LinearGradient(
+              colors: [
+                const Color.fromARGB(255, 255, 255, 255).withOpacity(0.3), // Color inicial con transparencia
+                const Color.fromARGB(255, 255, 255, 255).withOpacity(0.5), // Color final con más transparencia
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.1), // Sombra ligera
+                blurRadius: 8.0, // Difuminado de la sombra
+                offset: const Offset(0, 4), // Desplazamiento de la sombra
+              ),
+            ],
           ),
-          onChanged: _validateEmail, // Valida el texto mientras se escribe
+          child: TextField(
+            controller: _controller,
+            keyboardType: TextInputType.emailAddress,
+            decoration: InputDecoration(
+              labelText: 'Correo electrónico',
+              labelStyle: const TextStyle(
+                color: Color.fromARGB(255, 255, 255, 255), // Color del texto del label
+                fontWeight: FontWeight.bold, // Negrita para el label
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12.0), // Bordes redondeados
+                borderSide: BorderSide.none, // Sin borde visible
+              ),
+              prefixIcon: const Icon(Icons.email, color: Color.fromARGB(255, 255, 255, 255)), // Ícono con color azul
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: 16.0,
+                horizontal: 10.0,
+              ), // Espaciado interno
+            ),
+            style: const TextStyle(
+              color: Colors.black, // Color del texto ingresado
+              fontSize: 16.0, // Tamaño del texto
+            ),
+            onChanged: _validateEmail, // Valida el texto mientras se escribe
+          ),
         ),
         if (_errorText != null) // Muestra un mensaje adicional si hay error
           Padding(
