@@ -1,4 +1,4 @@
-import 'package:findoutmole/screen/login_screen/boto_nuevo_usuario.dart';
+import 'package:findoutmole/screen/login_screen/boton_nuevo_usuario.dart';
 import 'package:findoutmole/screen/login_screen/boton_acceder.dart';
 import 'package:findoutmole/screen/login_screen/boton_recuperar_contrasena.dart';
 import 'package:findoutmole/screen/login_screen/text_find_out.dart';
