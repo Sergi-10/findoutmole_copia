@@ -1,19 +1,17 @@
-import 'package:findoutmole/screen/register_screen/confirmar_Contraseña.dart';
-import 'package:findoutmole/screen/register_screen/cuentraPrevia.dart';
-import 'package:findoutmole/screen/register_screen/email.dart';
-import 'package:findoutmole/screen/register_screen/registerButtom.dart';
 import 'package:findoutmole/screen/register_screen/textoInicial.dart';
 import 'package:flutter/material.dart';
-import 'nombre_de_usuario.dart';
-import 'contraseña.dart';
+import 'package:findoutmole/screen/register_screen/confirmar_Contraseña.dart';
+import 'package:findoutmole/screen/register_screen/contraseña.dart';
+import 'package:findoutmole/screen/register_screen/email.dart';
+import 'package:findoutmole/screen/register_screen/nombre_de_usuario.dart';
+import 'package:findoutmole/screen/register_screen/registerButtom.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController passwordController =
-        TextEditingController(); // Controlador para la contraseña principal
+    final TextEditingController passwordController = TextEditingController();
 
     return Scaffold(
       body: Stack(
@@ -29,20 +27,18 @@ class RegisterPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    const SizedBox(height: 50),
+                    Image.asset('assets/images/lupaconojo.png', height: 100),
                     const SizedBox(height: 20),
-                    Cuentaexiste(),
+                    const TextoInicial(), // Antes: Cuentaexiste()
                     const SizedBox(height: 20),
                     const NombreDeUsuario(),
                     const SizedBox(height: 20),
                     const EmailField(),
                     const SizedBox(height: 20),
-                    PasswordField(
-                      controller: passwordController,
-                    ), // Pasa el controlador
+                    PasswordField(controller: passwordController),
                     const SizedBox(height: 20),
-                    ConfirmPasswordField(
-                      passwordController: passwordController,
-                    ), // Pasa el controlador
+                    ConfirmPasswordField(passwordController: passwordController),
                     const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {
@@ -59,7 +55,10 @@ class RegisterPage extends StatelessWidget {
                       onPressed: () {
                         // Redirigir al usuario a la página de inicio de sesión
                       },
-                      child: cuentaexiste(),
+                      child: const Text(
+                        '¿Ya tienes cuenta? Inicia sesión',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ],
                 ),
@@ -71,4 +70,3 @@ class RegisterPage extends StatelessWidget {
     );
   }
 }
-

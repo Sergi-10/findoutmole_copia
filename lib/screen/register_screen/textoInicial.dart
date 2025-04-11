@@ -1,20 +1,17 @@
-
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-
-class Cuentaexiste extends StatelessWidget {
-  const Cuentaexiste({
-    super.key,
-  });
+class TextoInicial extends StatelessWidget {
+  const TextoInicial({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Text(
+    return Text(
       'Registro de Usuario',
-      style: TextStyle(
-        fontSize: 24,
+      style: GoogleFonts.redHatDisplay(
+        fontSize: 28,
         fontWeight: FontWeight.bold,
-        color: Colors.white,
+        color: const Color.fromARGB(255, 0, 47, 90),
       ),
     );
   }
