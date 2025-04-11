@@ -1,28 +1,25 @@
-import 'package:findoutmole/screen/register_screen/confirmar_Contraseña.dart'; // Para ConfirmPasswordField
-import 'package:findoutmole/screen/register_screen/email.dart'; // Para EmailField
+import 'package:findoutmole/screen/register_screen/confirmar_Contraseña.dart';
+import 'package:findoutmole/screen/register_screen/email.dart';
 import 'package:flutter/material.dart';
-import 'nombre_de_usuario.dart'; // Para NombreDeUsuario
-import 'contraseña.dart'; // Para PasswordField
+import 'nombre_de_usuario.dart';
+import 'contraseña.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Controlador para la contraseña principal
-    final TextEditingController passwordController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController(); // Controlador para la contraseña principal
 
     return Scaffold(
       body: Stack(
         children: [
-          // Imagen de fondo
           Positioned.fill(
             child: Image.asset(
-              'assets/images/2.png', // Ruta de la imagen de fondo
-              fit: BoxFit.cover, // Ajusta la imagen para cubrir toda la pantalla
+              'assets/images/2.png',
+              fit: BoxFit.cover,
             ),
           ),
-          // Contenido principal
           Center(
             child: SingleChildScrollView(
               child: Padding(
@@ -37,42 +34,35 @@ class RegisterPage extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white, // Cambia el color del texto para que sea visible
+                        color: Colors.white,
                       ),
                     ),
                     const SizedBox(height: 20),
-                    // Campo para el nombre de usuario
                     const NombreDeUsuario(),
                     const SizedBox(height: 20),
-                    // Campo para el correo electrónico
                     const EmailField(),
                     const SizedBox(height: 20),
-                    // Campo para la contraseña
-                    PasswordField(controller: passwordController),
+                    PasswordField(controller: passwordController), // Pasa el controlador
                     const SizedBox(height: 20),
-                    // Campo para confirmar la contraseña
-                    ConfirmPasswordField(passwordController: passwordController),
+                    ConfirmPasswordField(passwordController: passwordController), // Pasa el controlador
                     const SizedBox(height: 20),
-                    // Botón para registrar
                     ElevatedButton(
                       onPressed: () {
-                        // Aquí puedes agregar la lógica para registrar al usuario
-                        // Por ejemplo, validar todos los campos antes de proceder
+                        // Lógica para registrar al usuario
                       },
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(double.infinity, 50),
-                        backgroundColor: Colors.blue, // Cambia el color del botón
+                        backgroundColor: Colors.blue,
                       ),
                       child: const Text(
                         'Registrar',
-                        style: TextStyle(color: Colors.white), // Cambia el color del texto del botón
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                     const SizedBox(height: 10),
-                    // Opción para ir a la página de inicio de sesión
                     TextButton(
                       onPressed: () {
-                        // Aquí puedes redirigir al usuario a la página de inicio de sesión
+                        // Redirigir al usuario a la página de inicio de sesión
                       },
                       child: const Text(
                         '¿Ya tienes cuenta? Inicia sesión',
