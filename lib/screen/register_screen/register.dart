@@ -1,10 +1,11 @@
-import 'package:findoutmole/screen/register_screen/textoInicial.dart';
+import 'package:findoutmole/screen/register_screen/cuentraPrevia.dart';
 import 'package:flutter/material.dart';
 import 'package:findoutmole/screen/register_screen/confirmar_Contraseña.dart';
 import 'package:findoutmole/screen/register_screen/contraseña.dart';
 import 'package:findoutmole/screen/register_screen/email.dart';
 import 'package:findoutmole/screen/register_screen/nombre_de_usuario.dart';
 import 'package:findoutmole/screen/register_screen/registerButtom.dart';
+import 'package:findoutmole/screen/register_screen/textoInicial.dart'; // Se mantiene el cambio aquí
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
@@ -38,28 +39,13 @@ class RegisterPage extends StatelessWidget {
                     const SizedBox(height: 20),
                     PasswordField(controller: passwordController),
                     const SizedBox(height: 20),
-                    ConfirmPasswordField(passwordController: passwordController),
+                    ConfirmPasswordField(
+                      passwordController: passwordController,
+                    ),
                     const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () {
-                        // Lógica para registrar al usuario
-                      },
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(double.infinity, 50),
-                        backgroundColor: Colors.blue,
-                      ),
-                      child: const RegisterButton(),
-                    ),
-                    const SizedBox(height: 10),
-                    TextButton(
-                      onPressed: () {
-                        // Redirigir al usuario a la página de inicio de sesión
-                      },
-                      child: const Text(
-                        '¿Ya tienes cuenta? Inicia sesión',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
+                    const RegisterButton(), // Se cierra correctamente el paréntesis aquí
+                    const SizedBox(height: 20),
+                    const CuentaExiste(), // Ensure the class name matches the one in cuentaExiste.dart
                   ],
                 ),
               ),
