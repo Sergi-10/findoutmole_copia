@@ -18,7 +18,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
       body: Center(
         child: const Text(
           'Hola, soy la pagina de inicio',
-          style: TextStyle(fontSize: 18),
+          style: TextStyle(fontSize: 24),
         ),
       ),
     );}
