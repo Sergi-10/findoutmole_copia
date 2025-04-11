@@ -34,15 +34,14 @@ class BotonAcceder extends StatelessWidget {
 
             if (user == 'admin' && password == 'admin') {
               Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomeScreenPage()),
-            );
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Usuario o contraseña incorrectos')),
-            );
-          }
-            
+                context,
+                MaterialPageRoute(builder: (context) => HomeScreenPage()),
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Usuario o contraseña incorrectos')),
+              );
+            }
           },
           child: Text(
             'Acceder',
