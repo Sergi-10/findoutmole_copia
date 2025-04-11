@@ -1,17 +1,25 @@
 import 'package:findoutmole/screen/login_screen/login_screen.dart';
 import 'package:flutter/material.dart';
-// Importa la pantalla de inicio de sesión (LoginScreen).
-// Asegúrate de tener la ruta correcta hacia el archivo 'login_screen.dart'
-class cuentaexiste extends StatelessWidget {
-  const cuentaexiste({
-    super.key,
-  });
+
+class CuentaExiste extends StatelessWidget {
+  const CuentaExiste({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      '¿Ya tienes cuenta? Inicia sesión',
-      style: TextStyle(color: Colors.white),
+    return GestureDetector(
+      onTap: () {
+        // Navega a la pantalla de inicio de sesión
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginPage()), // Enlace a LoginPage
+        );
+      },
+      child: const Text(
+        '¿Ya tienes cuenta? Inicia sesión',
+        style: TextStyle(
+          color: Colors.white,
+        ),
+      ),
     );
   }
 }

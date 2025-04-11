@@ -46,26 +46,27 @@ class _RegisterButtonState extends State<RegisterButton> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
             gradient: LinearGradient(
-              colors:
-                  _isPressed
-                      ? [
-                        Color(0xFF5EE2EC),
-                        Color(0xFF478DE0),
-                      ] // Colores más claros al presionar
-                      : [Color(0xFF4DD0E1), Color(0xFF1976D2)], // Normal
+              colors: _isPressed
+                  ? [
+                      Color(0xFF5EE2EC),
+                      Color(0xFF478DE0),
+                    ] // Colores más claros al presionar
+                  : [
+                      Color(0xFF4DD0E1),
+                      Color(0xFF1976D2),
+                    ], // Normal
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
             ),
-            boxShadow:
-                _isPressed
-                    ? [
-                      BoxShadow(
-                        color: Colors.blueAccent.withOpacity(0.4),
-                        blurRadius: 12,
-                        offset: const Offset(0, 6),
-                      ),
-                    ]
-                    : [],
+            boxShadow: _isPressed
+                ? [
+                    BoxShadow(
+                      color: Colors.blueAccent.withOpacity(0.4),
+                      blurRadius: 12,
+                      offset: const Offset(0, 6),
+                    ),
+                  ]
+                : [],
           ),
           child: const Center(
             child: Text(
