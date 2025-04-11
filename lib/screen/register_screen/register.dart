@@ -1,5 +1,8 @@
 import 'package:findoutmole/screen/register_screen/confirmar_Contraseña.dart';
+import 'package:findoutmole/screen/register_screen/cuentraPrevia.dart';
 import 'package:findoutmole/screen/register_screen/email.dart';
+import 'package:findoutmole/screen/register_screen/registerButtom.dart';
+import 'package:findoutmole/screen/register_screen/textoInicial.dart';
 import 'package:flutter/material.dart';
 import 'nombre_de_usuario.dart';
 import 'contraseña.dart';
@@ -9,16 +12,14 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController passwordController = TextEditingController(); // Controlador para la contraseña principal
+    final TextEditingController passwordController =
+        TextEditingController(); // Controlador para la contraseña principal
 
     return Scaffold(
       body: Stack(
         children: [
           Positioned.fill(
-            child: Image.asset(
-              'assets/images/2.png',
-              fit: BoxFit.cover,
-            ),
+            child: Image.asset('assets/images/2.png', fit: BoxFit.cover),
           ),
           Center(
             child: SingleChildScrollView(
@@ -29,22 +30,19 @@ class RegisterPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(height: 20),
-                    const Text(
-                      'Registro de Usuario',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
+                    Cuentaexiste(),
                     const SizedBox(height: 20),
                     const NombreDeUsuario(),
                     const SizedBox(height: 20),
                     const EmailField(),
                     const SizedBox(height: 20),
-                    PasswordField(controller: passwordController), // Pasa el controlador
+                    PasswordField(
+                      controller: passwordController,
+                    ), // Pasa el controlador
                     const SizedBox(height: 20),
-                    ConfirmPasswordField(passwordController: passwordController), // Pasa el controlador
+                    ConfirmPasswordField(
+                      passwordController: passwordController,
+                    ), // Pasa el controlador
                     const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {
@@ -54,20 +52,14 @@ class RegisterPage extends StatelessWidget {
                         minimumSize: const Size(double.infinity, 50),
                         backgroundColor: Colors.blue,
                       ),
-                      child: const Text(
-                        'Registrar',
-                        style: TextStyle(color: Colors.white),
-                      ),
+                      child: const RegisterButton(),
                     ),
                     const SizedBox(height: 10),
                     TextButton(
                       onPressed: () {
                         // Redirigir al usuario a la página de inicio de sesión
                       },
-                      child: const Text(
-                        '¿Ya tienes cuenta? Inicia sesión',
-                        style: TextStyle(color: Colors.white),
-                      ),
+                      child: cuentaexiste(),
                     ),
                   ],
                 ),
@@ -79,3 +71,4 @@ class RegisterPage extends StatelessWidget {
     );
   }
 }
+
