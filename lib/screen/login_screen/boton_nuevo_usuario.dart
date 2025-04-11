@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:findoutmole/screen/register_screen/register.dart';
 
 class BotonNuevoUsuario extends StatelessWidget {
   const BotonNuevoUsuario({
@@ -6,19 +7,35 @@ class BotonNuevoUsuario extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 20.0),
-      child: Center(
+Widget build(BuildContext context) {
+  return Padding(
+    padding: EdgeInsets.symmetric(horizontal: 50),
+    child: Container(
+      width: double.infinity,
+      height: 50,
+      child: TextButton(
+        style: TextButton.styleFrom(
+          backgroundColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+        ),
+          onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => RegisterPage()),
+          );
+        },
         child: Text(
           'Nuevo Usuario',
           style: TextStyle(
-            color: Colors.black87,
+            color: Colors.white, // Color del texto del botón
             fontSize: 18,
-            decoration: TextDecoration.underline,
+            fontWeight: FontWeight.normal,
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 }
