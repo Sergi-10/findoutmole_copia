@@ -1,12 +1,17 @@
+import 'package:findoutmole/screen/register_screen/confirmar_Contraseña.dart'; // Para ConfirmPasswordField
+import 'package:findoutmole/screen/register_screen/email.dart'; // Para EmailField
 import 'package:flutter/material.dart';
-import 'nombre_de_usuario.dart'; // Importa la función para el campo de usuario
-import 'contraseña.dart'; // Importa la función para el campo de contraseña
+import 'nombre_de_usuario.dart'; // Para NombreDeUsuario
+import 'contraseña.dart'; // Para PasswordField
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Controlador para la contraseña principal
+    final TextEditingController passwordController = TextEditingController();
+
     return Scaffold(
       body: Stack(
         children: [
@@ -37,31 +42,31 @@ class RegisterPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     // Campo para el nombre de usuario
-                    buildUsernameField(),
+                    const NombreDeUsuario(),
                     const SizedBox(height: 20),
                     // Campo para el correo electrónico
-                    TextField(
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: const InputDecoration(
-                        labelText: 'Correo electrónico',
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.email),
-                      ),
-                    ),
+                    const EmailField(),
                     const SizedBox(height: 20),
                     // Campo para la contraseña
-                    const PasswordField(),
+                    PasswordField(controller: passwordController),
+                    const SizedBox(height: 20),
+                    // Campo para confirmar la contraseña
+                    ConfirmPasswordField(passwordController: passwordController),
                     const SizedBox(height: 20),
                     // Botón para registrar
                     ElevatedButton(
                       onPressed: () {
                         // Aquí puedes agregar la lógica para registrar al usuario
+                        // Por ejemplo, validar todos los campos antes de proceder
                       },
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(double.infinity, 50),
-                        backgroundColor: Colors.blue,
+                        backgroundColor: Colors.blue, // Cambia el color del botón
                       ),
-                      child: const Text('Registrar'),
+                      child: const Text(
+                        'Registrar',
+                        style: TextStyle(color: Colors.white), // Cambia el color del texto del botón
+                      ),
                     ),
                     const SizedBox(height: 10),
                     // Opción para ir a la página de inicio de sesión
@@ -71,7 +76,7 @@ class RegisterPage extends StatelessWidget {
                       },
                       child: const Text(
                         '¿Ya tienes cuenta? Inicia sesión',
-                        style: TextStyle(color: Colors.blue),
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                   ],
