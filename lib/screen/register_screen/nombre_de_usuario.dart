@@ -13,7 +13,9 @@ class _NombreDeUsuarioState extends State<NombreDeUsuario> {
 
   // Función para validar el nombre de usuario
   void _validateUsername(String value) {
-    final RegExp regex = RegExp(r'^[a-zA-Z0-9]{6,}$'); // Solo letras y números, mínimo 6 caracteres
+    final RegExp regex = RegExp(
+      r'^[a-zA-Z0-9]{6,}$',
+    ); // Solo letras y números, mínimo 6 caracteres
     if (value.isEmpty) {
       setState(() {
         _errorText = 'El nombre de usuario no puede estar vacío';
@@ -37,18 +39,35 @@ class _NombreDeUsuarioState extends State<NombreDeUsuario> {
       children: [
         Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12.0), // Bordes redondeados más pronunciados
+            borderRadius: BorderRadius.circular(
+              12.0,
+            ), // Bordes redondeados más pronunciados
             gradient: LinearGradient(
               colors: [
-                const Color.fromARGB(255, 255, 255, 255).withOpacity(0.3), // Color inicial con transparencia
-                const Color.fromARGB(255, 250, 250, 250).withOpacity(0.5), // Color final con más transparencia
+                const Color.fromARGB(
+                  255,
+                  255,
+                  255,
+                  255,
+                ).withOpacity(0.3), // Color inicial con transparencia
+                const Color.fromARGB(
+                  255,
+                  250,
+                  250,
+                  250,
+                ).withOpacity(0.5), // Color final con más transparencia
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
             boxShadow: [
               BoxShadow(
-                color: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.1), // Sombra ligera
+                color: const Color.fromARGB(
+                  255,
+                  255,
+                  255,
+                  255,
+                ).withOpacity(0.1), // Sombra ligera
                 blurRadius: 8.0, // Difuminado de la sombra
                 offset: const Offset(0, 4), // Desplazamiento de la sombra
               ),
@@ -59,14 +78,22 @@ class _NombreDeUsuarioState extends State<NombreDeUsuario> {
             decoration: InputDecoration(
               labelText: 'Nombre de usuario',
               labelStyle: const TextStyle(
-                color: Color.fromARGB(255, 250, 250, 250), // Color del texto del label
+                color: Color.fromARGB(
+                  255,
+                  250,
+                  250,
+                  250,
+                ), // Color del texto del label
                 fontWeight: FontWeight.bold, // Negrita para el label
               ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12.0), // Bordes redondeados
                 borderSide: BorderSide.none, // Sin borde visible
               ),
-              prefixIcon: const Icon(Icons.person, color: Color.fromARGB(255, 255, 255, 255)), // Ícono con color azul
+              prefixIcon: const Icon(
+                Icons.person,
+                color: Color.fromARGB(255, 255, 255, 255),
+              ), // Ícono con color azul
               contentPadding: const EdgeInsets.symmetric(
                 vertical: 16.0,
                 horizontal: 10.0,
