@@ -1,3 +1,4 @@
+import 'package:findoutmole/screen/login_screen/screen_password.dart';
 import 'package:flutter/material.dart';
 
 class BotonRecuperarContrasena extends StatelessWidget {
@@ -11,7 +12,12 @@ class BotonRecuperarContrasena extends StatelessWidget {
         height: 50,
         child: TextButton(
           style: estiloBoton(), //Estilo Boton separado
-          onPressed: () => _accionAlPulsar(context), //Accion boton separado
+          onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ScreenPassword()),
+          );
+        }, //Accion boton separado
           child: const Text(
             'Recuperar contraseña',
             style: TextStyle(
@@ -40,13 +46,5 @@ class BotonRecuperarContrasena extends StatelessWidget {
         const EdgeInsets.all(0),
       ), // Quita el relleno interno
     ); // Close ButtonStyle constructor
-  }
-
-  // Acción de navegación
-  void _accionAlPulsar(BuildContext context) {
-    Navigator.pushNamed(
-      context,
-      '/screen_password',
-    ); // Navega a la pantalla de recuperar contraseña
   }
 }

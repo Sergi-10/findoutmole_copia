@@ -24,14 +24,14 @@ class TexfieldUsuarioPassw extends StatelessWidget {
         controller: controller,
         decoration: InputDecoration(
           // Constructor que indica que el borde sea de tipo contorno. Dentro del constructor se define aspecto del borde
-          prefixIcon: Icon(icon), // Icono de usuario
+          prefixIcon: Icon(icon, color: Colors.white,), // Icono de usuario
           hintText:hintText, // Texto dentro del campo // Oculta el texto mientras se escribe (modo contraseña)
           filled: true, // Activa el fondo del campo de texto
           fillColor: const Color.fromRGBO(
             255,
             255,
             255,
-            0.9,
+            0.4,
           ), // Blanco con 90% opacidad
           contentPadding: EdgeInsets.symmetric(
             vertical: 15,
