@@ -11,10 +11,6 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    final TextEditingController userController = TextEditingController();
-    final TextEditingController passController = TextEditingController();
-    
     return Scaffold(
       // Scaffold proporciona la estructura visual básica de la app (barra superior, body, etc.)
       body: Stack(
@@ -64,8 +60,3 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
