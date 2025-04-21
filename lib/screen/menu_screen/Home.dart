@@ -1,5 +1,7 @@
+import 'package:findoutmole/screen/FootBar.dart';
 import 'package:flutter/material.dart';
 import 'package:findoutmole/screen/menu_screen/Perfil.dart'; // Pantalla de perfil
+import 'package:findoutmole/screen/menu_screen/Contacto.dart'; // Pantalla de contacto
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -7,16 +9,15 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('FindOutMole'),
-      ),
+      appBar: AppBar(title: Text('FindOutMole')),
       body: Stack(
         children: [
           // Imagen de fondo
           Positioned.fill(
             child: Image.asset(
               'assets/images/2.png', // Ruta de la imagen
-              fit: BoxFit.cover, // Ajusta la imagen para cubrir toda la pantalla
+              fit:
+                  BoxFit.cover, // Ajusta la imagen para cubrir toda la pantalla
             ),
           ),
           // Contenido principal
@@ -26,7 +27,8 @@ class HomePage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: GridView.count(
-                  shrinkWrap: true, // Hace que el GridView ocupe solo el espacio necesario
+                  shrinkWrap:
+                      true, // Hace que el GridView ocupe solo el espacio necesario
                   crossAxisCount: 2, // Dos columnas
                   crossAxisSpacing: 16, // Espaciado horizontal
                   mainAxisSpacing: 16, // Espaciado vertical
@@ -34,7 +36,9 @@ class HomePage extends StatelessWidget {
                     // Botón 1: Agregar Archivos
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white.withOpacity(0.8), // Fondo con transparencia
+                        backgroundColor: Colors.white.withOpacity(
+                          0.8,
+                        ), // Fondo con transparencia
                         padding: const EdgeInsets.all(16.0),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
@@ -55,7 +59,9 @@ class HomePage extends StatelessWidget {
                     // Botón 2: Mi Perfil
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white.withOpacity(0.8), // Fondo con transparencia
+                        backgroundColor: Colors.white.withOpacity(
+                          0.8,
+                        ), // Fondo con transparencia
                         padding: const EdgeInsets.all(16.0),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
@@ -65,14 +71,21 @@ class HomePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => PerfilPage(
-                              nombre: 'Nombre no definido', // Valor predeterminado
-                              apellidos: 'Apellidos no definidos', // Valor predeterminado
-                              email: 'Correo no definido', // Valor predeterminado
-                              edad: 'Edad no definida', // Valor predeterminado
-                              peso: 'Peso no definido', // Valor predeterminado
-                              telefono: 'Teléfono no definido', // Valor predeterminado
-                            ),
+                            builder:
+                                (context) => PerfilPage(
+                                  nombre:
+                                      'Nombre no definido', // Valor predeterminado
+                                  apellidos:
+                                      'Apellidos no definidos', // Valor predeterminado
+                                  email:
+                                      'Correo no definido', // Valor predeterminado
+                                  edad:
+                                      'Edad no definida', // Valor predeterminado
+                                  peso:
+                                      'Peso no definido', // Valor predeterminado
+                                  telefono:
+                                      'Teléfono no definido', // Valor predeterminado
+                                ),
                           ),
                         );
                       },
@@ -88,7 +101,9 @@ class HomePage extends StatelessWidget {
                     // Botón 3: Consultas
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white.withOpacity(0.8), // Fondo con transparencia
+                        backgroundColor: Colors.white.withOpacity(
+                          0.8,
+                        ), // Fondo con transparencia
                         padding: const EdgeInsets.all(16.0),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
@@ -106,17 +121,29 @@ class HomePage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    // Botón 4: Contacto
+                    // Botón 4: Contacto// Botón 4: Contacto
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white.withOpacity(0.8), // Fondo con transparencia
+                        backgroundColor: const Color.fromARGB(
+                          255,
+                          246,
+                          247,
+                          248,
+                        ).withOpacity(0.8),
                         padding: const EdgeInsets.all(16.0),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
                       onPressed: () {
-                        print('Contacto clicked!');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder:
+                                (context) =>
+                                    ContactoScreen(), // Asegúrate que así se llama tu clase
+                          ),
+                        );
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -135,17 +162,7 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.black.withOpacity(0.5),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            '© 2025 FindOutMole. Todos los derechos reservados.',
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white), // Texto visible sobre fondo
-          ),
-        ), // Fondo semitransparente
-      ),
+      bottomNavigationBar: FooterBar(),
     );
   }
 }
