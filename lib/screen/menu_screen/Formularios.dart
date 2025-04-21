@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:findoutmole/screen/Perfil.dart'; // Importa la página de perfil
+import 'package:findoutmole/screen/menu_screen/Perfil.dart'; // Importa la página de perfil
 
 class FormulariosPage extends StatefulWidget {
   const FormulariosPage({super.key});

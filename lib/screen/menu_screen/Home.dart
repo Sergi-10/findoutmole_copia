@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:findoutmole/screen/Perfil.dart'; // Pantalla de perfil
-import 'package:findoutmole/screen/Formularios.dart'; // Pantalla de formularios
+import 'package:findoutmole/screen/menu_screen/Perfil.dart'; // Pantalla de perfil
+import 'package:findoutmole/screen/menu_screen/Formularios.dart'; // Pantalla de formularios
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
