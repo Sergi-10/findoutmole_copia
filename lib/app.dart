@@ -9,8 +9,9 @@ class AppHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: RegisterPage(),
-      //LoginPage(),
+      body: 
+      //RegisterPage(),
+      LoginPage(),
     );
   }
 }
