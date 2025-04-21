@@ -10,7 +10,7 @@ class BotonNuevoUsuario extends StatelessWidget {
 Widget build(BuildContext context) {
   return Padding(
     padding: EdgeInsets.symmetric(horizontal: 50),
-    child: Container(
+    child: SizedBox(
       width: double.infinity,
       height: 50,
       child: TextButton(
