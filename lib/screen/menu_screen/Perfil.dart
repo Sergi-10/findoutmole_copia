@@ -1,3 +1,4 @@
+import 'package:findoutmole/screen/menu_screen/Formularios.dart';
 import 'package:flutter/material.dart';
 
 class PerfilPage extends StatelessWidget {
@@ -22,8 +23,19 @@ class PerfilPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Mi Perfil'),
-      ),
+  title: const Text('Mi Perfil'),
+  actions: [
+    IconButton(
+      icon: const Icon(Icons.edit),
+      onPressed: () {
+        Navigator.push(context,
+          MaterialPageRoute(builder: (context) => FormulariosPage(), // Navega a la pantalla de formularios
+            ),
+          );
+        },
+    ),
+  ],
+),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

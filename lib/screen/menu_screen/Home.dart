@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:findoutmole/screen/menu_screen/Perfil.dart'; // Pantalla de perfil
-import 'package:findoutmole/screen/menu_screen/Formularios.dart'; // Pantalla de formularios
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -125,32 +124,6 @@ class HomePage extends StatelessWidget {
                           Icon(Icons.contact_mail, size: 40),
                           SizedBox(height: 8),
                           Text('Contacto'),
-                        ],
-                      ),
-                    ),
-                    // Botón 5: Formularios
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white.withOpacity(0.8), // Fondo con transparencia
-                        padding: const EdgeInsets.all(16.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => FormulariosPage(), // Navega a la pantalla de formularios
-                          ),
-                        );
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.assignment, size: 40),
-                          SizedBox(height: 8),
-                          Text('Formularios'),
                         ],
                       ),
                     ),
