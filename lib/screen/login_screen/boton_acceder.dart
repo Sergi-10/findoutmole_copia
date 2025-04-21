@@ -1,4 +1,5 @@
-import 'package:findoutmole/screen/home_screen/home_screen.dart';
+
+import 'package:findoutmole/screen/menu_screen/Home.dart';
 import 'package:flutter/material.dart';
 
 class BotonAcceder extends StatelessWidget {
@@ -35,7 +36,7 @@ class BotonAcceder extends StatelessWidget {
             if (user == 'admin' && password == 'admin') {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => HomeScreenPage()),
+                MaterialPageRoute(builder: (context) => HomePage()),
               );
             } else {
               ScaffoldMessenger.of(context).showSnackBar(

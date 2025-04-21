@@ -125,27 +125,6 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        print('Contacto clicked!');
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.contact_mail, size: 40),
-                          SizedBox(height: 8),
-                          Text('Contacto'),
-                        ],
-                      ),
-                    ),
-                    // Botón 5: Formularios
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white.withOpacity(0.8), // Fondo con transparencia
-                        padding: const EdgeInsets.all(16.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                      onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
