@@ -5,7 +5,7 @@ import 'package:findoutmole/screen/register_screen/contraseña.dart';
 import 'package:findoutmole/screen/register_screen/email.dart';
 import 'package:findoutmole/screen/register_screen/nombre_de_usuario.dart';
 import 'package:findoutmole/screen/register_screen/registerButtom.dart';
-import 'package:findoutmole/screen/register_screen/textoInicial.dart'; // Se mantiene el cambio aquí
+import 'package:findoutmole/screen/register_screen/textoInicial.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
@@ -13,6 +13,10 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextEditingController passwordController = TextEditingController();
+
+    // Obtén las dimensiones de la pantalla
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       body: Stack(
@@ -23,29 +27,29 @@ class RegisterPage extends StatelessWidget {
           Center(
             child: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.all(25.0),
+                padding: EdgeInsets.all(screenWidth * 0.05), // Espaciado dinámico
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const SizedBox(height: 50),
-                    Image.asset('assets/images/lupaconojo.png', height: 100),
-                    const SizedBox(height: 20),
-                    const TextoInicial(), // Antes: Cuentaexiste()
-                    const SizedBox(height: 20),
+                    SizedBox(height: screenHeight * 0.05), // Espaciado dinámico
+                    Image.asset('assets/images/lupaconojo.png', height: screenHeight * 0.15),
+                    SizedBox(height: screenHeight * 0.03), // Espaciado dinámico
+                    const TextoInicial(),
+                    SizedBox(height: screenHeight * 0.03), // Espaciado dinámico
                     const NombreDeUsuario(),
-                    const SizedBox(height: 20),
+                    SizedBox(height: screenHeight * 0.03), // Espaciado dinámico
                     const EmailField(),
-                    const SizedBox(height: 20),
+                    SizedBox(height: screenHeight * 0.03), // Espaciado dinámico
                     PasswordField(controller: passwordController),
-                    const SizedBox(height: 20),
+                    SizedBox(height: screenHeight * 0.03), // Espaciado dinámico
                     ConfirmPasswordField(
                       passwordController: passwordController,
                     ),
-                    const SizedBox(height: 20),
-                    const RegisterButton(), // Se cierra correctamente el paréntesis aquí
-                    const SizedBox(height: 20),
-                    const CuentaExiste(), // Ensure the class name matches the one in cuentaExiste.dart
+                    SizedBox(height: screenHeight * 0.03), // Espaciado dinámico
+                    const RegisterButton(),
+                    SizedBox(height: screenHeight * 0.03), // Espaciado dinámico
+                    const CuentaExiste(),
                   ],
                 ),
               ),

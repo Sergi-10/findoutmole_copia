@@ -18,7 +18,7 @@ class CuentaExiste extends StatelessWidget {
       },
       child: const Text(
         '¿Ya tienes cuenta? Inicia sesión',
-        style: TextStyle(color: Colors.white),
+        style: TextStyle(color: Colors.white, fontSize: 18), 
       ),
     );
   }

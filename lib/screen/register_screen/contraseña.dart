@@ -74,7 +74,7 @@ class _PasswordFieldState extends State<PasswordField> {
               suffixIcon: IconButton(
                 icon: Icon(
                   _isObscured ? Icons.visibility : Icons.visibility_off,
-                  color: const Color.fromARGB(255, 252, 252, 252), // Ícono con color azul
+                  color: const Color.fromARGB(255, 255, 255, 255), // Ícono con color azul
                 ),
                 onPressed: () {
                   setState(() {
@@ -88,7 +88,7 @@ class _PasswordFieldState extends State<PasswordField> {
               ), // Espaciado interno
             ),
             style: const TextStyle(
-              color: Colors.black, // Color del texto ingresado
+              color: Color.fromARGB(255, 0, 0, 0), // Color del texto ingresado
               fontSize: 16.0, // Tamaño del texto
             ),
             onChanged: _validatePassword, // Valida el texto mientras se escribe
