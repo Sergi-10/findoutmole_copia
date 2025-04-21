@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:findoutmole/screen/menu_screen/Perfil.dart'; // Pantalla de perfil
-import 'package:findoutmole/screen/menu_screen/Formularios.dart'; // Pantalla de formularios
+import 'package:findoutmole/screen/FootBar.dart';
+import 'package:findoutmole/screen/menu_screen/Contacto.dart'; // Pantalla de contacto
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -66,14 +67,21 @@ class HomePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => PerfilPage(
-                              nombre: 'Nombre no definido', // Valor predeterminado
-                              apellidos: 'Apellidos no definidos', // Valor predeterminado
-                              email: 'Correo no definido', // Valor predeterminado
-                              edad: 'Edad no definida', // Valor predeterminado
-                              peso: 'Peso no definido', // Valor predeterminado
-                              telefono: 'Teléfono no definido', // Valor predeterminado
-                            ),
+                            builder:
+                                (context) => PerfilPage(
+                                  nombre:
+                                      'Nombre no definido', // Valor predeterminado
+                                  apellidos:
+                                      'Apellidos no definidos', // Valor predeterminado
+                                  email:
+                                      'Correo no definido', // Valor predeterminado
+                                  edad:
+                                      'Edad no definida', // Valor predeterminado
+                                  peso:
+                                      'Peso no definido', // Valor predeterminado
+                                  telefono:
+                                      'Teléfono no definido', // Valor predeterminado
+                                ),
                           ),
                         );
                       },
@@ -141,16 +149,18 @@ class HomePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => FormulariosPage(), // Navega a la pantalla de formularios
+                            builder:
+                                (context) =>
+                                    ContactoScreen(), // Asegúrate que así se llama tu clase
                           ),
                         );
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.assignment, size: 40),
+                          Icon(Icons.contact_mail, size: 40),
                           SizedBox(height: 8),
-                          Text('Formularios'),
+                          Text('Contacto'),
                         ],
                       ),
                     ),
@@ -162,17 +172,7 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.black.withOpacity(0.5),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            '© 2025 FindOutMole. Todos los derechos reservados.',
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white), // Texto visible sobre fondo
-          ),
-        ), // Fondo semitransparente
-      ),
+      bottomNavigationBar: FooterBar(),
     );
   }
 }
