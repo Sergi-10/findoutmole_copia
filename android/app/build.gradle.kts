@@ -9,6 +9,10 @@ android {
     namespace = "com.example.proyectofindoutmole"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
+    android {
+    // Existing configurations
+    ndkVersion = "27.0.12077973"
+}
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

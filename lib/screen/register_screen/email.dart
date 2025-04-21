@@ -1,0 +1,120 @@
+import 'package:flutter/material.dart';
+
+class EmailField extends StatefulWidget {
+  const EmailField({super.key});
+
+  @override
+  _EmailFieldState createState() => _EmailFieldState();
+}
+
+class _EmailFieldState extends State<EmailField> {
+  final TextEditingController _controller = TextEditingController();
+  String? _errorText;
+
+  // Función para validar el correo electrónico
+  void _validateEmail(String value) {
+    final RegExp regex = RegExp(
+      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+    ); // Expresión regular para validar correos
+    if (value.isEmpty) {
+      setState(() {
+        _errorText = 'El correo electrónico no puede estar vacío';
+      });
+    } else if (!regex.hasMatch(value)) {
+      setState(() {
+        _errorText = 'Por favor, ingresa un correo electrónico válido';
+      });
+    } else {
+      setState(() {
+        _errorText = null; // No hay error
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(
+              12.0,
+            ), // Bordes redondeados más pronunciados
+            gradient: LinearGradient(
+              colors: [
+                const Color.fromARGB(
+                  255,
+                  255,
+                  255,
+                  255,
+                ).withOpacity(0.3), // Color inicial con transparencia
+                const Color.fromARGB(
+                  255,
+                  255,
+                  255,
+                  255,
+                ).withOpacity(0.5), // Color final con más transparencia
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: const Color.fromARGB(
+                  255,
+                  255,
+                  255,
+                  255,
+                ).withOpacity(0.1), // Sombra ligera
+                blurRadius: 8.0, // Difuminado de la sombra
+                offset: const Offset(0, 4), // Desplazamiento de la sombra
+              ),
+            ],
+          ),
+          child: TextField(
+            controller: _controller,
+            keyboardType: TextInputType.emailAddress,
+            decoration: InputDecoration(
+              labelText: 'Correo electrónico',
+              labelStyle: const TextStyle(
+                color: Color.fromARGB(
+                  255,
+                  255,
+                  255,
+                  255,
+                ), // Color del texto del label
+                fontWeight: FontWeight.bold, // Negrita para el label
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12.0), // Bordes redondeados
+                borderSide: BorderSide.none, // Sin borde visible
+              ),
+              prefixIcon: const Icon(
+                Icons.email,
+                color: Color.fromARGB(255, 255, 255, 255),
+              ), // Ícono con color azul
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: 16.0,
+                horizontal: 10.0,
+              ), // Espaciado interno
+            ),
+            style: const TextStyle(
+              color: Colors.black, // Color del texto ingresado
+              fontSize: 16.0, // Tamaño del texto
+            ),
+            onChanged: _validateEmail, // Valida el texto mientras se escribe
+          ),
+        ),
+        if (_errorText != null) // Muestra un mensaje adicional si hay error
+          Padding(
+            padding: const EdgeInsets.only(top: 5.0),
+            child: Text(
+              _errorText!,
+              style: const TextStyle(color: Colors.red, fontSize: 12),
+            ),
+          ),
+      ],
+    );
+  }
+}
