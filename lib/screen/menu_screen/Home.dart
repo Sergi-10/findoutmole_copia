@@ -9,16 +9,15 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('FindOutMole'),
-      ),
+      appBar: AppBar(title: Text('FindOutMole')),
       body: Stack(
         children: [
           // Imagen de fondo
           Positioned.fill(
             child: Image.asset(
               'assets/images/2.png', // Ruta de la imagen
-              fit: BoxFit.cover, // Ajusta la imagen para cubrir toda la pantalla
+              fit:
+                  BoxFit.cover, // Ajusta la imagen para cubrir toda la pantalla
             ),
           ),
           // Contenido principal
@@ -28,7 +27,8 @@ class HomePage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: GridView.count(
-                  shrinkWrap: true, // Hace que el GridView ocupe solo el espacio necesario
+                  shrinkWrap:
+                      true, // Hace que el GridView ocupe solo el espacio necesario
                   crossAxisCount: 2, // Dos columnas
                   crossAxisSpacing: 16, // Espaciado horizontal
                   mainAxisSpacing: 16, // Espaciado vertical
@@ -36,7 +36,9 @@ class HomePage extends StatelessWidget {
                     // Botón 1: Agregar Archivos
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white.withOpacity(0.8), // Fondo con transparencia
+                        backgroundColor: Colors.white.withOpacity(
+                          0.8,
+                        ), // Fondo con transparencia
                         padding: const EdgeInsets.all(16.0),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
@@ -57,7 +59,9 @@ class HomePage extends StatelessWidget {
                     // Botón 2: Mi Perfil
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white.withOpacity(0.8), // Fondo con transparencia
+                        backgroundColor: Colors.white.withOpacity(
+                          0.8,
+                        ), // Fondo con transparencia
                         padding: const EdgeInsets.all(16.0),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
@@ -97,7 +101,9 @@ class HomePage extends StatelessWidget {
                     // Botón 3: Consultas
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white.withOpacity(0.8), // Fondo con transparencia
+                        backgroundColor: Colors.white.withOpacity(
+                          0.8,
+                        ), // Fondo con transparencia
                         padding: const EdgeInsets.all(16.0),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
@@ -118,7 +124,9 @@ class HomePage extends StatelessWidget {
                     // Botón 4: Contacto
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white.withOpacity(0.8), // Fondo con transparencia
+                        backgroundColor: Colors.white.withOpacity(
+                          0.8,
+                        ), // Fondo con transparencia
                         padding: const EdgeInsets.all(16.0),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),

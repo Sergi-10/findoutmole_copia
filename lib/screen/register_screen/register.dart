@@ -6,6 +6,7 @@ import 'package:findoutmole/screen/register_screen/email.dart';
 import 'package:findoutmole/screen/register_screen/nombre_de_usuario.dart';
 import 'package:findoutmole/screen/register_screen/registerButtom.dart';
 import 'package:findoutmole/screen/register_screen/textoInicial.dart';
+import 'package:findoutmole/screen/FootBar.dart'; // Importa el pie de página
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
@@ -27,13 +28,18 @@ class RegisterPage extends StatelessWidget {
           Center(
             child: SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.all(screenWidth * 0.05), // Espaciado dinámico
+                padding: EdgeInsets.all(
+                  screenWidth * 0.05,
+                ), // Espaciado dinámico
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(height: screenHeight * 0.05), // Espaciado dinámico
-                    Image.asset('assets/images/lupaconojo.png', height: screenHeight * 0.15),
+                    Image.asset(
+                      'assets/images/lupaconojo.png',
+                      height: screenHeight * 0.15,
+                    ),
                     SizedBox(height: screenHeight * 0.03), // Espaciado dinámico
                     const TextoInicial(),
                     SizedBox(height: screenHeight * 0.03), // Espaciado dinámico
@@ -57,6 +63,7 @@ class RegisterPage extends StatelessWidget {
           ),
         ],
       ),
+      bottomNavigationBar: FooterBar(),
     );
   }
 }

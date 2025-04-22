@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:findoutmole/screen/menu_screen/Perfil.dart'; // Importa la página de perfil
+import 'package:findoutmole/screen/FootBar.dart'; // Importa el pie de página
 
 class FormulariosPage extends StatefulWidget {
   const FormulariosPage({super.key});
@@ -20,23 +21,25 @@ class _FormulariosPageState extends State<FormulariosPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Formulario de Datos Personales'),
-      ),
+      appBar: AppBar(title: Text('Formulario de Datos Personales')),
       body: Stack(
         children: [
           // Imagen de fondo que cubre toda la pantalla
           Positioned.fill(
             child: Image.asset(
               'assets/images/2.png', // Ruta de la imagen
-              fit: BoxFit.cover, // Ajusta la imagen para cubrir toda la pantalla
+              fit:
+                  BoxFit.cover, // Ajusta la imagen para cubrir toda la pantalla
             ),
           ),
           // Contenido principal
           SingleChildScrollView(
             child: ConstrainedBox(
               constraints: BoxConstraints(
-                minHeight: MediaQuery.of(context).size.height, // Asegura que ocupe toda la pantalla
+                minHeight:
+                    MediaQuery.of(
+                      context,
+                    ).size.height, // Asegura que ocupe toda la pantalla
               ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -83,7 +86,9 @@ class _FormulariosPageState extends State<FormulariosPage> {
                               if (value == null || value.isEmpty) {
                                 return 'Por favor, ingresa tu correo electrónico';
                               }
-                              if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                              if (!RegExp(
+                                r'^[^@]+@[^@]+\.[^@]+',
+                              ).hasMatch(value)) {
                                 return 'Por favor, ingresa un correo válido';
                               }
                               return null;
@@ -152,19 +157,20 @@ class _FormulariosPageState extends State<FormulariosPage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => PerfilPage(
-                                        nombre: _nombre,
-                                        apellidos: _apellidos,
-                                        email: _email,
-                                        edad: _edad,
-                                        peso: _peso,
-                                        telefono: _telefono,
-                                      ),
+                                      builder:
+                                          (context) => PerfilPage(
+                                            nombre: _nombre,
+                                            apellidos: _apellidos,
+                                            email: _email,
+                                            edad: _edad,
+                                            peso: _peso,
+                                            telefono: _telefono,
+                                          ),
                                     ),
                                   );
                                 }
                               },
-                              child: Text('Enviar'),     
+                              child: Text('Enviar'),
                             ),
                           ),
                         ],
@@ -177,6 +183,7 @@ class _FormulariosPageState extends State<FormulariosPage> {
           ),
         ],
       ),
+      bottomNavigationBar: FooterBar(),
     );
   }
 
@@ -191,11 +198,11 @@ class _FormulariosPageState extends State<FormulariosPage> {
       decoration: InputDecoration(
         labelText: label,
         prefixIcon: Icon(icon),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
         filled: true,
-        fillColor: Colors.white.withOpacity(0.8), // Fondo blanco con transparencia
+        fillColor: Colors.white.withOpacity(
+          0.8,
+        ), // Fondo blanco con transparencia
       ),
       keyboardType: keyboardType,
       validator: validator,
