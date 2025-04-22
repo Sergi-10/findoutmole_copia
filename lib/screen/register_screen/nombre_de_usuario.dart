@@ -8,26 +8,29 @@ class NombreDeUsuario extends StatefulWidget {
 }
 
 class _NombreDeUsuarioState extends State<NombreDeUsuario> {
-  final TextEditingController _controller = TextEditingController();
-  String? _errorText;
+  String _username = ''; // Estado para almacenar el nombre de usuario
+  String? _errorText; // Mensaje de error si el nombre no cumple con los requisitos
 
   // Función para validar el nombre de usuario
   void _validateUsername(String value) {
     final RegExp regex = RegExp(
-      r'^[a-zA-Z0-9]{6,}$',
-    ); // Solo letras y números, mínimo 6 caracteres
+      r'^[a-zA-Z0-9]{6,}$', // Solo letras y números, mínimo 6 caracteres
+    );
     if (value.isEmpty) {
       setState(() {
         _errorText = 'El nombre de usuario no puede estar vacío';
+        _username = ''; // No guarda el nombre de usuario
       });
     } else if (!regex.hasMatch(value)) {
       setState(() {
         _errorText =
             'Debe tener al menos 6 caracteres y no contener caracteres especiales';
+        _username = ''; // No guarda el nombre de usuario
       });
     } else {
       setState(() {
         _errorText = null; // No hay error
+        _username = value; // Guarda el nombre de usuario solo si es válido
       });
     }
   }
@@ -39,51 +42,28 @@ class _NombreDeUsuarioState extends State<NombreDeUsuario> {
       children: [
         Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(
-              12.0,
-            ), // Bordes redondeados más pronunciados
+            borderRadius: BorderRadius.circular(12.0), // Bordes redondeados
             gradient: LinearGradient(
               colors: [
-                const Color.fromARGB(
-                  255,
-                  255,
-                  255,
-                  255,
-                ).withOpacity(0.3), // Color inicial con transparencia
-                const Color.fromARGB(
-                  255,
-                  250,
-                  250,
-                  250,
-                ).withOpacity(0.5), // Color final con más transparencia
+                const Color.fromARGB(255, 255, 255, 255).withOpacity(0.3), // Color inicial con transparencia
+                const Color.fromARGB(255, 250, 250, 250).withOpacity(0.5), // Color final con más transparencia
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
             boxShadow: [
               BoxShadow(
-                color: const Color.fromARGB(
-                  255,
-                  255,
-                  255,
-                  255,
-                ).withOpacity(0.1), // Sombra ligera
+                color: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.1), // Sombra ligera
                 blurRadius: 8.0, // Difuminado de la sombra
                 offset: const Offset(0, 4), // Desplazamiento de la sombra
               ),
             ],
           ),
           child: TextField(
-            controller: _controller,
             decoration: InputDecoration(
               labelText: 'Nombre de usuario',
               labelStyle: const TextStyle(
-                color: Color.fromARGB(
-                  255,
-                  250,
-                  250,
-                  250,
-                ), // Color del texto del label
+                color: Color.fromARGB(255, 250, 250, 250), // Color del texto del label
                 fontWeight: FontWeight.bold, // Negrita para el label
               ),
               border: OutlineInputBorder(
@@ -93,7 +73,7 @@ class _NombreDeUsuarioState extends State<NombreDeUsuario> {
               prefixIcon: const Icon(
                 Icons.person,
                 color: Color.fromARGB(255, 255, 255, 255),
-              ), // Ícono con color azul
+              ), // Ícono con color blanco
               contentPadding: const EdgeInsets.symmetric(
                 vertical: 16.0,
                 horizontal: 10.0,

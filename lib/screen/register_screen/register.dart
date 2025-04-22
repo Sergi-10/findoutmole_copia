@@ -41,11 +41,9 @@ class RegisterPage extends StatelessWidget {
                     SizedBox(height: screenHeight * 0.03), // Espaciado dinámico
                     const EmailField(),
                     SizedBox(height: screenHeight * 0.03), // Espaciado dinámico
-                    PasswordField(controller: passwordController),
+                    PasswordField(),
                     SizedBox(height: screenHeight * 0.03), // Espaciado dinámico
-                    ConfirmPasswordField(
-                      passwordController: passwordController,
-                    ),
+                    ConfirmPasswordField(password: passwordController.text),
                     SizedBox(height: screenHeight * 0.03), // Espaciado dinámico
                     const RegisterButton(),
                     SizedBox(height: screenHeight * 0.03), // Espaciado dinámico

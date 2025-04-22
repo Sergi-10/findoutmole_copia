@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:findoutmole/screen/FootBar.dart';
 
 class ContactoScreen extends StatelessWidget {
+  const ContactoScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

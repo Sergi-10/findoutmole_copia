@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 
 class PasswordField extends StatefulWidget {
-  final TextEditingController controller; // Agrega el controlador como parámetro
-
-  const PasswordField({super.key, required this.controller}); // Constructor que recibe el controlador
+  const PasswordField({super.key});
 
   @override
   _PasswordFieldState createState() => _PasswordFieldState();
 }
 
 class _PasswordFieldState extends State<PasswordField> {
+  String _password = ''; // Estado para almacenar la contraseña
   bool _isObscured = true; // Controla si el texto está oculto o visible
   String? _errorText; // Mensaje de error si la contraseña no cumple con los requisitos
 
@@ -20,15 +19,18 @@ class _PasswordFieldState extends State<PasswordField> {
     if (value.isEmpty) {
       setState(() {
         _errorText = 'La contraseña no puede estar vacía';
+        _password = ''; // No guarda la contraseña
       });
     } else if (!regex.hasMatch(value)) {
       setState(() {
         _errorText =
             'Debe tener al menos 6 caracteres, 1 letra mayúscula, 1 número y 1 carácter especial';
+        _password = ''; // No guarda la contraseña
       });
     } else {
       setState(() {
         _errorText = null; // No hay error
+        _password = value; // Guarda la contraseña solo si es válida
       });
     }
   }
@@ -58,7 +60,6 @@ class _PasswordFieldState extends State<PasswordField> {
             ],
           ),
           child: TextField(
-            controller: widget.controller, // Usa el controlador recibido
             obscureText: _isObscured, // Controla si el texto está oculto o visible
             decoration: InputDecoration(
               labelText: 'Contraseña',
@@ -70,11 +71,11 @@ class _PasswordFieldState extends State<PasswordField> {
                 borderRadius: BorderRadius.circular(12.0), // Bordes redondeados
                 borderSide: BorderSide.none, // Sin borde visible
               ),
-              prefixIcon: const Icon(Icons.lock, color: Color.fromARGB(255, 255, 255, 255)), // Ícono con color azul
+              prefixIcon: const Icon(Icons.lock, color: Color.fromARGB(255, 255, 255, 255)), // Ícono con color blanco
               suffixIcon: IconButton(
                 icon: Icon(
                   _isObscured ? Icons.visibility : Icons.visibility_off,
-                  color: const Color.fromARGB(255, 255, 255, 255), // Ícono con color azul
+                  color: const Color.fromARGB(255, 255, 255, 255), // Ícono con color blanco
                 ),
                 onPressed: () {
                   setState(() {
