@@ -9,7 +9,8 @@ class EmailField extends StatefulWidget {
 
 class _EmailFieldState extends State<EmailField> {
   String _email = ''; // Estado para almacenar el correo electrónico
-  String? _errorText; // Mensaje de error si el correo no cumple con los requisitos
+  String?
+  _errorText; // Mensaje de error si el correo no cumple con los requisitos
 
   // Función para validar el correo electrónico
   void _validateEmail(String value) {
@@ -44,15 +45,30 @@ class _EmailFieldState extends State<EmailField> {
             borderRadius: BorderRadius.circular(12.0), // Bordes redondeados
             gradient: LinearGradient(
               colors: [
-                const Color.fromARGB(255, 255, 255, 255).withOpacity(0.3), // Color inicial con transparencia
-                const Color.fromARGB(255, 255, 255, 255).withOpacity(0.5), // Color final con más transparencia
+                const Color.fromARGB(
+                  255,
+                  255,
+                  255,
+                  255,
+                ).withOpacity(0.3), // Color inicial con transparencia
+                const Color.fromARGB(
+                  255,
+                  255,
+                  255,
+                  255,
+                ).withOpacity(0.5), // Color final con más transparencia
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
             boxShadow: [
               BoxShadow(
-                color: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.1), // Sombra ligera
+                color: const Color.fromARGB(
+                  255,
+                  255,
+                  255,
+                  255,
+                ).withOpacity(0.1), // Sombra ligera
                 blurRadius: 8.0, // Difuminado de la sombra
                 offset: const Offset(0, 4), // Desplazamiento de la sombra
               ),
@@ -63,7 +79,12 @@ class _EmailFieldState extends State<EmailField> {
             decoration: InputDecoration(
               labelText: 'Correo electrónico',
               labelStyle: const TextStyle(
-                color: Color.fromARGB(255, 255, 255, 255), // Color del texto del label
+                color: Color.fromARGB(
+                  255,
+                  255,
+                  255,
+                  255,
+                ), // Color del texto del label
                 fontWeight: FontWeight.bold, // Negrita para el label
               ),
               border: OutlineInputBorder(
@@ -83,7 +104,12 @@ class _EmailFieldState extends State<EmailField> {
               color: Colors.black, // Color del texto ingresado
               fontSize: 16.0, // Tamaño del texto
             ),
-            onChanged: _validateEmail, // Valida el texto mientras se escribe
+            onChanged: (value) {
+              setState(() {
+                _email = value; // Actualiza el estado con el nuevo valor
+                _validateEmail(_email); // Valida el correo electrónico
+              });
+            }, // Valida el texto mientras se escribe
           ),
         ),
         if (_errorText != null) // Muestra un mensaje adicional si hay error

@@ -13,7 +13,7 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController passwordController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController(); // Crea un controller
 
     // Obtén las dimensiones de la pantalla
     final screenWidth = MediaQuery.of(context).size.width;
@@ -28,31 +28,26 @@ class RegisterPage extends StatelessWidget {
           Center(
             child: SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.all(
-                  screenWidth * 0.05,
-                ), // Espaciado dinámico
+                padding: EdgeInsets.all(screenWidth * 0.05),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(height: screenHeight * 0.05), // Espaciado dinámico
-                    Image.asset(
-                      'assets/images/lupaconojo.png',
-                      height: screenHeight * 0.15,
-                    ),
-                    SizedBox(height: screenHeight * 0.03), // Espaciado dinámico
+                    SizedBox(height: screenHeight * 0.05),
+                    Image.asset('assets/images/lupaconojo.png', height: screenHeight * 0.15),
+                    SizedBox(height: screenHeight * 0.03),
                     const TextoInicial(),
-                    SizedBox(height: screenHeight * 0.03), // Espaciado dinámico
+                    SizedBox(height: screenHeight * 0.03),
                     const NombreDeUsuario(),
-                    SizedBox(height: screenHeight * 0.03), // Espaciado dinámico
+                    SizedBox(height: screenHeight * 0.03),
                     const EmailField(),
-                    SizedBox(height: screenHeight * 0.03), // Espaciado dinámico
-                    PasswordField(),
-                    SizedBox(height: screenHeight * 0.03), // Espaciado dinámico
-                    ConfirmPasswordField(password: passwordController.text),
-                    SizedBox(height: screenHeight * 0.03), // Espaciado dinámico
+                    SizedBox(height: screenHeight * 0.03),
+                    PasswordField(controller: passwordController), // Pasa el controller aquí
+                    SizedBox(height: screenHeight * 0.03),
+                    ConfirmPasswordField(passwordController: passwordController), // Pasa el controller aquí
+                    SizedBox(height: screenHeight * 0.03),
                     const RegisterButton(),
-                    SizedBox(height: screenHeight * 0.03), // Espaciado dinámico
+                    SizedBox(height: screenHeight * 0.03),
                     const CuentaExiste(),
                   ],
                 ),

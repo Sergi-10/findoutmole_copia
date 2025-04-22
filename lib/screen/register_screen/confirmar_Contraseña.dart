@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ConfirmPasswordField extends StatefulWidget {
-  final String password; // Recibe la contraseña principal para validación
+  final TextEditingController passwordController; // Contraseña principal
 
-  const ConfirmPasswordField({super.key, required this.password});
+  const ConfirmPasswordField({super.key, required this.passwordController});
 
   @override
   _ConfirmPasswordFieldState createState() => _ConfirmPasswordFieldState();
@@ -19,7 +19,7 @@ class _ConfirmPasswordFieldState extends State<ConfirmPasswordField> {
     setState(() {
       if (value.isEmpty) {
         _errorText = 'La confirmación de la contraseña no puede estar vacía';
-      } else if (value != widget.password) {
+      } else if (value != widget.passwordController.text) {
         _errorText = 'Las contraseñas no coinciden';
       } else {
         _errorText = null; // No hay error
@@ -34,29 +34,45 @@ class _ConfirmPasswordFieldState extends State<ConfirmPasswordField> {
       children: [
         Container(
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.3), // Fondo blanco transparente
-            borderRadius: BorderRadius.circular(12.0), // Bordes redondeados
+            borderRadius: BorderRadius.circular(12.0),
+            gradient: LinearGradient(
+              colors: [
+                const Color.fromARGB(255, 253, 253, 253).withOpacity(0.3),
+                const Color.fromARGB(255, 251, 252, 252).withOpacity(0.5),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: const Color.fromARGB(
+                  255,
+                  253,
+                  253,
+                  253,
+                ).withOpacity(0.1),
+                blurRadius: 8.0,
+                offset: const Offset(0, 4),
+              ),
+            ],
           ),
           child: TextField(
             obscureText: _isObscured,
             decoration: InputDecoration(
               labelText: 'Confirmar Contraseña',
               labelStyle: const TextStyle(
-                color: Color.fromARGB(255, 252, 252, 252),
+                color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12.0),
-                borderSide: BorderSide.none, // Sin borde visible
+                borderSide: BorderSide.none,
               ),
-              prefixIcon: const Icon(
-                Icons.lock, // Ícono de candado
-                color: Color.fromARGB(255, 252, 252, 252),
-              ),
+              prefixIcon: const Icon(Icons.lock, color: Colors.white),
               suffixIcon: IconButton(
                 icon: Icon(
                   _isObscured ? Icons.visibility : Icons.visibility_off,
-                  color: const Color.fromARGB(255, 252, 251, 251),
+                  color: Colors.white,
                 ),
                 onPressed: () {
                   setState(() {
@@ -67,12 +83,9 @@ class _ConfirmPasswordFieldState extends State<ConfirmPasswordField> {
               contentPadding: const EdgeInsets.symmetric(
                 vertical: 16.0,
                 horizontal: 10.0,
-              ), // Espaciado interno
+              ),
             ),
-            style: const TextStyle(
-              color: Colors.black, // Color del texto ingresado
-              fontSize: 16.0, // Tamaño del texto
-            ),
+            style: const TextStyle(color: Colors.black, fontSize: 16.0),
             onChanged: (value) {
               setState(() {
                 _confirmPassword = value;
