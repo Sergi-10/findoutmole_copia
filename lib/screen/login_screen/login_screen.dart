@@ -5,13 +5,13 @@ import 'package:findoutmole/screen/login_screen/text_find_out.dart';
 import 'package:findoutmole/screen/login_screen/textfield_user.dart';
 import 'package:flutter/material.dart';
 import 'package:findoutmole/screen/login_screen/text_mole.dart';
+import 'package:findoutmole/screen/FootBar.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    
     final TextEditingController userController = TextEditingController();
     final TextEditingController passController = TextEditingController();
 
@@ -26,7 +26,7 @@ class LoginPage extends StatelessWidget {
           SafeArea(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              
+
               children: [
                 FindOutText(),
                 MoleText(),
@@ -35,22 +35,23 @@ class LoginPage extends StatelessWidget {
                 TexfieldUsuarioPassw(
                   hintText: 'Usuario', // Texto dentro del campo
                   icon: Icons.person, // Icono de usuario
-                  obscureText:false,
-                  controller: userController),
+                  obscureText: false,
+                  controller: userController,
+                ),
 
                 SizedBox(height: 20),
 
                 TexfieldUsuarioPassw(
-                  hintText: 'Contraseña', 
+                  hintText: 'Contraseña',
                   icon: Icons.lock,
-                  obscureText:true,
-                  controller: passController,),
+                  obscureText: true,
+                  controller: passController,
+                ),
 
-                SizedBox(height: 30), 
-                BotonAcceder( 
-                    userController: userController,
-                    passwordController: passController,
-                  
+                SizedBox(height: 30),
+                BotonAcceder(
+                  userController: userController,
+                  passwordController: passController,
                 ),
                 SizedBox(height: 10),
                 BotonRecuperarContrasena(),
@@ -60,6 +61,7 @@ class LoginPage extends StatelessWidget {
           ),
         ],
       ),
+      bottomNavigationBar: FooterBar(),
     );
   }
 }
