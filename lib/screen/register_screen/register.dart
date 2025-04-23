@@ -1,9 +1,9 @@
 import 'package:findoutmole/screen/register_screen/cuentraPrevia.dart';
 import 'package:flutter/material.dart';
-import 'package:findoutmole/screen/register_screen/confirmar_Contraseña.dart';
+//import 'package:findoutmole/screen/register_screen/confirmar_Contraseña.dart';
 import 'package:findoutmole/screen/register_screen/contraseña.dart';
 import 'package:findoutmole/screen/register_screen/email.dart';
-import 'package:findoutmole/screen/register_screen/nombre_de_usuario.dart';
+//import 'package:findoutmole/screen/register_screen/nombre_de_usuario.dart';
 import 'package:findoutmole/screen/register_screen/registerButtom.dart';
 import 'package:findoutmole/screen/register_screen/textoInicial.dart';
 import 'package:findoutmole/screen/FootBar.dart'; // Importa el pie de página
@@ -17,7 +17,6 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final TextEditingController userController = TextEditingController();
     final TextEditingController passController= TextEditingController();
     final TextEditingController emailController = TextEditingController();
 

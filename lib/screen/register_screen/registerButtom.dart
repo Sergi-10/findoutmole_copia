@@ -96,7 +96,7 @@ class _RegisterButtonState extends State<RegisterButton> {
             }
           },
           child: Text(
-            'Acceder',
+            'Registrar',
             style: TextStyle(
               color: Colors.white, // Color del texto del botón
               fontSize: 18,
