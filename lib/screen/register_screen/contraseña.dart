@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
 class PasswordField extends StatefulWidget {
+
   final TextEditingController controller;
-  const PasswordField({super.key, required this.controller});
+
+  const PasswordField({
+  super.key, 
+  required this.controller});
 
   @override
   _PasswordFieldState createState() => _PasswordFieldState();
@@ -79,7 +83,7 @@ class _PasswordFieldState extends State<PasswordField> {
             ],
           ),
           child: TextField(
-            controller: widget.controller,
+            controller: widget.controller, //modificado por JB
             obscureText: _isObscured,
             decoration: InputDecoration(
               labelText: 'Contraseña',

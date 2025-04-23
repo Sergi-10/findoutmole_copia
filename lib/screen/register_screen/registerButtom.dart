@@ -1,80 +1,106 @@
+import 'package:findoutmole/screen/login_screen/login_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class RegisterButton extends StatefulWidget {
-  const RegisterButton({super.key});
+
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
+
+
+  const RegisterButton({super.key,
+  required this.emailController,
+  required this.passwordController
+  });
 
   @override
   State<RegisterButton> createState() => _RegisterButtonState();
 }
 
 class _RegisterButtonState extends State<RegisterButton> {
-  bool _isPressed = false;
+  // bool _isPressed = false;
 
-  void _onTapDown(TapDownDetails details) {
-    setState(() {
-      _isPressed = true;
-    });
-  }
+  // void _onTapDown(TapDownDetails details) {
+  //   setState(() {
+  //     _isPressed = true;
+  //   });
+  // }
 
-  void _onTapUp(TapUpDetails details) {
-    setState(() {
-      _isPressed = false;
-    });
-  }
+  // void _onTapUp(TapUpDetails details) {
+  //   setState(() {
+  //     _isPressed = false;
+  //   });
+  // }
 
-  void _onTapCancel() {
-    setState(() {
-      _isPressed = false;
-    });
-  }
+  // void _onTapCancel() {
+  //   setState(() {
+  //     _isPressed = false;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 50),
-      child: GestureDetector(
-        onTapDown: _onTapDown,
-        onTapUp: _onTapUp,
-        onTapCancel: _onTapCancel,
-        onTap: () {
-          // Aquí puedes agregar la lógica para registrar al usuario
-        },
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 150),
-          width: double.infinity,
-          height: 50,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-            gradient: LinearGradient(
-              colors:
-                  _isPressed
-                      ? [
-                        Color(0xFF5EE2EC),
-                        Color(0xFF478DE0),
-                      ] // Colores más claros al presionar
-                      : [Color(0xFF4DD0E1), Color(0xFF1976D2)], // Normal
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-            ),
-            boxShadow:
-                _isPressed
-                    ? [
-                      BoxShadow(
-                        color: Colors.blueAccent.withOpacity(0.4),
-                        blurRadius: 12,
-                        offset: const Offset(0, 6),
-                      ),
-                    ]
-                    : [],
+      padding: EdgeInsets.symmetric(horizontal: 50),
+      child: Container(
+        width: double.infinity,
+        height: 50,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          gradient: LinearGradient(
+            colors: [Color(0xFF4DD0E1), Color(0xFF1976D2)],
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
           ),
-          child: const Center(
-            child: Text(
-              'Registrar',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+        ),
+        child: TextButton(
+          onPressed: () async {
+            final email = widget.emailController.text.trim();
+            final password = widget.passwordController.text.trim();
+
+            if (email.isEmpty || password.isEmpty) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Correo y contraseña requeridos')),
+              );
+              return;
+            }
+
+            try {
+              await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                email: email,
+                password: password,
+              );
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Usuario registrado con éxito')),
+              );
+
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
+              );
+            } on FirebaseAuthException catch (e) {
+              String errorMessage = 'Error al registrar usuario';
+
+              if (e.code == 'email-already-in-use') {
+                errorMessage = 'El correo ya está registrado';
+              } else if (e.code == 'invalid-email') {
+                errorMessage = 'El correo no es válido';
+              } else if (e.code == 'weak-password') {
+                errorMessage = 'La contraseña es muy débil';
+              }
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(errorMessage)),
+              );
+            }
+          },
+          child: Text(
+            'Acceder',
+            style: TextStyle(
+              color: Colors.white, // Color del texto del botón
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),

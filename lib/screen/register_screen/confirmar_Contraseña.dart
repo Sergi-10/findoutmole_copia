@@ -1,108 +1,112 @@
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 
-class ConfirmPasswordField extends StatefulWidget {
-  final TextEditingController passwordController; // Contraseña principal
+// class ConfirmPasswordField extends StatefulWidget {
 
-  const ConfirmPasswordField({super.key, required this.passwordController});
+//   final TextEditingController passwordController; // Contraseña principal
 
-  @override
-  _ConfirmPasswordFieldState createState() => _ConfirmPasswordFieldState();
-}
+//   const ConfirmPasswordField({
+//   super.key,
+//   required this.passwordController
+//   });
 
-class _ConfirmPasswordFieldState extends State<ConfirmPasswordField> {
-  String _confirmPassword = '';
-  bool _isObscured = true;
-  String? _errorText;
+//   @override
+//   _ConfirmPasswordFieldState createState() => _ConfirmPasswordFieldState();
+// }
 
-  // Función para validar que las contraseñas coincidan
-  void _validateConfirmPassword(String value) {
-    setState(() {
-      if (value.isEmpty) {
-        _errorText = 'La confirmación de la contraseña no puede estar vacía';
-      } else if (value != widget.passwordController.text) {
-        _errorText = 'Las contraseñas no coinciden';
-      } else {
-        _errorText = null; // No hay error
-      }
-    });
-  }
+// class _ConfirmPasswordFieldState extends State<ConfirmPasswordField> {
+//   String _confirmPassword = '';
+//   bool _isObscured = true;
+//   String? _errorText;
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12.0),
-            gradient: LinearGradient(
-              colors: [
-                const Color.fromARGB(255, 253, 253, 253).withOpacity(0.3),
-                const Color.fromARGB(255, 251, 252, 252).withOpacity(0.5),
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: const Color.fromARGB(
-                  255,
-                  253,
-                  253,
-                  253,
-                ).withOpacity(0.1),
-                blurRadius: 8.0,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: TextField(
-            obscureText: _isObscured,
-            decoration: InputDecoration(
-              labelText: 'Confirmar Contraseña',
-              labelStyle: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12.0),
-                borderSide: BorderSide.none,
-              ),
-              prefixIcon: const Icon(Icons.lock, color: Colors.white),
-              suffixIcon: IconButton(
-                icon: Icon(
-                  _isObscured ? Icons.visibility : Icons.visibility_off,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  setState(() {
-                    _isObscured = !_isObscured;
-                  });
-                },
-              ),
-              contentPadding: const EdgeInsets.symmetric(
-                vertical: 16.0,
-                horizontal: 10.0,
-              ),
-            ),
-            style: const TextStyle(color: Colors.black, fontSize: 16.0),
-            onChanged: (value) {
-              setState(() {
-                _confirmPassword = value;
-                _validateConfirmPassword(_confirmPassword);
-              });
-            },
-          ),
-        ),
-        if (_errorText != null)
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Text(
-              _errorText!,
-              style: const TextStyle(color: Colors.red, fontSize: 12),
-            ),
-          ),
-      ],
-    );
-  }
-}
+//   // Función para validar que las contraseñas coincidan
+//   void _validateConfirmPassword(String value) {
+//     setState(() {
+//       if (value.isEmpty) {
+//         _errorText = 'La confirmación de la contraseña no puede estar vacía';
+//       } else if (value != widget.passwordController.text) {
+//         _errorText = 'Las contraseñas no coinciden';
+//       } else {
+//         _errorText = null; // No hay error
+//       }
+//     });
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         Container(
+//           decoration: BoxDecoration(
+//             borderRadius: BorderRadius.circular(12.0),
+//             gradient: LinearGradient(
+//               colors: [
+//                 const Color.fromARGB(255, 253, 253, 253).withOpacity(0.3),
+//                 const Color.fromARGB(255, 251, 252, 252).withOpacity(0.5),
+//               ],
+//               begin: Alignment.topLeft,
+//               end: Alignment.bottomRight,
+//             ),
+//             boxShadow: [
+//               BoxShadow(
+//                 color: const Color.fromARGB(
+//                   255,
+//                   253,
+//                   253,
+//                   253,
+//                 ).withOpacity(0.1),
+//                 blurRadius: 8.0,
+//                 offset: const Offset(0, 4),
+//               ),
+//             ],
+//           ),
+//           child: TextField(
+//             obscureText: _isObscured,
+//             decoration: InputDecoration(
+//               labelText: 'Confirmar Contraseña',
+//               labelStyle: const TextStyle(
+//                 color: Colors.white,
+//                 fontWeight: FontWeight.bold,
+//               ),
+//               border: OutlineInputBorder(
+//                 borderRadius: BorderRadius.circular(12.0),
+//                 borderSide: BorderSide.none,
+//               ),
+//               prefixIcon: const Icon(Icons.lock, color: Colors.white),
+//               suffixIcon: IconButton(
+//                 icon: Icon(
+//                   _isObscured ? Icons.visibility : Icons.visibility_off,
+//                   color: Colors.white,
+//                 ),
+//                 onPressed: () {
+//                   setState(() {
+//                     _isObscured = !_isObscured;
+//                   });
+//                 },
+//               ),
+//               contentPadding: const EdgeInsets.symmetric(
+//                 vertical: 16.0,
+//                 horizontal: 10.0,
+//               ),
+//             ),
+//             style: const TextStyle(color: Colors.black, fontSize: 16.0),
+//             onChanged: (value) {
+//               setState(() {
+//                 _confirmPassword = value;
+//                 _validateConfirmPassword(_confirmPassword);
+//               });
+//             },
+//           ),
+//         ),
+//         if (_errorText != null)
+//           Padding(
+//             padding: const EdgeInsets.only(top: 8.0),
+//             child: Text(
+//               _errorText!,
+//               style: const TextStyle(color: Colors.red, fontSize: 12),
+//             ),
+//           ),
+//       ],
+//     );
+//   }
+// }

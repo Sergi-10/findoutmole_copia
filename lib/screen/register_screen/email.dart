@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 
 class EmailField extends StatefulWidget {
-  const EmailField({super.key});
+
+  final TextEditingController controller;
+
+  const EmailField({
+  super.key,
+  required this.controller
+  });
 
   @override
   _EmailFieldState createState() => _EmailFieldState();
@@ -75,6 +81,7 @@ class _EmailFieldState extends State<EmailField> {
             ],
           ),
           child: TextField(
+            controller: widget.controller, //modificado por JB
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
               labelText: 'Correo electrónico',

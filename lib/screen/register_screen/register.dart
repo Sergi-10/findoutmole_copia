@@ -9,11 +9,17 @@ import 'package:findoutmole/screen/register_screen/textoInicial.dart';
 import 'package:findoutmole/screen/FootBar.dart'; // Importa el pie de página
 
 class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key});
+
+
+
+  RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController passwordController = TextEditingController(); // Crea un controller
+
+    final TextEditingController userController = TextEditingController();
+    final TextEditingController passController= TextEditingController();
+    final TextEditingController emailController = TextEditingController();
 
     // Obtén las dimensiones de la pantalla
     final screenWidth = MediaQuery.of(context).size.width;
@@ -38,15 +44,19 @@ class RegisterPage extends StatelessWidget {
                     SizedBox(height: screenHeight * 0.03),
                     const TextoInicial(),
                     SizedBox(height: screenHeight * 0.03),
-                    const NombreDeUsuario(),
+                    //const NombreDeUsuario(),
                     SizedBox(height: screenHeight * 0.03),
-                    const EmailField(),
+                    EmailField(controller: emailController ),
                     SizedBox(height: screenHeight * 0.03),
-                    PasswordField(controller: passwordController), // Pasa el controller aquí
+                    PasswordField(
+                      controller: passController), // Pasa el controller aquí
                     SizedBox(height: screenHeight * 0.03),
-                    ConfirmPasswordField(passwordController: passwordController), // Pasa el controller aquí
+                    // ConfirmPasswordField(
+                    //   passwordController: passController), // Pasa el controller aquí
                     SizedBox(height: screenHeight * 0.03),
-                    const RegisterButton(),
+                    RegisterButton(
+                      passwordController: passController,
+                      emailController: emailController,),
                     SizedBox(height: screenHeight * 0.03),
                     const CuentaExiste(),
                   ],

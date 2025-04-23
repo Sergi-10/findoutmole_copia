@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-class TexfieldUsuarioPassw extends StatelessWidget {
+class TexfieldUsuarioPassw extends StatefulWidget {
   final String hintText;
   final IconData icon;
   final bool obscureText;
-
   final TextEditingController controller;
 
   const TexfieldUsuarioPassw({
@@ -16,32 +15,48 @@ class TexfieldUsuarioPassw extends StatelessWidget {
   });
 
   @override
+  State<TexfieldUsuarioPassw> createState() => _TexfieldUsuarioPasswState();
+}
+
+class _TexfieldUsuarioPasswState extends State<TexfieldUsuarioPassw> {
+  late bool _isObscured;
+
+  @override
+  void initState() {
+    super.initState();
+    _isObscured = widget.obscureText;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 50),
       child: TextField(
-        obscureText: obscureText,
-        controller: controller,
+        obscureText: _isObscured,
+        controller: widget.controller,
         decoration: InputDecoration(
-          // Constructor que indica que el borde sea de tipo contorno. Dentro del constructor se define aspecto del borde
-          prefixIcon: Icon(icon, color: Colors.white,), // Icono de usuario
-          hintText:hintText, // Texto dentro del campo // Oculta el texto mientras se escribe (modo contraseña)
-          filled: true, // Activa el fondo del campo de texto
-          fillColor: const Color.fromRGBO(
-            255,
-            255,
-            255,
-            0.4,
-          ), // Blanco con 90% opacidad
-          contentPadding: EdgeInsets.symmetric(
-            vertical: 15,
-          ), // Altura del campo
+          prefixIcon: Icon(widget.icon, color: Colors.white),
+          hintText: widget.hintText,
+          filled: true,
+          fillColor: const Color.fromRGBO(255, 255, 255, 0.4),
+          contentPadding: const EdgeInsets.symmetric(vertical: 15),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(
-              30,
-            ), // Bordes redondeados con radio 30
-            borderSide: BorderSide.none, // Sin borde visible
+            borderRadius: BorderRadius.circular(30),
+            borderSide: BorderSide.none,
           ),
+          suffixIcon: widget.obscureText
+              ? IconButton(
+                  icon: Icon(
+                    _isObscured ? Icons.visibility : Icons.visibility_off,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _isObscured = !_isObscured;
+                    });
+                  },
+                )
+              : null,
         ),
       ),
     );
