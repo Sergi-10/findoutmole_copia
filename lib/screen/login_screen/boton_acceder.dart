@@ -1,5 +1,6 @@
 
 import 'package:findoutmole/screen/menu_screen/Home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class BotonAcceder extends StatelessWidget {
@@ -29,21 +30,36 @@ class BotonAcceder extends StatelessWidget {
           ),
         ),
         child: TextButton(
-          onPressed: () {
-            final user = userController.text;
-            final password = passwordController.text;
+          onPressed: () async {
+  final user = userController.text.trim();
+  final password = passwordController.text.trim();
 
-            if (user == 'admin' && password == 'admin') {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => HomePage()),
-              );
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Usuario o contraseña incorrectos')),
-              );
-            }
-          },
+  try {
+    // Intenta iniciar sesión con Firebase
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: user,
+      password: password,
+    );
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => HomePage()),
+    );
+  } on FirebaseAuthException catch (e) {
+    // Si hay un error, muestra un mensaje
+    String errorMessage = 'Error al iniciar sesión';
+
+    if (e.code == 'user-not-found') {
+      errorMessage = 'No se encontró ningún usuario con ese correo';
+    } else if (e.code == 'wrong-password') {
+      errorMessage = 'Contraseña incorrecta';
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(errorMessage)),
+    );
+  }
+},
           child: Text(
             'Acceder',
             style: TextStyle(

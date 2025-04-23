@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1090878587702",
+    "project_id": "findoutmole",
+    "storage_bucket": "findoutmole.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1090878587702:android:812a753afc27384784a997",
+        "android_client_info": {
+          "package_name": "com.example.proyectofindoutmole"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD73lY0wv82ulErAw8nVbaRFE8Th1LigRs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
