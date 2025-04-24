@@ -1,4 +1,5 @@
 import 'package:findoutmole/screen/register_screen/cuentraPrevia.dart';
+// import 'package:findoutmole/screen/register_screen/nombre_de_usuario.dart';
 import 'package:flutter/material.dart';
 //import 'package:findoutmole/screen/register_screen/confirmar_Contraseña.dart';
 import 'package:findoutmole/screen/register_screen/contraseña.dart';
@@ -12,7 +13,7 @@ class RegisterPage extends StatelessWidget {
 
 
 
-  RegisterPage({super.key});
+  const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,11 +48,10 @@ class RegisterPage extends StatelessWidget {
                     SizedBox(height: screenHeight * 0.03),
                     EmailField(controller: emailController ),
                     SizedBox(height: screenHeight * 0.03),
-                    PasswordField(
-                      controller: passController), // Pasa el controller aquí
+                    PasswordField(controller: passController), // Pasa el controller aquí
                     SizedBox(height: screenHeight * 0.03),
                     // ConfirmPasswordField(
-                    //   passwordController: passController), // Pasa el controller aquí
+                    // passwordController: passController), // Pasa el controller aquí
                     SizedBox(height: screenHeight * 0.03),
                     RegisterButton(
                       passwordController: passController,

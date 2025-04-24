@@ -3,14 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class RegisterButton extends StatefulWidget {
-
+  
   final TextEditingController emailController;
   final TextEditingController passwordController;
 
-
-  const RegisterButton({super.key,
-  required this.emailController,
-  required this.passwordController
+  const RegisterButton({
+    super.key,
+    required this.emailController,
+    required this.passwordController,
   });
 
   @override
@@ -55,12 +55,26 @@ class _RegisterButtonState extends State<RegisterButton> {
         ),
         child: TextButton(
           onPressed: () async {
+
             final email = widget.emailController.text.trim();
-            final password = widget.passwordController.text.trim();
+            final password = widget.passwordController.text.trim(); //Trim elimina espacios en blanco
 
             if (email.isEmpty || password.isEmpty) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Correo y contraseña requeridos')),
+              );
+              return;
+            }
+
+            final RegExp regex = RegExp(
+              r'^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$&*~]).{6,}$',
+            );
+
+            if (password.length < 8 || !regex.hasMatch(password)) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('La contraseña no cumple con los requisitos'),
+                ),
               );
               return;
             }
@@ -90,9 +104,9 @@ class _RegisterButtonState extends State<RegisterButton> {
                 errorMessage = 'La contraseña es muy débil';
               }
 
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(errorMessage)),
-              );
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text(errorMessage)));
             }
           },
           child: Text(
