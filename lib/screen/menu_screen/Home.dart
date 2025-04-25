@@ -3,7 +3,7 @@ import 'package:findoutmole/screen/menu_screen/Perfil.dart'; // Pantalla de perf
 import 'package:findoutmole/screen/FootBar.dart';
 import 'package:findoutmole/screen/menu_screen/Archivos.dart'; // Pantalla de menu
 import 'package:findoutmole/screen/menu_screen/Contacto.dart'; // Pantalla de contacto
-
+import 'package:findoutmole/screen/login_screen/login_screen.dart'; // Pantalla de login
  // Pantalla de archivos
 
 class HomePage extends StatelessWidget {
@@ -12,15 +12,31 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('FindOutMole')),
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            color: IconTheme.of(context).color,
+            onPressed: () {
+              Navigator.pushAndRemoveUntil( // Se cierra sesion borrando las rutas anteriores
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
+                (Route<dynamic> route) => false,
+              );
+            },
+          ),
+        ],
+      ),
       body: Stack(
         children: [
           // Imagen de fondo
           Positioned.fill(
             child: Image.asset(
               'assets/images/2.png', // Ruta de la imagen
-              fit:
-                  BoxFit.cover, // Ajusta la imagen para cubrir toda la pantalla
+              fit: BoxFit.cover, // Ajusta la imagen para cubrir toda la pantalla
             ),
           ),
           // Contenido principal
@@ -30,8 +46,7 @@ class HomePage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: GridView.count(
-                  shrinkWrap:
-                      true, // Hace que el GridView ocupe solo el espacio necesario
+                  shrinkWrap: true, // Hace que el GridView ocupe solo el espacio necesario
                   crossAxisCount: 2, // Dos columnas
                   crossAxisSpacing: 16, // Espaciado horizontal
                   mainAxisSpacing: 16, // Espaciado vertical
@@ -39,9 +54,7 @@ class HomePage extends StatelessWidget {
                     // Botón 1: Agregar Archivos
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white.withOpacity(
-                          0.8,
-                        ), // Fondo con transparencia
+                        backgroundColor: Colors.white.withOpacity(0.8),
                         padding: const EdgeInsets.all(16.0),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
@@ -51,7 +64,7 @@ class HomePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ArchivosScreen(), // Navega a ArchivosScreen
+                            builder: (context) => ArchivosScreen(),
                           ),
                         );
                       },
@@ -67,9 +80,7 @@ class HomePage extends StatelessWidget {
                     // Botón 2: Mi Perfil
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white.withOpacity(
-                          0.8,
-                        ), // Fondo con transparencia
+                        backgroundColor: Colors.white.withOpacity(0.8),
                         padding: const EdgeInsets.all(16.0),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
@@ -79,21 +90,14 @@ class HomePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder:
-                                (context) => PerfilPage(
-                                  nombre:
-                                      'Nombre no definido', // Valor predeterminado
-                                  apellidos:
-                                      'Apellidos no definidos', // Valor predeterminado
-                                  email:
-                                      'Correo no definido', // Valor predeterminado
-                                  edad:
-                                      'Edad no definida', // Valor predeterminado
-                                  peso:
-                                      'Peso no definido', // Valor predeterminado
-                                  telefono:
-                                      'Teléfono no definido', // Valor predeterminado
-                                ),
+                            builder: (context) => PerfilPage(
+                              nombre: 'Nombre no definido',
+                              apellidos: 'Apellidos no definidos',
+                              email: 'Correo no definido',
+                              edad: 'Edad no definida',
+                              peso: 'Peso no definido',
+                              telefono: 'Teléfono no definido',
+                            ),
                           ),
                         );
                       },
@@ -109,9 +113,7 @@ class HomePage extends StatelessWidget {
                     // Botón 3: Consultas
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white.withOpacity(
-                          0.8,
-                        ), // Fondo con transparencia
+                        backgroundColor: Colors.white.withOpacity(0.8),
                         padding: const EdgeInsets.all(16.0),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
@@ -132,9 +134,7 @@ class HomePage extends StatelessWidget {
                     // Botón 4: Contacto
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white.withOpacity(
-                          0.8,
-                        ), // Fondo con transparencia
+                        backgroundColor: Colors.white.withOpacity(0.8),
                         padding: const EdgeInsets.all(16.0),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
@@ -144,9 +144,7 @@ class HomePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder:
-                                (context) =>
-                                    ContactoScreen(), // Asegúrate que así se llama tu clase
+                            builder: (context) => ContactoScreen(),
                           ),
                         );
                       },

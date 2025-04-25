@@ -41,7 +41,7 @@ class BotonAcceder extends StatelessWidget {
       password: password,
     );
 
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => HomePage()),
     );
