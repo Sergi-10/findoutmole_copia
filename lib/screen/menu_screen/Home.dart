@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:findoutmole/screen/menu_screen/Perfil.dart'; // Pantalla de perfil
 import 'package:findoutmole/screen/FootBar.dart';
+import 'package:findoutmole/screen/menu_screen/Archivos.dart'; // Pantalla de menu
 import 'package:findoutmole/screen/menu_screen/Contacto.dart'; // Pantalla de contacto
+
+ // Pantalla de archivos
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -45,7 +48,12 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        print('Agregar Archivos clicked!');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ArchivosScreen(), // Navega a ArchivosScreen
+                          ),
+                        );
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
