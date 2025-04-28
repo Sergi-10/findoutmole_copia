@@ -3,6 +3,7 @@ import 'package:image_picker/image_picker.dart' as picker; // Alias: picker
 import 'package:permission_handler/permission_handler.dart';
 import 'package:image_editor/image_editor.dart' as editor; // Alias: editor
 import 'dart:io';
+import 'package:findoutmole/screen/FootBar.dart';
 
 class ArchivosScreen extends StatefulWidget {
   const ArchivosScreen({super.key});
@@ -47,7 +48,9 @@ class _ArchivosScreenState extends State<ArchivosScreen> {
   Future<File?> _editImage(File imageFile) async {
     try {
       final editorOption = editor.ImageEditorOption();
-      editorOption.addOption(editor.ClipOption(x: 0, y: 0, width: 500, height: 500)); // Recorte
+      editorOption.addOption(
+        editor.ClipOption(x: 0, y: 0, width: 500, height: 500),
+      ); // Recorte
 
       final result = await editor.ImageEditor.editImage(
         image: imageFile.readAsBytesSync(),
@@ -70,18 +73,21 @@ class _ArchivosScreenState extends State<ArchivosScreen> {
   void _removeImage(int index) async {
     final confirm = await showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Eliminar imagen'),
-        content: Text('¿Estás seguro de que deseas eliminar esta imagen?'),
-        actions: [
-          TextButton(
-              onPressed: () => Navigator.pop(context, false),
-              child: Text('Cancelar')),
-          TextButton(
-              onPressed: () => Navigator.pop(context, true),
-              child: Text('Eliminar')),
-        ],
-      ),
+      builder:
+          (context) => AlertDialog(
+            title: Text('Eliminar imagen'),
+            content: Text('¿Estás seguro de que deseas eliminar esta imagen?'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: Text('Cancelar'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context, true),
+                child: Text('Eliminar'),
+              ),
+            ],
+          ),
     );
 
     if (confirm == true) {
@@ -127,9 +133,47 @@ class _ArchivosScreenState extends State<ArchivosScreen> {
               else if (_images.isEmpty)
                 Expanded(
                   child: Center(
-                    child: Text(
-                      'No hay imágenes seleccionadas.',
-                      style: TextStyle(color: Colors.black54),
+                    child: GestureDetector(
+                      onTap: () async {
+                        setState(() {
+                          _isLoading = true;
+                        });
+                        await _requestPermissions();
+                        await _pickImage(picker.ImageSource.gallery);
+                        setState(() {
+                          _isLoading = false;
+                        });
+                      },
+                      child: Container(
+                        width: 250,
+                        height: 200,
+                        padding: EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.8),
+                          border: Border.all(color: Colors.blue, width: 2),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.add_a_photo,
+                              size: 50,
+                              color: Colors.blue,
+                            ),
+                            SizedBox(height: 12),
+                            Text(
+                              'Sube una imagen clara\ny bien iluminada',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black87,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 )
@@ -229,6 +273,7 @@ class _ArchivosScreenState extends State<ArchivosScreen> {
           ),
         ],
       ),
+      bottomNavigationBar: FooterBar(),
     );
   }
 }
