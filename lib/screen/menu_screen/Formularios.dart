@@ -21,31 +21,28 @@ class _FormulariosPageState extends State<FormulariosPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Formulario de Datos Personales')),
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: const Text('Formulario de Datos Personales'),
+      ),
       body: Stack(
         children: [
-          // Imagen de fondo que cubre toda la pantalla
+          // Imagen de fondo
           Positioned.fill(
-            child: Image.asset(
-              'assets/images/2.png', // Ruta de la imagen
-              fit:
-                  BoxFit.cover, // Ajusta la imagen para cubrir toda la pantalla
-            ),
+            child: Image.asset('assets/images/2.png', fit: BoxFit.cover),
           ),
-          // Contenido principal
           SingleChildScrollView(
             child: ConstrainedBox(
               constraints: BoxConstraints(
-                minHeight:
-                    MediaQuery.of(
-                      context,
-                    ).size.height, // Asegura que ocupe toda la pantalla
+                minHeight: MediaQuery.of(context).size.height,
               ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    SizedBox(height: 140), // Espaciado para bajar los campos
+                    const SizedBox(height: 140),
                     Form(
                       key: _formKey,
                       child: Column(
@@ -64,7 +61,7 @@ class _FormulariosPageState extends State<FormulariosPage> {
                               _nombre = value!;
                             },
                           ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           _buildTextField(
                             label: 'Apellidos',
                             icon: Icons.person_outline,
@@ -78,7 +75,7 @@ class _FormulariosPageState extends State<FormulariosPage> {
                               _apellidos = value!;
                             },
                           ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           _buildTextField(
                             label: 'Correo Electrónico',
                             icon: Icons.email,
@@ -97,7 +94,7 @@ class _FormulariosPageState extends State<FormulariosPage> {
                               _email = value!;
                             },
                           ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           _buildTextField(
                             label: 'Edad',
                             icon: Icons.cake,
@@ -115,7 +112,7 @@ class _FormulariosPageState extends State<FormulariosPage> {
                               _edad = value!;
                             },
                           ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           _buildTextField(
                             label: 'Peso (kg)',
                             icon: Icons.fitness_center,
@@ -133,7 +130,7 @@ class _FormulariosPageState extends State<FormulariosPage> {
                               _peso = value!;
                             },
                           ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           _buildTextField(
                             label: 'Teléfono',
                             icon: Icons.phone,
@@ -148,29 +145,56 @@ class _FormulariosPageState extends State<FormulariosPage> {
                               _telefono = value!;
                             },
                           ),
-                          SizedBox(height: 32),
+                          const SizedBox(height: 32),
                           Center(
-                            child: ElevatedButton(
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  _formKey.currentState!.save();
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder:
-                                          (context) => PerfilPage(
-                                            nombre: _nombre,
-                                            apellidos: _apellidos,
-                                            email: _email,
-                                            edad: _edad,
-                                            peso: _peso,
-                                            telefono: _telefono,
-                                          ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 50,
+                              ),
+                              child: Container(
+                                width: double.infinity,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  gradient: const LinearGradient(
+                                    colors: [
+                                      Color(0xFF4DD0E1),
+                                      Color(0xFF1976D2),
+                                    ],
+                                    begin: Alignment.centerLeft,
+                                    end: Alignment.centerRight,
+                                  ),
+                                ),
+                                child: TextButton(
+                                  onPressed: () {
+                                    if (_formKey.currentState!.validate()) {
+                                      _formKey.currentState!.save();
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder:
+                                              (context) => PerfilPage(
+                                                nombre: _nombre,
+                                                apellidos: _apellidos,
+                                                email: _email,
+                                                edad: _edad,
+                                                peso: _peso,
+                                                telefono: _telefono,
+                                              ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  child: const Text(
+                                    'Enviar',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                  );
-                                }
-                              },
-                              child: Text('Enviar'),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ],
@@ -183,7 +207,7 @@ class _FormulariosPageState extends State<FormulariosPage> {
           ),
         ],
       ),
-      bottomNavigationBar: FooterBar(),
+      bottomNavigationBar: const FooterBar(),
     );
   }
 
@@ -195,16 +219,17 @@ class _FormulariosPageState extends State<FormulariosPage> {
     required void Function(String?) onSaved,
   }) {
     return TextFormField(
+      keyboardType: keyboardType,
       decoration: InputDecoration(
         labelText: label,
         prefixIcon: Icon(icon),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+          borderSide: BorderSide.none,
+        ),
         filled: true,
-        fillColor: Colors.white.withOpacity(
-          0.8,
-        ), // Fondo blanco con transparencia
+        fillColor: Colors.white.withOpacity(0.4),
       ),
-      keyboardType: keyboardType,
       validator: validator,
       onSaved: onSaved,
     );
