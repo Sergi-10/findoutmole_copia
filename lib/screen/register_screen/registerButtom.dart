@@ -6,11 +6,13 @@ class RegisterButton extends StatefulWidget {
   
   final TextEditingController emailController;
   final TextEditingController passwordController;
+  final bool enabled;
 
   const RegisterButton({
     super.key,
     required this.emailController,
-    required this.passwordController,
+    required this.passwordController, 
+    required this.enabled,
   });
 
   @override
@@ -77,6 +79,15 @@ class _RegisterButtonState extends State<RegisterButton> {
                 ),
               );
               return;
+            }
+            // Verifica si la casilla de términos y condiciones está marcada
+            if (!widget.enabled) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Debes aceptar los términos y condiciones'),
+                ),
+              );
+              return;  // Impide continuar si no se aceptan los términos
             }
 
             try {

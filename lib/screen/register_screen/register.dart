@@ -1,3 +1,4 @@
+import 'package:findoutmole/screen/register_screen/condiciones.dart';
 import 'package:findoutmole/screen/register_screen/cuentraPrevia.dart';
 // import 'package:findoutmole/screen/register_screen/nombre_de_usuario.dart';
 import 'package:flutter/material.dart';
@@ -9,17 +10,21 @@ import 'package:findoutmole/screen/register_screen/registerButtom.dart';
 import 'package:findoutmole/screen/register_screen/textoInicial.dart';
 import 'package:findoutmole/screen/FootBar.dart'; // Importa el pie de página
 
-class RegisterPage extends StatelessWidget {
-
-
-
+class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<RegisterPage> createState() => _RegisterPageState();
+}
 
-    final TextEditingController passController= TextEditingController();
-    final TextEditingController emailController = TextEditingController();
+class _RegisterPageState extends State<RegisterPage> {
+
+  final TextEditingController passController= TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  bool aceptoCondiciones = false; //Variable para el estado de la casilla de verificación
+
+  @override
+  Widget build(BuildContext context) {
 
     // Obtén las dimensiones de la pantalla
     final screenWidth = MediaQuery.of(context).size.width;
@@ -50,12 +55,21 @@ class RegisterPage extends StatelessWidget {
                     SizedBox(height: screenHeight * 0.03),
                     PasswordField(controller: passController), // Pasa el controller aquí
                     SizedBox(height: screenHeight * 0.03),
+                    Condiciones(
+                      onChanged: (valor) {
+                        setState(() {
+                          aceptoCondiciones = valor;
+                        });
+                      },
+                    ),
                     // ConfirmPasswordField(
                     // passwordController: passController), // Pasa el controller aquí
                     SizedBox(height: screenHeight * 0.03),
+                    SizedBox(height: screenHeight * 0.03),
                     RegisterButton(
                       passwordController: passController,
-                      emailController: emailController,),
+                      emailController: emailController,
+                      enabled: aceptoCondiciones,),
                     SizedBox(height: screenHeight * 0.03),
                     const CuentaExiste(),
                   ],
