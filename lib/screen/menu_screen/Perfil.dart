@@ -1,66 +1,270 @@
-import 'package:findoutmole/screen/menu_screen/Formularios.dart';
 import 'package:flutter/material.dart';
-import 'package:findoutmole/screen/FootBar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:findoutmole/screen/FootBar.dart'; // Importa el pie de página
 
-class PerfilPage extends StatelessWidget {
-  final String nombre;
-  final String apellidos;
-  final String email;
-  final String edad;
-  final String peso;
-  final String telefono;
+class PerfilPage extends StatefulWidget {
+  const PerfilPage({super.key});
 
-  const PerfilPage({
-    super.key,
-    required this.nombre,
-    required this.apellidos,
-    required this.email,
-    required this.edad,
-    required this.peso,
-    required this.telefono,
-  });
+  @override
+  _PerfilPageState createState() => _PerfilPageState();
+}
+
+class _PerfilPageState extends State<PerfilPage> {
+  // Controladores para los campos de texto
+  late TextEditingController _nombreController;
+  late TextEditingController _apellidosController;
+  late TextEditingController _emailController;
+  late TextEditingController _edadController;
+  late TextEditingController _pesoController;
+  late TextEditingController _alturaController;
+
+  // Variable para controlar el estado de edición
+  bool _isEditing = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _nombreController = TextEditingController();
+    _apellidosController = TextEditingController();
+    _emailController = TextEditingController();
+    _edadController = TextEditingController();
+    _pesoController = TextEditingController();
+    _alturaController = TextEditingController();
+
+    _loadUserData(); // Cargar datos del usuario al iniciar
+  }
+
+  @override
+  void dispose() {
+    _nombreController.dispose();
+    _apellidosController.dispose();
+    _emailController.dispose();
+    _edadController.dispose();
+    _pesoController.dispose();
+    _alturaController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _loadUserData() async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        final doc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .get();
+
+        if (doc.exists) {
+          final data = doc.data()!;
+          setState(() {
+            _nombreController.text = data['nombre'] ?? '';
+            _apellidosController.text = data['apellidos'] ?? '';
+            _emailController.text = data['email'] ?? '';
+            _edadController.text = data['edad'] ?? '';
+            _pesoController.text = data['peso'] ?? '';
+            _alturaController.text = data['altura'] ?? '';
+          });
+        }
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error al cargar datos: $e')),
+      );
+    }
+  }
+
+  Future<void> _saveUserData() async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+          'nombre': _nombreController.text,
+          'apellidos': _apellidosController.text,
+          'email': _emailController.text,
+          'edad': _edadController.text,
+          'peso': _pesoController.text,
+          'altura': _alturaController.text,
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Datos guardados correctamente')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error al guardar datos: $e')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Mi Perfil'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder:
-                      (context) =>
-                          FormulariosPage(), // Navega a la pantalla de formularios
+      body: Stack(
+        children: [
+          // Imagen de fondo
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/2.png', // Ruta de la imagen
+              fit: BoxFit.cover,
+            ),
+          ),
+          // Contenido principal
+          Column(
+            children: [
+              // Título transparente con botón de ir atrás
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: SafeArea(
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.arrow_back, color: Colors.white),
+                        onPressed: () {
+                          Navigator.pop(context); // Regresar a la pantalla anterior
+                        },
+                      ),
+                      const Spacer(),
+                      const Text(
+                        'Perfil Médico',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const Spacer(),
+                    ],
+                  ),
                 ),
-              );
-            },
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      _buildTextField(
+                        label: 'Nombre',
+                        hintText: 'Nombre no definido',
+                        icon: Icons.person,
+                        controller: _nombreController,
+                      ),
+                      const SizedBox(height: 16),
+                      _buildTextField(
+                        label: 'Apellidos',
+                        hintText: 'Apellidos no definidos',
+                        icon: Icons.person_outline,
+                        controller: _apellidosController,
+                      ),
+                      const SizedBox(height: 16),
+                      _buildTextField(
+                        label: 'Correo Electrónico',
+                        hintText: 'Correo no definido',
+                        icon: Icons.email,
+                        controller: _emailController,
+                      ),
+                      const SizedBox(height: 16),
+                      _buildTextField(
+                        label: 'Edad',
+                        hintText: 'Edad no definida',
+                        icon: Icons.cake,
+                        controller: _edadController,
+                      ),
+                      const SizedBox(height: 16),
+                      _buildTextField(
+                        label: 'Peso (kg)',
+                        hintText: 'Peso no definido',
+                        icon: Icons.fitness_center,
+                        controller: _pesoController,
+                      ),
+                      const SizedBox(height: 16),
+                      _buildTextField(
+                        label: 'Altura (cm)',
+                        hintText: 'Altura no definida',
+                        icon: Icons.height,
+                        controller: _alturaController,
+                      ),
+                      const SizedBox(height: 32),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                            onPressed: _isEditing
+                                ? () async {
+                                    await _saveUserData();
+                                    setState(() {
+                                      _isEditing = false; // Deshabilitar edición
+                                    });
+                                  }
+                                : null,
+                            child: const Text('Guardar Cambios'),
+                          ),
+                          const SizedBox(width: 16),
+                          ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                _isEditing = true; // Habilitar edición
+                              });
+                            },
+                            child: const Text('Editar'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              // Pie de página
+              const FooterBar(), // Asegúrate de que FootBar esté implementado correctamente
+            ],
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Datos Guardados:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 8),
-            Text('Nombre: $nombre', style: TextStyle(fontSize: 16)),
-            Text('Apellidos: $apellidos', style: TextStyle(fontSize: 16)),
-            Text('Correo Electrónico: $email', style: TextStyle(fontSize: 16)),
-            Text('Edad: $edad', style: TextStyle(fontSize: 16)),
-            Text('Peso: $peso kg', style: TextStyle(fontSize: 16)),
-            Text('Teléfono: $telefono', style: TextStyle(fontSize: 16)),
-          ],
+    );
+  }
+
+  Widget _buildTextField({
+    required String label,
+    required String hintText,
+    required IconData icon,
+    required TextEditingController controller,
+  }) {
+    return SizedBox(
+      width: 350,
+      child: TextFormField(
+        controller: controller,
+        enabled: _isEditing,
+        decoration: InputDecoration(
+          labelText: label,
+          labelStyle: const TextStyle(
+            fontSize: 16, // Tamaño de fuente más grande
+            color: Color.fromARGB(255, 0, 0, 0), // Color negro para el texto del título
+          ),
+          floatingLabelBehavior: FloatingLabelBehavior.always, // El label siempre estará flotando
+          hintText: hintText, // Texto de sugerencia
+          hintStyle: const TextStyle(
+            fontSize: 14, // Tamaño de fuente para el texto de sugerencia
+            color: Colors.grey, // Color gris para el texto de sugerencia
+          ),
+          prefixIcon: Opacity(
+            opacity: 0.5, // Nivel de transparencia del ícono (0.0 a 1.0)
+            child: Icon(icon, color: const Color.fromARGB(255, 25, 84, 133)), // Ícono con color azul
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          filled: true,
+          fillColor: const Color.fromARGB(255, 245, 241, 241).withOpacity(0.8),
         ),
+        onChanged: (value) {
+          // Si el campo queda vacío, no se asigna ningún valor al controlador
+          if (value.isEmpty) {
+            controller.text = '';
+          }
+        },
       ),
-      bottomNavigationBar: FooterBar(),
     );
   }
 }

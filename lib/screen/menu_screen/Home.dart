@@ -91,12 +91,7 @@ class HomePage extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => PerfilPage(
-                              nombre: 'Nombre no definido',
-                              apellidos: 'Apellidos no definidos',
-                              email: 'Correo no definido',
-                              edad: 'Edad no definida',
-                              peso: 'Peso no definido',
-                              telefono: 'Teléfono no definido',
+
                             ),
                           ),
                         );

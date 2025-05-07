@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:findoutmole/screen/menu_screen/Perfil.dart'; // Importa la página de perfil
 import 'package:findoutmole/screen/FootBar.dart'; // Importa el pie de página
 
@@ -234,4 +234,4 @@ class _FormulariosPageState extends State<FormulariosPage> {
       onSaved: onSaved,
     );
   }
-}
+}*/
