@@ -25,6 +25,7 @@ class _PerfilPageState extends State<PerfilPage> {
   @override
   void initState() {
     super.initState();
+    // Inicializa los controladores de texto
     _nombreController = TextEditingController();
     _apellidosController = TextEditingController();
     _emailController = TextEditingController();
@@ -32,11 +33,13 @@ class _PerfilPageState extends State<PerfilPage> {
     _pesoController = TextEditingController();
     _alturaController = TextEditingController();
 
-    _loadUserData(); // Cargar datos del usuario al iniciar
+    // Cargar datos del usuario al iniciar
+    _loadUserData();
   }
 
   @override
   void dispose() {
+    // Libera los recursos utilizados por los controladores de texto
     _nombreController.dispose();
     _apellidosController.dispose();
     _emailController.dispose();
@@ -46,21 +49,28 @@ class _PerfilPageState extends State<PerfilPage> {
     super.dispose();
   }
 
+  // Método para cargar los datos del usuario desde Firebase
   Future<void> _loadUserData() async {
     try {
-      final user = FirebaseAuth.instance.currentUser;
+      final user = FirebaseAuth.instance.currentUser; // Obtiene el usuario autenticado
       if (user != null) {
+        // Asignar el correo electrónico directamente desde FirebaseAuth
+        setState(() {
+          _emailController.text = user.email ?? 'Correo no definido';
+        });
+
+        // Obtener otros datos del usuario desde Firestore
         final doc = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(user.uid)
+            .collection('users') // Colección en Firestore
+            .doc(user.uid) // Documento basado en el UID del usuario
             .get();
 
         if (doc.exists) {
           final data = doc.data()!;
           setState(() {
+            // Asigna los datos obtenidos a los controladores
             _nombreController.text = data['nombre'] ?? '';
             _apellidosController.text = data['apellidos'] ?? '';
-            _emailController.text = data['email'] ?? '';
             _edadController.text = data['edad'] ?? '';
             _pesoController.text = data['peso'] ?? '';
             _alturaController.text = data['altura'] ?? '';
@@ -68,17 +78,20 @@ class _PerfilPageState extends State<PerfilPage> {
         }
       }
     } catch (e) {
+      // Muestra un mensaje de error si ocurre algún problema
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error al cargar datos: $e')),
       );
     }
   }
 
+  // Método para guardar los datos del usuario en Firestore
   Future<void> _saveUserData() async {
     try {
-      final user = FirebaseAuth.instance.currentUser;
+      final user = FirebaseAuth.instance.currentUser; // Obtiene el usuario autenticado
       if (user != null) {
-        await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+        // Guarda los datos en la colección 'Perfil' en Firestore
+        await FirebaseFirestore.instance.collection('Perfil').doc(user.uid).set({
           'nombre': _nombreController.text,
           'apellidos': _apellidosController.text,
           'email': _emailController.text,
@@ -86,11 +99,13 @@ class _PerfilPageState extends State<PerfilPage> {
           'peso': _pesoController.text,
           'altura': _alturaController.text,
         });
+        // Muestra un mensaje de éxito
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Datos guardados correctamente')),
         );
       }
     } catch (e) {
+      // Muestra un mensaje de error si ocurre algún problema
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error al guardar datos: $e')),
       );
@@ -145,6 +160,7 @@ class _PerfilPageState extends State<PerfilPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      // Campos de texto para los datos del usuario
                       _buildTextField(
                         label: 'Nombre',
                         hintText: 'Nombre no definido',
@@ -164,6 +180,7 @@ class _PerfilPageState extends State<PerfilPage> {
                         hintText: 'Correo no definido',
                         icon: Icons.email,
                         controller: _emailController,
+                        readOnly: true, // Campo de solo lectura
                       ),
                       const SizedBox(height: 16),
                       _buildTextField(
@@ -187,6 +204,7 @@ class _PerfilPageState extends State<PerfilPage> {
                         controller: _alturaController,
                       ),
                       const SizedBox(height: 32),
+                      // Botones para guardar o habilitar edición
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -225,17 +243,20 @@ class _PerfilPageState extends State<PerfilPage> {
     );
   }
 
+  // Método para construir un campo de texto
   Widget _buildTextField({
     required String label,
     required String hintText,
     required IconData icon,
     required TextEditingController controller,
+    bool readOnly = false, // Nuevo parámetro para controlar si el campo es de solo lectura
   }) {
     return SizedBox(
       width: 350,
       child: TextFormField(
         controller: controller,
-        enabled: _isEditing,
+        enabled: _isEditing && !readOnly, // Solo habilitar si no es de solo lectura
+        readOnly: readOnly, // Hacer el campo de solo lectura si es necesario
         decoration: InputDecoration(
           labelText: label,
           labelStyle: const TextStyle(
@@ -258,12 +279,6 @@ class _PerfilPageState extends State<PerfilPage> {
           filled: true,
           fillColor: const Color.fromARGB(255, 245, 241, 241).withOpacity(0.8),
         ),
-        onChanged: (value) {
-          // Si el campo queda vacío, no se asigna ningún valor al controlador
-          if (value.isEmpty) {
-            controller.text = '';
-          }
-        },
       ),
     );
   }
