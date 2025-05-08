@@ -135,170 +135,188 @@ class _PredictionScreenState extends State<PredictionScreen> {
         ),
         backgroundColor: Colors.blueAccent,
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              height: 200,
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: const Offset(0, 3),
-                  ),
-                ],
+      body: Stack(
+        children: [
+          // Imagen de fondo
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/2.png'),
+                fit: BoxFit.cover, // Cubre toda la pantalla
+                colorFilter: ColorFilter.mode(
+                  Colors.white.withOpacity(0.5), // Opcional: opacidad
+                  BlendMode.dstATop,
+                ),
               ),
-              child: _imageFile == null
-                  ? Center(
-                      child: Text(
-                        'No hay imagen seleccionada',
-                        style: GoogleFonts.poppins(color: Colors.grey[600]),
-                      ),
-                    )
-                  : ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: kIsWeb
-                          ? Image.memory(
-                              _imageBytes!,
-                              fit: BoxFit.cover,
-                            )
-                          : Image.file(
-                              _imageFileMobile!,
-                              fit: BoxFit.cover,
-                            ),
-                    ),
             ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          ),
+          // Contenido desplazable
+          SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                ElevatedButton.icon(
-                  onPressed: _pickImageFromGallery,
-                  icon: const Icon(Icons.photo, size: 20),
-                  label: Text(
-                    'Galería',
-                    style: GoogleFonts.poppins(fontSize: 16),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                ),
-                ElevatedButton.icon(
-                  onPressed: _takePhoto,
-                  icon: const Icon(Icons.camera_alt, size: 20),
-                  label: Text(
-                    'Cámara',
-                    style: GoogleFonts.poppins(fontSize: 16),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _isLoading ? null : _predictImage,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blueAccent,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: _isLoading
-                  ? const CircularProgressIndicator(color: Colors.white)
-                  : Text(
-                      'Analizar Imagen',
-                      style: GoogleFonts.poppins(
-                        fontSize: 18,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-            ),
-            const SizedBox(height: 20),
-            if (_errorMessage != null)
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.red[50],
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  _errorMessage!,
-                  style: GoogleFonts.poppins(
-                    color: Colors.red[700],
-                    fontSize: 14,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            if (_prediction != null) ...[
-              const Divider(height: 30),
-              Text(
-                'Resultado: ${_prediction!.prediction}',
-                style: GoogleFonts.poppins(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                ),
-              ),
-              Text(
-                'Tipo: ${_prediction!.type}',
-                style: GoogleFonts.poppins(
-                  fontSize: 16,
-                  color: Colors.black54,
-                ),
-              ),
-              const SizedBox(height: 12),
-              Text(
-                'Probabilidades:',
-                style: GoogleFonts.poppins(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black87,
-                ),
-              ),
-              const SizedBox(height: 8),
-              ..._prediction!.probabilities.entries.map(
-                (entry) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          entry.key,
-                          style: GoogleFonts.poppins(fontSize: 14),
-                        ),
-                      ),
-                      Text(
-                        '${entry.value.toStringAsFixed(2)}%',
-                        style: GoogleFonts.poppins(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
+                Container(
+                  height: 200,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: const Offset(0, 3),
                       ),
                     ],
                   ),
+                  child: _imageFile == null
+                      ? Center(
+                          child: Text(
+                            'No hay imagen seleccionada',
+                            style: GoogleFonts.poppins(color: Colors.grey[600]),
+                          ),
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: kIsWeb
+                              ? Image.memory(
+                                  _imageBytes!,
+                                  fit: BoxFit.cover,
+                                )
+                              : Image.file(
+                                  _imageFileMobile!,
+                                  fit: BoxFit.cover,
+                                ),
+                        ),
                 ),
-              ),
-            ],
-          ],
-        ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: _pickImageFromGallery,
+                      icon: const Icon(Icons.photo, size: 20),
+                      label: Text(
+                        'Galería',
+                        style: GoogleFonts.poppins(fontSize: 16),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                    ElevatedButton.icon(
+                      onPressed: _takePhoto,
+                      icon: const Icon(Icons.camera_alt, size: 20),
+                      label: Text(
+                        'Cámara',
+                        style: GoogleFonts.poppins(fontSize: 16),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: _isLoading ? null : _predictImage,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blueAccent,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: _isLoading
+                      ? const CircularProgressIndicator(color: Colors.white)
+                      : Text(
+                          'Analizar Imagen',
+                          style: GoogleFonts.poppins(
+                            fontSize: 18,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                ),
+                const SizedBox(height: 20),
+                if (_errorMessage != null)
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.red[50],
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      _errorMessage!,
+                      style: GoogleFonts.poppins(
+                        color: Colors.red[700],
+                        fontSize: 14,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                if (_prediction != null) ...[
+                  const Divider(height: 30),
+                  Text(
+                    'Resultado: ${_prediction!.prediction}',
+                    style: GoogleFonts.poppins(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  Text(
+                    'Tipo: ${_prediction!.type}',
+                    style: GoogleFonts.poppins(
+                      fontSize: 16,
+                      color: Colors.black54,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    'Probabilidades:',
+                    style: GoogleFonts.poppins(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  ..._prediction!.probabilities.entries.map(
+                    (entry) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              entry.key,
+                              style: GoogleFonts.poppins(fontSize: 14),
+                            ),
+                          ),
+                          Text(
+                            '${entry.value.toStringAsFixed(2)}%',
+                            style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

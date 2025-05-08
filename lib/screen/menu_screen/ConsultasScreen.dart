@@ -188,128 +188,146 @@ class _ConsultasScreenState extends State<ConsultasScreen> {
         ),
         backgroundColor: Colors.blueAccent,
       ),
-      body: _isLoading
-          ? Center(child: CircularProgressIndicator())
-          : _errorMessage != null
-              ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        _errorMessage!,
-                        style: GoogleFonts.poppins(
-                          color: Colors.red,
-                          fontSize: 16,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: 16),
-                      ElevatedButton(
-                        onPressed: _fetchDiagnostics,
-                        child: Text(
-                          'Reintentar',
-                          style: GoogleFonts.poppins(),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              : _diagnostics.isEmpty
+      body: Stack(
+        children: [
+          // Imagen de fondo
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/2.png'),
+                fit: BoxFit.cover, // Cubre toda la pantalla
+                colorFilter: ColorFilter.mode(
+                  Colors.white.withOpacity(0.5), // Opcional: opacidad
+                  BlendMode.dstATop,
+                ),
+              ),
+            ),
+          ),
+          // Contenido
+          _isLoading
+              ? Center(child: CircularProgressIndicator())
+              : _errorMessage != null
                   ? Center(
-                      child: Text(
-                        'No hay diagnósticos disponibles',
-                        style: GoogleFonts.poppins(
-                          fontSize: 18,
-                          color: Colors.grey[600],
-                        ),
-                      ),
-                    )
-                  : ListView.builder(
-                      padding: EdgeInsets.all(16),
-                      itemCount: _diagnostics.length,
-                      itemBuilder: (context, index) {
-                        final diagnostic = _diagnostics[index];
-                        return Card(
-                          elevation: 4,
-                          margin: EdgeInsets.symmetric(vertical: 8),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            _errorMessage!,
+                            style: GoogleFonts.poppins(
+                              color: Colors.red,
+                              fontSize: 16,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          child: InkWell(
-                            onTap: () => _showDiagnosticDetails(diagnostic),
-                            child: Padding(
-                              padding: EdgeInsets.all(16),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  if (diagnostic.imageUrl != null)
-                                    Container(
-                                      width: 80,
-                                      height: 80,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        image: DecorationImage(
-                                          image: NetworkImage(diagnostic.imageUrl!),
-                                          fit: BoxFit.cover,
-                                          onError: (error, stackTrace) => Icon(Icons.error),
-                                        ),
-                                      ),
-                                    )
-                                  else
-                                    Container(
-                                      width: 80,
-                                      height: 80,
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey[200],
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: Icon(Icons.image_not_supported, color: Colors.grey),
-                                    ),
-                                  SizedBox(width: 16),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          diagnostic.prediction,
-                                          style: GoogleFonts.poppins(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        SizedBox(height: 4),
-                                        Text(
-                                          'Tipo: ${diagnostic.type}',
-                                          style: GoogleFonts.poppins(
-                                            fontSize: 14,
-                                            color: Colors.grey[600],
-                                          ),
-                                        ),
-                                        SizedBox(height: 4),
-                                        Text(
-                                          diagnostic.timestamp != null
-                                              ? DateFormat('dd/MM/yyyy HH:mm')
-                                                  .format(diagnostic.timestamp!)
-                                              : 'Sin fecha',
-                                          style: GoogleFonts.poppins(
-                                            fontSize: 14,
-                                            color: Colors.grey[600],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  IconButton(
-                                    icon: Icon(Icons.delete, color: Colors.red),
-                                    onPressed: () => _confirmDeleteDiagnostic(diagnostic.diagnosticId!),
-                                  ),
-                                ],
-                              ),
+                          SizedBox(height: 16),
+                          ElevatedButton(
+                            onPressed: _fetchDiagnostics,
+                            child: Text(
+                              'Reintentar',
+                              style: GoogleFonts.poppins(),
                             ),
                           ),
-                        );
-                      },
-                    ),
+                        ],
+                      ),
+                    )
+                  : _diagnostics.isEmpty
+                      ? Center(
+                          child: Text(
+                            'No hay diagnósticos disponibles',
+                            style: GoogleFonts.poppins(
+                              fontSize: 18,
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                        )
+                      : ListView.builder(
+                          padding: EdgeInsets.all(16),
+                          itemCount: _diagnostics.length,
+                          itemBuilder: (context, index) {
+                            final diagnostic = _diagnostics[index];
+                            return Card(
+                              elevation: 4,
+                              margin: EdgeInsets.symmetric(vertical: 8),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: InkWell(
+                                onTap: () => _showDiagnosticDetails(diagnostic),
+                                child: Padding(
+                                  padding: EdgeInsets.all(16),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      if (diagnostic.imageUrl != null)
+                                        Container(
+                                          width: 80,
+                                          height: 80,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(8),
+                                            image: DecorationImage(
+                                              image: NetworkImage(diagnostic.imageUrl!),
+                                              fit: BoxFit.cover,
+                                              onError: (error, stackTrace) => Icon(Icons.error),
+                                            ),
+                                          ),
+                                        )
+                                      else
+                                        Container(
+                                          width: 80,
+                                          height: 80,
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey[200],
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                          child: Icon(Icons.image_not_supported, color: Colors.grey),
+                                        ),
+                                      SizedBox(width: 16),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              diagnostic.prediction,
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            SizedBox(height: 4),
+                                            Text(
+                                              'Tipo: ${diagnostic.type}',
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 14,
+                                                color: Colors.grey[600],
+                                              ),
+                                            ),
+                                            SizedBox(height: 4),
+                                            Text(
+                                              diagnostic.timestamp != null
+                                                  ? DateFormat('dd/MM/yyyy HH:mm')
+                                                      .format(diagnostic.timestamp!)
+                                                  : 'Sin fecha',
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 14,
+                                                color: Colors.grey[600],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      IconButton(
+                                        icon: Icon(Icons.delete, color: Colors.red),
+                                        onPressed: () => _confirmDeleteDiagnostic(diagnostic.diagnosticId!),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+        ],
+      ),
     );
   }
 }
