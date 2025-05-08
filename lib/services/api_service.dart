@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart' as http_parser;
@@ -8,16 +7,15 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
 import '../models/prediction.dart';
 
+// Clase que gestiona la comunicación con el backend
 class ApiService {
+  // Base URL adaptable. Se define la direccion del backend dependiendo de si es web o movil.
   static const String baseUrl = String.fromEnvironment(
     'API_URL',
     defaultValue: kIsWeb ? 'http://127.0.0.1:8000' : 'http://10.0.2.2:8000',
-  //Para web, conectandose desde el navegador en local 'http://127.0.0.1:8000'; // 
-  // En navegador se corre con: flutter run -d chrome --web-port=8080 --verbose
-  // Para emulador: static const String baseUrl = 'http://10.0.2.2:8000';
-  // Para dispositivo físico: usa la IP de tu máquina, ej: 'http://192.168.1.X:8000'
   );
 
+  // Metodo que envia una imagen al backend para obtener su predicción
   Future<Prediction> predict(dynamic imageData, String token) async {
     try {
       if (imageData == null) {
@@ -25,34 +23,52 @@ class ApiService {
       }
 
       print('Enviando solicitud a: $baseUrl/predict');
-      var request = http.MultipartRequest('POST', Uri.parse('$baseUrl/predict'));
+      var request = http.MultipartRequest(
+        'POST',
+        Uri.parse('$baseUrl/predict'),
+      );
       request.headers['Authorization'] = 'Bearer $token';
 
-      XFile imageFile = imageData as XFile;
+      final xFile = imageData as XFile;
 
       if (kIsWeb) {
-        final bytes = await imageFile.readAsBytes();
-        if (bytes == null || bytes.isEmpty) {
+        // Flutter Web. Proceso que se ejecuta cuando corre la app en un navegador web
+        final bytes =
+            await xFile
+                .readAsBytes(); // Leer bytes de la imagen. Es necesario xk Web no accede a la ruta del archivo
+        if (bytes.isEmpty)
           throw Exception('No se pudieron leer los bytes de la imagen');
-        }
-        String filename = imageFile.name.isNotEmpty ? imageFile.name : 'uploaded_image.jpg';
+
+        String filename =
+            xFile.name.isNotEmpty ? xFile.name : 'uploaded_image.jpg';
         String extension = path.extension(filename).toLowerCase();
         String mimeType = _getMimeType(extension);
 
-        request.files.add(http.MultipartFile.fromBytes(
-          'file',
-          bytes,
-          filename: filename,
-          contentType: http_parser.MediaType('image', mimeType),
-        ));
+        // Se adjunta el archivo como bytes, especificando nombre y tipo MIME
+        request.files.add(
+          http.MultipartFile.fromBytes(
+            'file',
+            bytes,
+            filename: filename,
+            contentType: http_parser.MediaType('image', mimeType),
+          ),
+        );
       } else {
-        if (!File(imageFile.path).existsSync()) {
-          throw Exception('El archivo de imagen no existe: ${imageFile.path}');
-        }
-        request.files.add(await http.MultipartFile.fromPath(
-          'file',
-          imageFile.path,
-        ));
+        // Android o dispositivo físico. Obtiene la ruta del archivo de la imagen seleccionada
+        final file = File(xFile.path);
+        if (!file.existsSync())
+          throw Exception('El archivo de imagen no existe: ${xFile.path}');
+
+        String extension = path.extension(file.path).toLowerCase();
+        String mime = _getMimeType(extension);
+        // Adjunta el archivo directamente desde la ruta del dispositivo. . Se le pasa el nombre del archivo, la ruta y el tipo de contenido
+        request.files.add(
+          await http.MultipartFile.fromPath(
+            'file',
+            file.path,
+            contentType: http_parser.MediaType('image', mime),
+          ),
+        );
       }
 
       final response = await request.send();
@@ -70,20 +86,28 @@ class ApiService {
     }
   }
 
+  // Método que obtiene todos los diagnósticos del usuario autenticado
   Future<List<Prediction>> getDiagnostics(String token) async {
     try {
       print('Enviando solicitud a: $baseUrl/diagnostics');
       final response = await http.get(
         Uri.parse('$baseUrl/diagnostics'),
-        headers: {'Authorization': 'Bearer $token'},
+        headers: {
+          'Authorization':
+              'Bearer $token', // Se le pasa el token de acceso al servidor. Permite que backend reconozca al usuario
+        },
       );
 
-      print('Respuesta del servidor: ${response.statusCode} - ${response.body}');
+      print(
+        'Respuesta del servidor: ${response.statusCode} - ${response.body}',
+      );
       if (response.statusCode == 200) {
+        //Obtiebne la lista de diagnósticos del servidor. Es decir, los datos de la imagen subida
         final data = jsonDecode(response.body);
-        final diagnostics = (data['diagnostics'] as List)
-            .map((item) => Prediction.fromJson(item))
-            .toList();
+        final diagnostics =
+            (data['diagnostics'] as List)
+                .map((item) => Prediction.fromJson(item))
+                .toList();
         return diagnostics;
       } else {
         throw Exception('Error: ${jsonDecode(response.body)['detail']}');
@@ -94,6 +118,7 @@ class ApiService {
     }
   }
 
+  // Metodo que elimina un diagnóstico específico usando su ID
   Future<void> deleteDiagnostic(String diagnosticId, String token) async {
     try {
       print('Enviando solicitud DELETE a: $baseUrl/diagnostics/$diagnosticId');
@@ -102,7 +127,9 @@ class ApiService {
         headers: {'Authorization': 'Bearer $token'},
       );
 
-      print('Respuesta del servidor: ${response.statusCode} - ${response.body}');
+      print(
+        'Respuesta del servidor: ${response.statusCode} - ${response.body}',
+      );
       if (response.statusCode != 200) {
         throw Exception('Error: ${jsonDecode(response.body)['detail']}');
       }
@@ -112,6 +139,7 @@ class ApiService {
     }
   }
 
+  // Metodo que devuelve el tipo de imagen dependiendo de la extension de la imagen, devuelve el tipo de imagen en formato string
   String _getMimeType(String extension) {
     switch (extension) {
       case '.jpg':
