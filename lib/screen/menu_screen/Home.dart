@@ -4,6 +4,7 @@ import 'package:findoutmole/screen/FootBar.dart';
 import 'package:findoutmole/screen/menu_screen/Contacto.dart';
 import 'package:findoutmole/screen/prediction_screen.dart';
 import 'package:findoutmole/screen/menu_screen/ConsultasScreen.dart';
+import 'package:findoutmole/screen/login_screen/login_screen.dart';
 
 class HomePage extends StatelessWidget {
   final String token;
@@ -13,14 +14,15 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('FindOutMole')),
+      extendBodyBehindAppBar:
+          true, // Extiende el cuerpo detrás de la barra de navegación superior
+      appBar: configuracionAppBar(
+        context,
+      ), // LLamar metodo para configuración de la barra de navegación superior
       body: Stack(
         children: [
           Positioned.fill(
-            child: Image.asset(
-              'assets/images/2.png',
-              fit: BoxFit.cover,
-            ),
+            child: Image.asset('assets/images/2.png', fit: BoxFit.cover),
           ),
           Column(
             children: [
@@ -45,7 +47,8 @@ class HomePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => PredictionScreen(token: token),
+                            builder:
+                                (context) => PredictionScreen(token: token),
                           ),
                         );
                       },
@@ -70,8 +73,7 @@ class HomePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const PerfilPage(
-                            ),
+                            builder: (context) => const PerfilPage(),
                           ),
                         );
                       },
@@ -143,6 +145,29 @@ class HomePage extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: const FooterBar(),
+    );
+  }
+
+  // Método para configurar la barra de navegación superior
+  AppBar configuracionAppBar(BuildContext context) {
+    return AppBar(
+      backgroundColor: Colors.transparent, // Fondo transparente
+      elevation: 0, // Sin sombra
+      actions: [
+        Tooltip(
+          message: 'Cerrar sesión',
+          child: IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginPage()),
+                (route) => false,
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }
