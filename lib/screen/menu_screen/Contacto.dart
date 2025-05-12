@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:findoutmole/screen/FootBar.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ContactoScreen extends StatelessWidget {
   const ContactoScreen({super.key});
@@ -15,60 +16,220 @@ class ContactoScreen extends StatelessWidget {
         elevation: 0,
         title: const Text('Contacto'),
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 20),
-              const Text(
-                '¿Necesitas ayuda?',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                'Puedes ponerte en contacto con nosotros a través de los siguientes medios:',
-                style: TextStyle(fontSize: 16),
-              ),
-              const SizedBox(height: 24),
-              Row(
-                children: const [
-                  Icon(Icons.email, color: Colors.blue),
-                  SizedBox(width: 10),
-                  Text('contacto@miapp.com', style: TextStyle(fontSize: 16)),
-                ],
-              ),
-              const SizedBox(height: 12),
-              Row(
-                children: const [
-                  Icon(Icons.phone, color: Colors.green),
-                  SizedBox(width: 10),
-                  Text('+34 848 233 111', style: TextStyle(fontSize: 16)),
-                ],
-              ),
-              const SizedBox(height: 12),
-              Row(
-                children: const [
-                  Icon(Icons.location_on, color: Colors.red),
-                  SizedBox(width: 10),
-                  Text(
-                    'Calle Falsa, 123 - Majarromaque, España',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 30),
-              const Center(
-                child: Text(
-                  'Gracias por usar nuestra app máquina ❤️',
-                  style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
+      body: Stack(
+        children: [
+          // Imagen de fondo
+          Positioned.fill(
+            child: Image.asset('assets/images/2.png', fit: BoxFit.cover),
+          ),
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SingleChildScrollView(
+                // Para permitir desplazamiento
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Título de la pantalla
+                    const SizedBox(height: 20),
+                    const Text(
+                      '¿Necesitas ayuda?',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'Aquí tienes varias maneras de ponerte en contacto con nosotros:',
+                      style: TextStyle(fontSize: 16, color: Colors.white),
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Correo electrónico
+                    _buildContactRow(
+                      icon: Icons.email,
+                      color: Colors.blue,
+                      text: 'contacto@miapp.com',
+                    ),
+                    const SizedBox(height: 12),
+
+                    // Teléfono
+                    _buildContactRow(
+                      icon: Icons.phone,
+                      color: Colors.green,
+                      text: '+34 848 233 111',
+                    ),
+                    const SizedBox(height: 12),
+
+                    // Dirección
+                    _buildContactRow(
+                      icon: Icons.location_on,
+                      color: Colors.red,
+                      text: 'Calle Falsa, 123 - Majarromaque, España',
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Redes sociales
+                    const Text(
+                      'Síguenos en nuestras redes sociales:',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(
+                            Icons.facebook,
+                            color: Colors.blue,
+                            size: 50,
+                          ),
+                          onPressed: () {
+                            // Aquí puedes agregar un enlace a Facebook
+                          },
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: const [
+                        FaIcon(
+                          FontAwesomeIcons.instagram,
+                          color: Colors.purple,
+                          size: 32,
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          '@miapp_instagram',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 12),
+                    Row(
+                      children: const [
+                        FaIcon(
+                          FontAwesomeIcons.xTwitter,
+                          color: Colors.black,
+                          size: 32,
+                        ),
+                        SizedBox(width: 10),
+                        Text('@miapp_oficial', style: TextStyle(fontSize: 16)),
+                      ],
+                    ),
+                    const SizedBox(height: 50),
+
+                    // Mapa de ubicación (solo un contenedor visual por ahora)
+                    const Text(
+                      'Nuestra ubicación:',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Container(
+                      height: 200,
+                      width: double.infinity,
+                      color:
+                          Colors.grey[300], // Aquí podrías agregar un mapa real
+                      child: const Center(
+                        child: Text('Mapa interactivo (próximamente)'),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Formulario de contacto
+                    const Text(
+                      'Envíanos un mensaje:',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    _buildTextField('Nombre', Icons.person),
+                    const SizedBox(height: 12),
+                    _buildTextField('Correo electrónico', Icons.email),
+                    const SizedBox(height: 12),
+                    _buildTextField(
+                      'Mensaje',
+                      Icons.message,
+                      isMultiline: true,
+                    ),
+                    const SizedBox(height: 16),
+
+                    // Botón de enviar mensaje
+                    ElevatedButton(
+                      onPressed: () {
+                        // Lógica para enviar el mensaje
+                      },
+                      child: const Text('Enviar mensaje'),
+                    ),
+                    const SizedBox(height: 30),
+
+                    // Mensaje de agradecimiento
+                    const Center(
+                      child: Text(
+                        'Gracias por usar nuestra app máquina ❤️',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontStyle: FontStyle.italic,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Método para crear una fila de contacto reutilizable
+  Widget _buildContactRow({
+    required IconData icon,
+    required Color color,
+    required String text,
+  }) {
+    return Row(
+      children: [
+        Icon(icon, color: color, size: 24),
+        const SizedBox(width: 10),
+        Flexible(
+          child: Text(
+            text,
+            style: const TextStyle(fontSize: 16, color: Colors.white),
           ),
         ),
+      ],
+    );
+  }
+
+  // Método para crear un campo de texto reutilizable (con opción para multilinea)
+  Widget _buildTextField(
+    String label,
+    IconData icon, {
+    bool isMultiline = false,
+  }) {
+    return TextField(
+      decoration: InputDecoration(
+        labelText: label,
+        prefixIcon: Icon(icon),
+        border: const OutlineInputBorder(),
+        filled: true,
+        fillColor: Colors.white,
       ),
+      maxLines: isMultiline ? null : 1,
     );
   }
 }
