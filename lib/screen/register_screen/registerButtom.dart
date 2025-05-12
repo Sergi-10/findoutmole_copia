@@ -3,15 +3,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class RegisterButton extends StatefulWidget {
-  
   final TextEditingController emailController;
   final TextEditingController passwordController;
+  final TextEditingController confirmPasswordController; // Controlador para la confirmación de contraseña
   final bool enabled;
 
   const RegisterButton({
     super.key,
     required this.emailController,
-    required this.passwordController, 
+    required this.passwordController,
+    required this.confirmPasswordController, // Añadido
     required this.enabled,
   });
 
@@ -20,36 +21,16 @@ class RegisterButton extends StatefulWidget {
 }
 
 class _RegisterButtonState extends State<RegisterButton> {
-  // bool _isPressed = false;
-
-  // void _onTapDown(TapDownDetails details) {
-  //   setState(() {
-  //     _isPressed = true;
-  //   });
-  // }
-
-  // void _onTapUp(TapUpDetails details) {
-  //   setState(() {
-  //     _isPressed = false;
-  //   });
-  // }
-
-  // void _onTapCancel() {
-  //   setState(() {
-  //     _isPressed = false;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 50),
+      padding: const EdgeInsets.symmetric(horizontal: 50),
       child: Container(
         width: double.infinity,
         height: 50,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
             colors: [Color(0xFF4DD0E1), Color(0xFF1976D2)],
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
@@ -57,17 +38,27 @@ class _RegisterButtonState extends State<RegisterButton> {
         ),
         child: TextButton(
           onPressed: () async {
-
             final email = widget.emailController.text.trim();
-            final password = widget.passwordController.text.trim(); //Trim elimina espacios en blanco
+            final password = widget.passwordController.text.trim();
+            final confirmPassword = widget.confirmPasswordController.text.trim();
 
-            if (email.isEmpty || password.isEmpty) {
+            // Validación de campos vacíos
+            if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Correo y contraseña requeridos')),
+                const SnackBar(content: Text('Correo, contraseña y confirmación son requeridos')),
               );
               return;
             }
 
+            // Validación de coincidencia de contraseñas
+            if (password != confirmPassword) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Las contraseñas no coinciden')),
+              );
+              return;
+            }
+
+            // Validación de requisitos de contraseña
             final RegExp regex = RegExp(
               r'^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$&*~]).{6,}$',
             );
@@ -75,11 +66,12 @@ class _RegisterButtonState extends State<RegisterButton> {
             if (password.length < 8 || !regex.hasMatch(password)) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text('La contraseña no cumple con los requisitos'),
+                  content: Text('La contraseña debe tener al menos 8 caracteres, una mayúscula, un número y un carácter especial'),
                 ),
               );
               return;
             }
+
             // Verifica si la casilla de términos y condiciones está marcada
             if (!widget.enabled) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -87,10 +79,11 @@ class _RegisterButtonState extends State<RegisterButton> {
                   content: Text('Debes aceptar los términos y condiciones'),
                 ),
               );
-              return;  // Impide continuar si no se aceptan los términos
+              return;
             }
 
             try {
+              // Registro del usuario en Firebase
               await FirebaseAuth.instance.createUserWithEmailAndPassword(
                 email: email,
                 password: password,
@@ -100,10 +93,13 @@ class _RegisterButtonState extends State<RegisterButton> {
                 const SnackBar(content: Text('Usuario registrado con éxito')),
               );
 
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => LoginPage()),
-              );
+              // Navega a la pantalla de inicio de sesión
+              if (mounted) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                );
+              }
             } on FirebaseAuthException catch (e) {
               String errorMessage = 'Error al registrar usuario';
 
@@ -115,12 +111,12 @@ class _RegisterButtonState extends State<RegisterButton> {
                 errorMessage = 'La contraseña es muy débil';
               }
 
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(SnackBar(content: Text(errorMessage)));
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(errorMessage)),
+              );
             }
           },
-          child: Text(
+          child: const Text(
             'Registrar',
             style: TextStyle(
               color: Colors.white, // Color del texto del botón
