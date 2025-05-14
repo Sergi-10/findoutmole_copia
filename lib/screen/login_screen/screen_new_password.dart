@@ -1,3 +1,6 @@
+//No se utiliza esta clase. Comentada
+
+/*
 import 'package:flutter/material.dart';
 import 'package:findoutmole/screen/login_screen/login_screen.dart';
 
@@ -263,3 +266,4 @@ class ScreenNewPasswordState extends State<ScreenNewPassword> {
     );
   }
 }
+*/
