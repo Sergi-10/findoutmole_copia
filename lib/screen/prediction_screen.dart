@@ -125,70 +125,80 @@ class _PredictionScreenState extends State<PredictionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: Text(
           'FindOutMole',
           style: GoogleFonts.poppins(
             fontSize: 24,
             fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
         ),
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
       body: Stack(
         children: [
-          // Imagen de fondo
+          // Fondo con imagen y filtro oscuro para visibilidad
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/images/2.png'),
-                fit: BoxFit.cover, // Cubre toda la pantalla
+                fit: BoxFit.cover,
                 colorFilter: ColorFilter.mode(
-                  Colors.white.withOpacity(0.5), // Opcional: opacidad
-                  BlendMode.dstATop,
+                  Colors.transparent,
+                  BlendMode.darken,
                 ),
               ),
             ),
           ),
-          // Contenido desplazable
+          // Contenido scrollable encima
           SingleChildScrollView(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.fromLTRB(16, kToolbarHeight + 24, 16, 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Container(
-                  height: 200,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        spreadRadius: 2,
-                        blurRadius: 5,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: _imageFile == null
-                      ? Center(
-                          child: Text(
-                            'No hay imagen seleccionada',
-                            style: GoogleFonts.poppins(color: Colors.grey[600]),
-                          ),
-                        )
-                      : ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: kIsWeb
-                              ? Image.memory(
-                                  _imageBytes!,
-                                  fit: BoxFit.cover,
-                                )
-                              : Image.file(
-                                  _imageFileMobile!,
-                                  fit: BoxFit.cover,
-                                ),
+                AspectRatio(
+                  aspectRatio: 4 / 3,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.2),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: const Offset(0, 3),
                         ),
+                      ],
+                    ),
+                    child:
+                        _imageFile == null
+                            ? Center(
+                              child: Text(
+                                'No hay imagen seleccionada',
+                                style: GoogleFonts.poppins(
+                                  color: Colors.grey[600],
+                                ),
+                              ),
+                            )
+                            : ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child:
+                                  kIsWeb
+                                      ? Image.memory(
+                                        _imageBytes!,
+                                        fit: BoxFit.contain,
+                                      )
+                                      : Image.file(
+                                        _imageFileMobile!,
+                                        fit: BoxFit.contain,
+                                      ),
+                            ),
+                  ),
                 ),
                 const SizedBox(height: 20),
                 Row(
@@ -202,7 +212,10 @@ class _PredictionScreenState extends State<PredictionScreen> {
                         style: GoogleFonts.poppins(fontSize: 16),
                       ),
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -216,7 +229,10 @@ class _PredictionScreenState extends State<PredictionScreen> {
                         style: GoogleFonts.poppins(fontSize: 16),
                       ),
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -234,16 +250,17 @@ class _PredictionScreenState extends State<PredictionScreen> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  child: _isLoading
-                      ? const CircularProgressIndicator(color: Colors.white)
-                      : Text(
-                          'Analizar Imagen',
-                          style: GoogleFonts.poppins(
-                            fontSize: 18,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
+                  child:
+                      _isLoading
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : Text(
+                            'Analizar Imagen',
+                            style: GoogleFonts.poppins(
+                              fontSize: 18,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
-                        ),
                 ),
                 const SizedBox(height: 20),
                 if (_errorMessage != null)
