@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart' as picker; // Alias: picker
 import 'package:permission_handler/permission_handler.dart';
 import 'package:image_editor/image_editor.dart' as editor; // Alias: editor
@@ -276,4 +276,4 @@ class _ArchivosScreenState extends State<ArchivosScreen> {
       bottomNavigationBar: FooterBar(),
     );
   }
-}
+} */

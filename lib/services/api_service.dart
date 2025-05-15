@@ -10,10 +10,9 @@ import '../models/prediction.dart';
 // Clase que gestiona la comunicación con el backend
 class ApiService {
   // Base URL adaptable. Se define la direccion del backend dependiendo de si es web o movil.
-  static const String baseUrl = String.fromEnvironment(
-    'API_URL',
-    defaultValue: kIsWeb ? 'http://127.0.0.1:8000' : 'http://10.0.2.2:8000',
-  );
+  static const String baseUrl = kIsWeb
+      ? 'http://127.0.0.1:8000' // Para Flutter Web
+      : 'http://10.0.2.2:8000'; // Para emuladores Android
 
   // Metodo que envia una imagen al backend para obtener su predicción
   Future<Prediction> predict(dynamic imageData, String token) async {
@@ -36,8 +35,9 @@ class ApiService {
         final bytes =
             await xFile
                 .readAsBytes(); // Leer bytes de la imagen. Es necesario xk Web no accede a la ruta del archivo
-        if (bytes.isEmpty)
+        if (bytes.isEmpty) {
           throw Exception('No se pudieron leer los bytes de la imagen');
+        }
 
         String filename =
             xFile.name.isNotEmpty ? xFile.name : 'uploaded_image.jpg';
@@ -56,8 +56,9 @@ class ApiService {
       } else {
         // Android o dispositivo físico. Obtiene la ruta del archivo de la imagen seleccionada
         final file = File(xFile.path);
-        if (!file.existsSync())
+        if (!file.existsSync()) {
           throw Exception('El archivo de imagen no existe: ${xFile.path}');
+        }
 
         String extension = path.extension(file.path).toLowerCase();
         String mime = _getMimeType(extension);

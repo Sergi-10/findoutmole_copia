@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:findoutmole/screen/menu_screen/Perfil.dart';
 import 'package:findoutmole/screen/FootBar.dart';
 import 'package:findoutmole/screen/menu_screen/Contacto.dart';
-import 'package:findoutmole/screen/prediction_screen.dart';
+import 'package:findoutmole/screen/menu_screen/prediction_screen.dart';
 import 'package:findoutmole/screen/menu_screen/ConsultasScreen.dart';
 import 'package:findoutmole/screen/login_screen/login_screen.dart';
 
