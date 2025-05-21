@@ -13,11 +13,7 @@ import logging
 import os
 from pathlib import Path
 import json
-from firebase_admin import credentials, initialize_app
 
-cred_data = json.loads(os.environ["FIREBASE_CREDENTIALS"])
-cred = credentials.Certificate(cred_data)
-initialize_app(cred)
 # Configurar logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
