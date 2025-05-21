@@ -1,5 +1,9 @@
 from fastapi import HTTPException, Security, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+
+# ⚠️ Este import debe estar antes que firestore.client()
+from backend import firebase_config  # o simplemente: import firebase_config si estás dentro de /backend
+
 from firebase_admin import auth, firestore
 import logging
 
@@ -7,7 +11,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Inicializar Firestore
+# Ahora ya podemos usar firestore porque se inicializó antes
 db = firestore.client()
 
 security = HTTPBearer()
