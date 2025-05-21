@@ -2,8 +2,7 @@ from fastapi import HTTPException, Security, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
 # ⚠️ Este import debe estar antes que firestore.client()
-from backend import *  # o simplemente: import firebase_config si estás dentro de /backend
-
+from firebase_config import *
 from firebase_admin import auth, firestore
 import logging
 
