@@ -1,21 +1,11 @@
 from fastapi import HTTPException, Security, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-import firebase_admin
-from firebase_admin import auth, credentials, firestore
+from firebase_admin import auth, firestore
 import logging
 
 # Configurar logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-
-# Inicializar Firebase Admin SDK
-try:
-    cred = firebase_admin.credentials.Certificate("firebase-adminsdk.json")
-    firebase_admin.initialize_app(cred)  # Sin storageBucket
-    logger.info("Firebase Admin SDK inicializado correctamente")
-except Exception as e:
-    logger.error(f"Error inicializando Firebase Admin SDK: {str(e)}", exc_info=True)
-    raise Exception(f"Failed to initialize Firebase: {str(e)}")
 
 # Inicializar Firestore
 db = firestore.client()

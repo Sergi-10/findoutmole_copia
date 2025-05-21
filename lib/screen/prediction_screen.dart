@@ -10,7 +10,7 @@ import '../models/prediction.dart';
 class PredictionScreen extends StatefulWidget {
   final String token;
 
-  const PredictionScreen({required this.token, Key? key}) : super(key: key);
+  const PredictionScreen({required this.token, super.key});
 
   @override
   _PredictionScreenState createState() => _PredictionScreenState();
