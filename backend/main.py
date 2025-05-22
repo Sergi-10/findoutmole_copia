@@ -25,14 +25,19 @@ app = FastAPI(title="FindOutMole API")
 # Esto evita aceptar peticiones de dominios no autorizados
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
+    allow_origins=[ #Lista de dominios permitidos. Solo estos pueden hacer peticiones al backend.Locales para pruebas
         "http://localhost:3000",
         "http://localhost:3001",
-        "http://localhost:3002"
+        "http://localhost:3002",
+        "https://findoutmole-backend.onrender.com" #Se añade para permitir que el propio backend acceda a recursos estáticos o haga peticiones internas en Render.
     ],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    #Descomentar cuando la app tenga dominio definitio localhost:3000-3002 son puertos locales de pruebas
+    #allow_origins=["https://tu-dominio-final.vercel.app"]
+
+    allow_credentials=True, #Permite el uso de cookies y credenciales en las peticiones o certificados SSL entre el frontend y el backend. necesario si usas autenticación con tokens o cookies.
+    allow_methods=["*"], #Acepta cualquier tipo de  HTTP: GET, POST, DELETE, etc.
+    allow_headers=["*"], ## Acepta cualquier tipo de cabecera HTTP como Authorization, Content-Type, etc.
+
 )
 
 # Crea el directorio de subida de imágenes si no existe
