@@ -23,11 +23,16 @@ app = FastAPI(title="FindOutMole API")
 # Configurar CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4200", "http://localhost:8000", "http://127.0.0.1:8000", "http://localhost:8080", "http://localhost:3001"],
+    allow_origins=[
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "http://localhost:3002",  # AÑADE ESTE ✅
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # Montar directorio estático para servir imágenes
 UPLOAD_DIR = Path("uploads")
