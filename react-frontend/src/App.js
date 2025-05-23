@@ -5,8 +5,9 @@ function App() {
 
   useEffect(() => {
     fetch('https://findoutmole-backend.onrender.com/')
-      .then(response => response.text())
-      .then(data => setMensaje(data))
+      .then(response => response.json())
+.then(data => setMensaje(data.message))
+
       .catch(error => {
         console.error('Error al conectar con el backend:', error);
         setMensaje('Error al conectar con el backend.');
