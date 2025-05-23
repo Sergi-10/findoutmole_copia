@@ -164,10 +164,7 @@ class _PredictionScreenState extends State<PredictionScreen> {
       appBar: AppBar(
         title: Text(
           'FindOutMole',
-          style: GoogleFonts.poppins(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
+          style: GoogleFonts.poppins(fontSize: 24, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.blueAccent,
       ),
@@ -206,25 +203,29 @@ class _PredictionScreenState extends State<PredictionScreen> {
                       ),
                     ],
                   ),
-                  child: _imageFile == null
-                      ? Center(
-                          child: Text(
-                            'No hay imagen seleccionada',
-                            style: GoogleFonts.poppins(color: Colors.grey[600]),
+                  child:
+                      _imageFile == null
+                          ? Center(
+                            child: Text(
+                              'No hay imagen seleccionada',
+                              style: GoogleFonts.poppins(
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                          )
+                          : ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child:
+                                kIsWeb
+                                    ? Image.memory(
+                                      _imageBytes!,
+                                      fit: BoxFit.cover,
+                                    )
+                                    : Image.file(
+                                      _imageFileMobile!,
+                                      fit: BoxFit.cover,
+                                    ),
                           ),
-                        )
-                      : ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: kIsWeb
-                              ? Image.memory(
-                                  _imageBytes!,
-                                  fit: BoxFit.cover,
-                                )
-                              : Image.file(
-                                  _imageFileMobile!,
-                                  fit: BoxFit.cover,
-                                ),
-                        ),
                 ),
                 const SizedBox(height: 20),
                 Row(
@@ -238,7 +239,10 @@ class _PredictionScreenState extends State<PredictionScreen> {
                         style: GoogleFonts.poppins(fontSize: 16),
                       ),
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -252,7 +256,10 @@ class _PredictionScreenState extends State<PredictionScreen> {
                         style: GoogleFonts.poppins(fontSize: 16),
                       ),
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -270,16 +277,17 @@ class _PredictionScreenState extends State<PredictionScreen> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  child: _isLoading
-                      ? const CircularProgressIndicator(color: Colors.white)
-                      : Text(
-                          'Analizar Imagen',
-                          style: GoogleFonts.poppins(
-                            fontSize: 18,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
+                  child:
+                      _isLoading
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : Text(
+                            'Analizar Imagen',
+                            style: GoogleFonts.poppins(
+                              fontSize: 18,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
-                        ),
                 ),
                 const SizedBox(height: 20),
                 if (_errorMessage != null)
