@@ -30,7 +30,7 @@ app.add_middleware(
         "http://localhost:3001",
         "http://localhost:3002",
         "https://findoutmole-backend.onrender.com", #Se añade para permitir que el propio backend acceda a recursos estáticos o haga peticiones internas en Render.
-        "https://findoutmole-copia123.vercel.app" ## Dominio del frontend desplegado en Vercel. Necesario para permitir la comunicación con el backend en Render (evita errores CORS).
+        "https://findoutmole-copia.vercel.app" ## Dominio del frontend desplegado en Vercel. Necesario para permitir la comunicación con el backend en Render (evita errores CORS).
     ],
     #Descomentar cuando la app tenga dominio definitio localhost:3000-3002 son puertos locales de pruebas
     #allow_origins=["https://tu-dominio-final.vercel.app"]
