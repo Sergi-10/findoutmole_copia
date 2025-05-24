@@ -38,16 +38,17 @@ class _PredictionScreenState extends State<PredictionScreen> {
   }
 
   Future<void> _pickImageFromGallery() async {
-    // Solicita permisos
-    final cameraStatus = await Permission.camera.request();
-    final photosStatus = await Permission.photos.request();
+    // Solo pedir permisos si NO es Web
+    if (!kIsWeb) {
+      final cameraStatus = await Permission.camera.request();
+      final photosStatus = await Permission.photos.request();
 
-    // Verifica si los permisos fueron concedidos
-    if (!cameraStatus.isGranted || !photosStatus.isGranted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Permisos requeridos no concedidos.')),
-      );
-      return; // Salir del método si los permisos no son concedidos
+      if (!cameraStatus.isGranted || !photosStatus.isGranted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Permisos requeridos no concedidos.')),
+        );
+        return;
+      }
     }
 
     try {
@@ -84,16 +85,16 @@ class _PredictionScreenState extends State<PredictionScreen> {
   }
 
   Future<void> _takePhoto() async {
-    // Solicita permisos
-    final cameraStatus = await Permission.camera.request();
-    final photosStatus = await Permission.photos.request();
+    if (!kIsWeb) {
+      final cameraStatus = await Permission.camera.request();
+      final photosStatus = await Permission.photos.request();
 
-    // Verifica si los permisos fueron concedidos
-    if (!cameraStatus.isGranted || !photosStatus.isGranted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Permisos requeridos no concedidos.')),
-      );
-      return; // Salir del método si los permisos no son concedidos
+      if (!cameraStatus.isGranted || !photosStatus.isGranted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Permisos requeridos no concedidos.')),
+        );
+        return;
+      }
     }
 
     try {
