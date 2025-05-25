@@ -40,9 +40,9 @@ class _PredictionScreenState extends State<PredictionScreen> {
             _errorMessage = null;
           });
         } else {
+          _imageFileMobile = File(pickedFile.path);
           setState(() {
             _imageFile = pickedFile;
-            _imageFileMobile = File(pickedFile.path);
             _imageBytes = null;
             _prediction = null;
             _errorMessage = null;
@@ -60,28 +60,24 @@ class _PredictionScreenState extends State<PredictionScreen> {
   }
 
   Future<void> _takePhoto() async {
+    if (kIsWeb) {
+      setState(() {
+        _errorMessage = 'Tomar foto no está soportado en Web';
+      });
+      return;
+    }
+
     try {
       final pickedFile = await _picker.pickImage(source: ImageSource.camera);
       if (pickedFile != null) {
         print('Foto tomada: ${pickedFile.path}');
-        if (kIsWeb) {
-          final bytes = await pickedFile.readAsBytes();
-          setState(() {
-            _imageFile = pickedFile;
-            _imageBytes = bytes;
-            _imageFileMobile = null;
-            _prediction = null;
-            _errorMessage = null;
-          });
-        } else {
-          setState(() {
-            _imageFile = pickedFile;
-            _imageFileMobile = File(pickedFile.path);
-            _imageBytes = null;
-            _prediction = null;
-            _errorMessage = null;
-          });
-        }
+        _imageFileMobile = File(pickedFile.path);
+        setState(() {
+          _imageFile = pickedFile;
+          _imageBytes = null;
+          _prediction = null;
+          _errorMessage = null;
+        });
       } else {
         print('Captura de foto cancelada');
       }
@@ -141,7 +137,6 @@ class _PredictionScreenState extends State<PredictionScreen> {
       ),
       body: Stack(
         children: [
-          // Fondo con imagen y filtro oscuro para visibilidad
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
@@ -154,7 +149,6 @@ class _PredictionScreenState extends State<PredictionScreen> {
               ),
             ),
           ),
-          // Contenido scrollable encima
           SingleChildScrollView(
             padding: const EdgeInsets.fromLTRB(16, kToolbarHeight + 24, 16, 16),
             child: Column(

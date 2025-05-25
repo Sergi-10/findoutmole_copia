@@ -36,6 +36,5 @@ flutter:
     - assets/fonts/
   fonts: []
   
-dependency_overrides:
-  permission_handler_html: 0.0.0
+
 
