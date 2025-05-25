@@ -57,15 +57,16 @@ async def root():
 # Esta ruta se encarga de responder correctamente a solicitudes CORS OPTIONS sin requerir token
 @app.options("/predict", include_in_schema=False)
 async def preflight_predict(request: Request):
+    origin = request.headers.get("origin")
     return JSONResponse(
-        content={"allow": "ok"},
+        content=None,
         headers={
-            "Access-Control-Allow-Origin": request.headers.get("origin", "*"),
+            "Access-Control-Allow-Origin": origin or "*",
             "Access-Control-Allow-Methods": "POST, OPTIONS",
-            "Access-Control-Allow-Headers": "*",
-            "Access-Control-Allow-Credentials": "true"
+            "Access-Control-Allow-Headers": "Authorization, Content-Type",
+            "Access-Control-Allow-Credentials": "true",
         },
-        status_code=200
+        status_code=204
     )
 
 # Ruta POST que recibe una imagen, la analiza con el modelo, la guarda, y registra en Firestore

@@ -17,6 +17,7 @@ class PredictionScreen extends StatefulWidget {
   _PredictionScreenState createState() => _PredictionScreenState();
 }
 
+//Cambios
 class _PredictionScreenState extends State<PredictionScreen> {
   XFile? _imageFile;
   Uint8List? _imageBytes;
