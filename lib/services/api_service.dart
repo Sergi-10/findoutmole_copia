@@ -10,9 +10,10 @@ import '../models/prediction.dart';
 // Clase que gestiona la comunicación con el backend
 class ApiService {
   // Base URL adaptable. Se define la direccion del backend dependiendo de si es web o movil.
-  static const String baseUrl = kIsWeb
-      ? 'http://127.0.0.1:8000' // Para Flutter Web
-      : 'http://10.0.2.2:8000'; // Para emuladores Android
+  static const String baseUrl =
+      kIsWeb
+          ? 'https://findoutmole-backend.onrender.com' // Para Flutter Web
+          : 'http://10.0.2.2:8000'; // Para emuladores Android
 
   // Metodo que envia una imagen al backend para obtener su predicción
   Future<Prediction> predict(dynamic imageData, String token) async {

@@ -26,17 +26,6 @@ class _PredictionScreenState extends State<PredictionScreen> {
   String? _errorMessage;
   final ImagePicker _picker = ImagePicker();
 
-  Future<void> _requestPermissions() async {
-    final cameraStatus = await Permission.camera.request();
-    final photosStatus = await Permission.photos.request();
-
-    if (!cameraStatus.isGranted || !photosStatus.isGranted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Permisos requeridos no concedidos.')),
-      );
-    }
-  }
-
   Future<void> _pickImageFromGallery() async {
     // Solo pedir permisos si NO es Web
     if (!kIsWeb) {
