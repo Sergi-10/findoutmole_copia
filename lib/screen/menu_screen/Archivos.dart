@@ -1,6 +1,5 @@
-/* import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart' as picker; // Alias: picker
-import 'package:permission_handler/permission_handler.dart';
 import 'package:image_editor/image_editor.dart' as editor; // Alias: editor
 import 'dart:io';
 import 'package:findoutmole/screen/FootBar.dart';
@@ -22,17 +21,7 @@ class _ArchivosScreenState extends State<ArchivosScreen> {
     super.initState();
   }
 
-  Future<void> _requestPermissions() async {
-    final cameraStatus = await Permission.camera.request();
-    final photosStatus = await Permission.photos.request();
-
-    if (!cameraStatus.isGranted || !photosStatus.isGranted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Permisos requeridos no concedidos.')),
-      );
-    }
-  }
-
+  // Método para seleccionar imagen y editarla
   Future<void> _pickImage(picker.ImageSource source) async {
     final pickedFile = await _picker.pickImage(source: source);
     if (pickedFile != null) {
@@ -45,6 +34,7 @@ class _ArchivosScreenState extends State<ArchivosScreen> {
     }
   }
 
+  // Método para editar la imagen (recorte)
   Future<File?> _editImage(File imageFile) async {
     try {
       final editorOption = editor.ImageEditorOption();
@@ -70,6 +60,7 @@ class _ArchivosScreenState extends State<ArchivosScreen> {
     return null;
   }
 
+  // Eliminar imagen del listado
   void _removeImage(int index) async {
     final confirm = await showDialog<bool>(
       context: context,
@@ -138,7 +129,6 @@ class _ArchivosScreenState extends State<ArchivosScreen> {
                         setState(() {
                           _isLoading = true;
                         });
-                        await _requestPermissions();
                         await _pickImage(picker.ImageSource.gallery);
                         setState(() {
                           _isLoading = false;
@@ -237,7 +227,6 @@ class _ArchivosScreenState extends State<ArchivosScreen> {
                       setState(() {
                         _isLoading = true;
                       });
-                      await _requestPermissions();
                       await _pickImage(picker.ImageSource.gallery);
                       setState(() {
                         _isLoading = false;
@@ -254,7 +243,6 @@ class _ArchivosScreenState extends State<ArchivosScreen> {
                       setState(() {
                         _isLoading = true;
                       });
-                      await _requestPermissions();
                       await _pickImage(picker.ImageSource.camera);
                       setState(() {
                         _isLoading = false;
@@ -276,4 +264,4 @@ class _ArchivosScreenState extends State<ArchivosScreen> {
       bottomNavigationBar: FooterBar(),
     );
   }
-} */
+}
