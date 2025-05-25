@@ -53,10 +53,20 @@ app.mount("/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
 async def root():
     return {"message": "Welcome to FindOutMole API"}
 
-# Ruta OPTIONS que permite precargar información del endpoint /predict (CORS preflight)
-@app.options("/predict")
-async def options_predict():
-    return JSONResponse(status_code=200)
+# Ruta OPTIONS específica para Flutter Web (preflight)
+# Esta ruta se encarga de responder correctamente a solicitudes CORS OPTIONS sin requerir token
+@app.options("/predict", include_in_schema=False)
+async def preflight_predict(request: Request):
+    return JSONResponse(
+        content={"allow": "ok"},
+        headers={
+            "Access-Control-Allow-Origin": request.headers.get("origin", "*"),
+            "Access-Control-Allow-Methods": "POST, OPTIONS",
+            "Access-Control-Allow-Headers": "*",
+            "Access-Control-Allow-Credentials": "true"
+        },
+        status_code=200
+    )
 
 # Ruta POST que recibe una imagen, la analiza con el modelo, la guarda, y registra en Firestore
 @app.post("/predict", response_model=PredictionResponse)
