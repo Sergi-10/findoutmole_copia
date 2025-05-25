@@ -17,7 +17,6 @@ class PredictionScreen extends StatefulWidget {
   _PredictionScreenState createState() => _PredictionScreenState();
 }
 
-//Cambios
 class _PredictionScreenState extends State<PredictionScreen> {
   XFile? _imageFile;
   Uint8List? _imageBytes;
@@ -28,24 +27,10 @@ class _PredictionScreenState extends State<PredictionScreen> {
   final ImagePicker _picker = ImagePicker();
 
   Future<void> _pickImageFromGallery() async {
-    // Solo pedir permisos si NO es Web
-    if (!kIsWeb) {
-      final cameraStatus = await Permission.camera.request();
-      final photosStatus = await Permission.photos.request();
-
-      if (!cameraStatus.isGranted || !photosStatus.isGranted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Permisos requeridos no concedidos.')),
-        );
-        return;
-      }
-    }
-
     try {
-      final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-      if (pickedFile != null) {
-        print('Imagen seleccionada: ${pickedFile.path}');
-        if (kIsWeb) {
+      if (kIsWeb) {
+        final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+        if (pickedFile != null) {
           final bytes = await pickedFile.readAsBytes();
           setState(() {
             _imageFile = pickedFile;
@@ -55,6 +40,21 @@ class _PredictionScreenState extends State<PredictionScreen> {
             _errorMessage = null;
           });
         } else {
+          print('Selección de imagen cancelada');
+        }
+      } else {
+        final cameraStatus = await Permission.camera.request();
+        final photosStatus = await Permission.photos.request();
+
+        if (!cameraStatus.isGranted || !photosStatus.isGranted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Permisos requeridos no concedidos.')),
+          );
+          return;
+        }
+
+        final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+        if (pickedFile != null) {
           setState(() {
             _imageFile = pickedFile;
             _imageFileMobile = File(pickedFile.path);
@@ -62,9 +62,9 @@ class _PredictionScreenState extends State<PredictionScreen> {
             _prediction = null;
             _errorMessage = null;
           });
+        } else {
+          print('Selección de imagen cancelada');
         }
-      } else {
-        print('Selección de imagen cancelada');
       }
     } catch (e) {
       print('Error en _pickImageFromGallery: $e');
