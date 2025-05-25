@@ -43,12 +43,11 @@ class _PredictionScreenState extends State<PredictionScreen> {
           print('Selección de imagen cancelada');
         }
       } else {
-        final cameraStatus = await Permission.camera.request();
         final photosStatus = await Permission.photos.request();
 
-        if (!cameraStatus.isGranted || !photosStatus.isGranted) {
+        if (!photosStatus.isGranted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Permisos requeridos no concedidos.')),
+            const SnackBar(content: Text('Permiso de galería no concedido.')),
           );
           return;
         }
@@ -161,20 +160,18 @@ class _PredictionScreenState extends State<PredictionScreen> {
       ),
       body: Stack(
         children: [
-          // Imagen de fondo
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/images/2.png'),
-                fit: BoxFit.cover, // Cubre toda la pantalla
+                fit: BoxFit.cover,
                 colorFilter: ColorFilter.mode(
-                  Colors.white.withOpacity(0.5), // Opcional: opacidad
+                  Colors.white.withOpacity(0.5),
                   BlendMode.dstATop,
                 ),
               ),
             ),
           ),
-          // Contenido desplazable
           SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
             child: Column(
