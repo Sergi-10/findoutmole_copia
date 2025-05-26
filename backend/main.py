@@ -26,11 +26,8 @@ app = FastAPI(title="FindOutMole API")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[ #Lista de dominios permitidos. Solo estos pueden hacer peticiones al backend.Locales para pruebas
-        "http://localhost:3000",
-        "http://localhost:3001",
-        "http://localhost:3002",
-        "https://findoutmole-backend.onrender.com", #Se añade para permitir que el propio backend acceda a recursos estáticos o haga peticiones internas en Render.
-        "https://findoutmole-copia.vercel.app" ## Dominio del frontend desplegado en Vercel. Necesario para permitir la comunicación con el backend en Render (evita errores CORS).
+        "http://localhost:3000", # Dominio del frontend en desarrollo local
+        "https://findoutmole-copia.vercel.app" # Dominio del frontend desplegado en Vercel. Necesario para permitir la comunicación con el backend en Render (evita errores CORS).
     ],
     #Descomentar cuando la app tenga dominio definitio localhost:3000-3002 son puertos locales de pruebas
     #allow_origins=["https://tu-dominio-final.vercel.app"]
