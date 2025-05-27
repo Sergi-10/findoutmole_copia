@@ -8,10 +8,14 @@ import 'package:path/path.dart' as path;
 import '../models/prediction.dart';
 
 class ApiService {
+  // Modo LOCAL: para desarrollo en emulador Android o navegador Web
   static const String baseUrl =
       kIsWeb
-          ? 'https://findoutmole-backend.onrender.com'
-          : 'http://10.0.2.2:8000';
+          ? 'http://127.0.0.1:3000' // Flutter Web
+          : 'http://10.0.2.2:3000'; // Emulador Android
+
+  // Modo PRODUCCIÓN: para cuando uses Vercel + Render
+  // static const String baseUrl = 'https://findoutmole-backend.onrender.com';
 
   Future<Prediction> predict(dynamic imageData, String token) async {
     try {

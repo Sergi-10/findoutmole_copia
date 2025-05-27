@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class TextoInicial extends StatelessWidget {
   const TextoInicial({super.key});
@@ -8,10 +7,10 @@ class TextoInicial extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       'Registro de Usuario',
-      style: GoogleFonts.redHatDisplay(
-        fontSize: 28,
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 44,
         fontWeight: FontWeight.bold,
-        color: const Color.fromARGB(255, 0, 47, 90),
       ),
     );
   }

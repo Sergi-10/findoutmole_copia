@@ -141,7 +141,7 @@ class _PredictionScreenState extends State<PredictionScreen> {
               children: [
                 Expanded(child: Text(entry.key, style: GoogleFonts.poppins())),
                 Text(
-                  '${(entry.value * 100).toStringAsFixed(2)}%',
+                  '${entry.value.toStringAsFixed(2)}%',
                   style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
                 ),
               ],
@@ -155,13 +155,20 @@ class _PredictionScreenState extends State<PredictionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         title: Text(
           'FindOutMole',
-          style: GoogleFonts.poppins(fontSize: 24, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        backgroundColor: Colors.blueAccent,
       ),
+
       body: Stack(
         children: [
           Container(
@@ -176,66 +183,77 @@ class _PredictionScreenState extends State<PredictionScreen> {
               ),
             ),
           ),
-          SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _buildImageBox(),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                top: kToolbarHeight + 16,
+                left: 16,
+                right: 16,
+                bottom: 16,
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    ElevatedButton.icon(
-                      onPressed: _pickImageFromGallery,
-                      icon: const Icon(Icons.photo),
-                      label: Text('Galería', style: GoogleFonts.poppins()),
+                    _buildImageBox(),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton.icon(
+                          onPressed: _pickImageFromGallery,
+                          icon: const Icon(Icons.photo),
+                          label: Text('Galería', style: GoogleFonts.poppins()),
+                        ),
+                        ElevatedButton.icon(
+                          onPressed: _takePhoto,
+                          icon: const Icon(Icons.camera_alt),
+                          label: Text('Cámara', style: GoogleFonts.poppins()),
+                        ),
+                      ],
                     ),
-                    ElevatedButton.icon(
-                      onPressed: _takePhoto,
-                      icon: const Icon(Icons.camera_alt),
-                      label: Text('Cámara', style: GoogleFonts.poppins()),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: _isLoading ? null : _sendToBackend,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blueAccent,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child:
+                          _isLoading
+                              ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                              : Text(
+                                'Analizar Imagen',
+                                style: GoogleFonts.poppins(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                     ),
+                    const SizedBox(height: 20),
+                    if (_errorMessage != null)
+                      Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.red[50],
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          _errorMessage!,
+                          style: GoogleFonts.poppins(color: Colors.red[700]),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    _buildPredictionResults(),
                   ],
                 ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: _isLoading ? null : _sendToBackend,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueAccent,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  child:
-                      _isLoading
-                          ? const CircularProgressIndicator(color: Colors.white)
-                          : Text(
-                            'Analizar Imagen',
-                            style: GoogleFonts.poppins(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                ),
-                const SizedBox(height: 20),
-                if (_errorMessage != null)
-                  Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: Colors.red[50],
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(
-                      _errorMessage!,
-                      style: GoogleFonts.poppins(color: Colors.red[700]),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                _buildPredictionResults(),
-              ],
+              ),
             ),
           ),
         ],

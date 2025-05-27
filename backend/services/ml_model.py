@@ -54,7 +54,7 @@ def predict_image(image: Image.Image) -> Tuple[str, str, Dict[str, float]]:
 
         with torch.no_grad():
             outputs = model(image_tensor)
-            probabilities = torch.softmax(outputs, dim=1)[0].cpu().numpy() * 100
+            probabilities = torch.nn.functional.softmax(outputs[0], dim=0).cpu().numpy() * 100
 
         probabilities_dict = {cls: float(prob) for cls, prob in zip(CLASSES, probabilities)}
         max_class = max(probabilities_dict, key=probabilities_dict.get)
