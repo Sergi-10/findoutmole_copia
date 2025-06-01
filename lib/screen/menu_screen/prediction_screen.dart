@@ -3,10 +3,14 @@ import 'dart:typed_data';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:findoutmole/utils/image_selector.dart';
 import '../../services/api_service.dart';
 import '../../models/prediction.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 
 class PredictionScreen extends StatefulWidget {
   final String token;
@@ -78,6 +82,62 @@ class _PredictionScreenState extends State<PredictionScreen> {
         _isLoading = false;
       });
     }
+  }
+
+  Future<void> generarPDF({
+    required Map<String, dynamic> perfilData,
+    required Prediction prediction,
+  }) async {
+    final pdf = pw.Document();
+
+    pdf.addPage(
+      pw.Page(
+        build: (pw.Context context) {
+          return pw.Column(
+            crossAxisAlignment: pw.CrossAxisAlignment.start,
+            children: [
+              pw.Text(
+                'Orientación Diagnóstica',
+                style: pw.TextStyle(
+                  fontSize: 24,
+                  fontWeight: pw.FontWeight.bold,
+                ),
+              ),
+              pw.SizedBox(height: 20),
+              pw.Text('Resultado: ${prediction.prediction}'),
+              pw.Text('Tipo: ${prediction.type}'),
+              pw.SizedBox(height: 20),
+              pw.Text(
+                'Paciente: ${perfilData['nombre']} ${perfilData['apellidos']}',
+              ),
+              pw.Text('Correo: ${perfilData['email']}'),
+              pw.Text('Edad: ${perfilData['edad']} años'),
+              pw.Text('Peso: ${perfilData['peso']} kg'),
+              pw.Text('Altura: ${perfilData['altura']} m'),
+              pw.SizedBox(height: 20),
+              pw.Text(
+                '📈 Probabilidades del análisis:',
+                style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+              ),
+              pw.SizedBox(height: 10),
+              ...prediction.probabilities.entries.map(
+                (entry) => pw.Row(
+                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                  children: [
+                    pw.Text(entry.key),
+                    pw.Text('${entry.value.toStringAsFixed(2)}%'),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+
+    await Printing.layoutPdf(
+      onLayout: (PdfPageFormat format) async => pdf.save(),
+    );
   }
 
   Widget _buildImageBox() {
@@ -212,30 +272,253 @@ class _PredictionScreenState extends State<PredictionScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: _isLoading ? null : _sendToBackend,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blueAccent,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                    const SizedBox(height: 60),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // Botón "Analizar Imagen"
+                        Container(
+                          height: 50,
+                          width: 160,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            gradient: const LinearGradient(
+                              colors: [Color(0xFF4DD0E1), Color(0xFF1976D2)],
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                            ),
+                          ),
+                          child: ElevatedButton(
+                            onPressed: _isLoading ? null : _sendToBackend,
+                            style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              backgroundColor: Colors.transparent,
+                              shadowColor: Colors.transparent,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              padding:
+                                  EdgeInsets
+                                      .zero, // importante para respetar tu ancho
+                            ),
+                            child: Center(
+                              child:
+                                  _isLoading
+                                      ? const CircularProgressIndicator(
+                                        color: Colors.white,
+                                      )
+                                      : Text(
+                                        'Analizar Imagen',
+                                        style: GoogleFonts.poppins(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                            ),
+                          ),
                         ),
-                      ),
-                      child:
-                          _isLoading
-                              ? const CircularProgressIndicator(
-                                color: Colors.white,
-                              )
-                              : Text(
-                                'Analizar Imagen',
+                        const SizedBox(width: 20), // espacio entre botones
+                        // Botón "Diagnóstico"
+                        Container(
+                          height: 50,
+                          width: 160,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            gradient: const LinearGradient(
+                              colors: [Color(0xFF4DD0E1), Color(0xFF1976D2)],
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                            ),
+                          ),
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              if (_prediction == null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'Primero debes analizar una imagen.',
+                                    ),
+                                  ),
+                                );
+                                return;
+                              }
+
+                              final user = FirebaseAuth.instance.currentUser;
+                              if (user == null) return;
+
+                              final perfilDoc =
+                                  await FirebaseFirestore.instance
+                                      .collection('Perfil')
+                                      .doc(user.uid)
+                                      .get();
+                              final perfilData = perfilDoc.data();
+
+                              if (perfilData == null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'No se encontraron datos del perfil médico.',
+                                    ),
+                                  ),
+                                );
+                                return;
+                              }
+
+                              final nombre =
+                                  perfilData['nombre'] ?? 'No definido';
+                              final apellidos = perfilData['apellidos'] ?? '';
+                              final edad = perfilData['edad'] ?? 'No definido';
+                              final peso = perfilData['peso'] ?? 'No definido';
+                              final altura =
+                                  perfilData['altura'] ?? 'No definido';
+                              final correo = user.email ?? 'No definido';
+
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    backgroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    contentPadding: const EdgeInsets.all(20),
+                                    content: SingleChildScrollView(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Diagnóstico Médico',
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 12),
+                                          Text(
+                                            'Resultado: ${_prediction!.prediction}',
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          Text(
+                                            'Tipo: ${_prediction!.type}',
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          const Divider(height: 30),
+                                          Text(
+                                            'Paciente: $nombre $apellidos',
+                                            style: GoogleFonts.poppins(),
+                                          ),
+                                          Text(
+                                            'Correo: $correo',
+                                            style: GoogleFonts.poppins(),
+                                          ),
+                                          Text(
+                                            'Edad: $edad años',
+                                            style: GoogleFonts.poppins(),
+                                          ),
+                                          Text(
+                                            'Peso: $peso kg',
+                                            style: GoogleFonts.poppins(),
+                                          ),
+                                          Text(
+                                            'Altura: $altura m',
+                                            style: GoogleFonts.poppins(),
+                                          ),
+                                          const Divider(height: 30),
+                                          Text(
+                                            'Probabilidades del análisis:',
+                                            style: GoogleFonts.poppins(
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 8),
+                                          ..._prediction!.probabilities.entries.map((
+                                            entry,
+                                          ) {
+                                            return Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                    vertical: 2,
+                                                  ),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Expanded(
+                                                    child: Text(
+                                                      entry.key,
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                            fontSize: 14,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    '${entry.value.toStringAsFixed(2)}%',
+                                                    style: GoogleFonts.poppins(
+                                                      fontSize: 14,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          }).toList(),
+                                        ],
+                                      ),
+                                    ),
+                                    // Botones de guardar y cerrar diálogo emergente
+                                    actions: [
+                                      TextButton(
+                                        child: const Text('Cerrar'),
+                                        onPressed: () => Navigator.pop(context),
+                                      ),
+                                      TextButton(
+                                        onPressed: () async {
+                                          Navigator.of(
+                                            context,
+                                          ).pop(); // cerrar el diálogo
+                                          await generarPDF(
+                                            perfilData: perfilData!,
+                                            prediction: _prediction!,
+                                          );
+                                        },
+                                        child: Text("Guardar"),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              backgroundColor: Colors.transparent,
+                              shadowColor: Colors.transparent,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              padding: EdgeInsets.zero,
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Diagnóstico',
                                 style: GoogleFonts.poppins(
                                   color: Colors.white,
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
+
                     const SizedBox(height: 20),
                     if (_errorMessage != null)
                       Container(
