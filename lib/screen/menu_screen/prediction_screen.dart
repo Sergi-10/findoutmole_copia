@@ -104,6 +104,13 @@ class _PredictionScreenState extends State<PredictionScreen> {
                 ),
               ),
               pw.SizedBox(height: 20),
+              // Mostrar la imagen analizada si está disponible
+              if (_imageBytes != null) ...[
+                pw.Text('Imagen analizada:'),
+                pw.SizedBox(height: 10),
+                pw.Image(pw.MemoryImage(_imageBytes!), height: 200),
+                pw.SizedBox(height: 20),
+              ],
               pw.Text('Resultado: ${prediction.prediction}'),
               pw.Text('Tipo: ${prediction.type}'),
               pw.SizedBox(height: 20),
@@ -116,7 +123,7 @@ class _PredictionScreenState extends State<PredictionScreen> {
               pw.Text('Altura: ${perfilData['altura']} m'),
               pw.SizedBox(height: 20),
               pw.Text(
-                '📈 Probabilidades del análisis:',
+                'Probabilidades del análisis:',
                 style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
               ),
               pw.SizedBox(height: 10),
@@ -134,7 +141,6 @@ class _PredictionScreenState extends State<PredictionScreen> {
         },
       ),
     );
-
     await Printing.layoutPdf(
       onLayout: (PdfPageFormat format) async => pdf.save(),
     );
