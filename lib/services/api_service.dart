@@ -11,11 +11,8 @@ class ApiService {
   // Modo LOCAL: para desarrollo en emulador Android o navegador Web
   static const String baseUrl =
       kIsWeb
-          ? 'http://127.0.0.1:3000' // Flutter Web
-          : 'http://10.0.2.2:3000'; // Emulador Android
-
-  // Modo PRODUCCIÓN: para cuando uses Vercel + Render
-  // static const String baseUrl = 'https://findoutmole-backend.onrender.com';
+          ? 'https://findoutmole-backend.onrender.com' // Flutter Web en producción
+          : 'http://10.0.2.2:3000'; // Emulador Android local
 
   Future<Prediction> predict(dynamic imageData, String token) async {
     try {
