@@ -60,7 +60,7 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-class _StyledInputField extends StatelessWidget {
+class _StyledInputField extends StatefulWidget {
   final String hintText;
   final IconData icon;
   final TextEditingController controller;
@@ -72,6 +72,25 @@ class _StyledInputField extends StatelessWidget {
     required this.controller,
     required this.obscureText,
   });
+
+  @override
+  State<_StyledInputField> createState() => _StyledInputFieldState();
+}
+
+class _StyledInputFieldState extends State<_StyledInputField> {
+  late bool _obscureText;
+
+  @override
+  void initState() {
+    super.initState();
+    _obscureText = widget.obscureText;
+  }
+
+  void _toggleObscureText() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,10 +116,10 @@ class _StyledInputField extends StatelessWidget {
           ],
         ),
         child: TextField(
-          controller: controller,
-          obscureText: obscureText,
+          controller: widget.controller,
+          obscureText: _obscureText,
           decoration: InputDecoration(
-            labelText: hintText,
+            labelText: widget.hintText,
             labelStyle: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -109,7 +128,17 @@ class _StyledInputField extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide.none,
             ),
-            prefixIcon: Icon(icon, color: Colors.white),
+            prefixIcon: Icon(widget.icon, color: Colors.white),
+            suffixIcon:
+                widget.obscureText
+                    ? IconButton(
+                      icon: Icon(
+                        _obscureText ? Icons.visibility : Icons.visibility_off,
+                        color: Colors.white,
+                      ),
+                      onPressed: _toggleObscureText,
+                    )
+                    : null,
             contentPadding: const EdgeInsets.symmetric(
               vertical: 16,
               horizontal: 10,
