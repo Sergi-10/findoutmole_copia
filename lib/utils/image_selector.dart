@@ -30,7 +30,8 @@ class ImageSelector {
         final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
         if (pickedFile == null) return null;
         final file = File(pickedFile.path);
-        return ImageSelectorResult(xFile: pickedFile, file: file);
+        final bytes = await file.readAsBytes();
+        return ImageSelectorResult(xFile: pickedFile, file: file, bytes: bytes);
       }
     } catch (e) {
       print('Error al seleccionar imagen: $e');
@@ -44,11 +45,13 @@ class ImageSelector {
       if (pickedFile == null) return null;
 
       if (kIsWeb) {
+        final file = File(pickedFile.path);
         final bytes = await pickedFile.readAsBytes();
-        return ImageSelectorResult(xFile: pickedFile, bytes: bytes);
+        return ImageSelectorResult(xFile: pickedFile, bytes: bytes, file: file);
       } else {
         final file = File(pickedFile.path);
-        return ImageSelectorResult(xFile: pickedFile, file: file);
+        final bytes = await file.readAsBytes();
+        return ImageSelectorResult(xFile: pickedFile, file: file, bytes: bytes);
       }
     } catch (e) {
       print('Error al tomar foto: $e');

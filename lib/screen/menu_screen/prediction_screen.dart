@@ -36,6 +36,7 @@ class _PredictionScreenState extends State<PredictionScreen> {
         _imageFile = result.file;
         _prediction = null;
       });
+      print('Bytes de imagen seleccionada: ${_imageBytes?.length}');
     }
   }
 
@@ -489,6 +490,12 @@ class _PredictionScreenState extends State<PredictionScreen> {
                                           Navigator.of(
                                             context,
                                           ).pop(); // cerrar el diálogo
+                                          // Asegura que los bytes estén disponibles
+                                          if (_imageBytes == null &&
+                                              _imageFile != null) {
+                                            _imageBytes =
+                                                await _imageFile!.readAsBytes();
+                                          }
                                           await generarPDF(
                                             perfilData: perfilData!,
                                             prediction: _prediction!,
