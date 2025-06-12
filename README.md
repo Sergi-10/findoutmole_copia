@@ -54,6 +54,11 @@
 **Backend (Render)**  
     [https://findoutmole-backend.onrender.com](https://findoutmole-backend.onrender.com) *(API REST)*
 
+### Aviso importante sobre el backend
+
+> **ℹ️ Al abrir la app en Vercel por primera vez, es posible que el análisis de imágenes falle momentáneamente.**
+> Esto se debe a que el backend desplegado en Render utiliza el plan gratuito, que entra en modo de hibernación cuando no hay actividad.
+> Si aparece un error al analizar la imagen, espera entre **5 y 10 minutos** y vuelve a intentarlo. El servidor se reactiva automáticamente.
 ---
 
 ## Cómo ejecutar en local
@@ -63,13 +68,6 @@
  Poner en la consola de la carpeta backend: uvicorn main:app --reload --host 0.0.0.0 --port 3000 //para funcionar lógica
  flutter run -d chrome
  
-### Backend (FastAPI)
-
-```bash
-cd backend
-pip install -r requirements.txt
-uvicorn main:app --reload --host 0.0.0.0 --port 3000
-
 --- 
 
 ### Ejecutar en emulador movil
@@ -97,3 +95,10 @@ Arranca backend poniendo en la consola de esta carpeta: uvicorn main:app --reloa
 
 ### Perfil médico
 ![Perfil médico](assets/images/perfil_medico_editable.png)
+
+### Backend (FastAPI)
+
+```bash
+cd backend
+pip install -r requirements.txt
+uvicorn main:app --reload --host 0.0.0.0 --port 3000
