@@ -396,7 +396,7 @@ class _PredictionScreenState extends State<PredictionScreen> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            'Diagnóstico Médico',
+                                            'Orientación Diagnóstica',
                                             style: GoogleFonts.poppins(
                                               fontSize: 20,
                                               fontWeight: FontWeight.bold,

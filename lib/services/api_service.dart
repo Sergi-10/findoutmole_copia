@@ -8,11 +8,15 @@ import 'package:path/path.dart' as path;
 import '../models/prediction.dart';
 
 class ApiService {
-  // Modo LOCAL: para desarrollo en emulador Android o navegador Web
+  // Cambiar a true antes de subir a producción
+  //  Para cambiar a producción, cambiar a true antes y hacer push a GitHub.
+
+  static const bool enProduccion = false;
+
   static const String baseUrl =
-      kIsWeb
-          ? 'https://findoutmole-backend.onrender.com' // Flutter Web en producción
-          : 'http://10.0.2.2:3000'; // Emulador Android local
+      enProduccion
+          ? 'https://findoutmole-backend.onrender.com'
+          : (kIsWeb ? 'http://localhost:3000' : 'http://10.0.2.2:3000');
 
   Future<Prediction> predict(dynamic imageData, String token) async {
     try {

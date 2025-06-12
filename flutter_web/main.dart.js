@@ -50023,7 +50023,7 @@ case 1:return A.A(q,r)}})
 return A.B($async$$0,r)},
 $S:10}
 A.azr.prototype={
-$1(a){var s=this,r=null,q=A.cq(16),p=s.a,o=t.D,n=A.a([A.b7("Diagn\xf3stico M\xe9dico",r,r,r,A.dP().$2$fontSize$fontWeight(20,B.aQ),r,r),B.dz,A.b7("Resultado: "+p.f.a,r,r,r,A.dP().$1$fontSize(16),r,r),A.b7("Tipo: "+p.f.b,r,r,r,A.dP().$1$fontSize(16),r,r),B.nn,A.b7("Paciente: "+A.i(s.b)+" "+A.i(s.c),r,r,r,A.dP().$0(),r,r),A.b7("Correo: "+s.d,r,r,r,A.dP().$0(),r,r),A.b7("Edad: "+A.i(s.e)+" a\xf1os",r,r,r,A.dP().$0(),r,r),A.b7("Peso: "+A.i(s.f)+" kg",r,r,r,A.dP().$0(),r,r),A.b7("Altura: "+A.i(s.r)+" m",r,r,r,A.dP().$0(),r,r),B.nn,A.b7("Probabilidades del an\xe1lisis:",r,r,r,A.dP().$1$fontWeight(B.ee),r,r),B.ql],o),m=p.f.c,l=A.n(m).i("dw<1,2>")
+$1(a){var s=this,r=null,q=A.cq(16),p=s.a,o=t.D,n=A.a([A.b7("Orientaci\xf3n Diagn\xf3stica",r,r,r,A.dP().$2$fontSize$fontWeight(20,B.aQ),r,r),B.dz,A.b7("Resultado: "+p.f.a,r,r,r,A.dP().$1$fontSize(16),r,r),A.b7("Tipo: "+p.f.b,r,r,r,A.dP().$1$fontSize(16),r,r),B.nn,A.b7("Paciente: "+A.i(s.b)+" "+A.i(s.c),r,r,r,A.dP().$0(),r,r),A.b7("Correo: "+s.d,r,r,r,A.dP().$0(),r,r),A.b7("Edad: "+A.i(s.e)+" a\xf1os",r,r,r,A.dP().$0(),r,r),A.b7("Peso: "+A.i(s.f)+" kg",r,r,r,A.dP().$0(),r,r),A.b7("Altura: "+A.i(s.r)+" m",r,r,r,A.dP().$0(),r,r),B.nn,A.b7("Probabilidades del an\xe1lisis:",r,r,r,A.dP().$1$fontWeight(B.ee),r,r),B.ql],o),m=p.f.c,l=A.n(m).i("dw<1,2>")
 l=A.is(new A.dw(m,l),new A.azo(),l.i("k.E"),t.iF)
 m=A.P(l,A.n(l).i("k.E"))
 B.n.U(n,m)
@@ -50278,8 +50278,8 @@ yb(a,b){return this.axm(a,b)},
 axm(a,b){var s=0,r=A.C(t.mf),q,p=2,o=[],n,m,l,k,j,i,h,g,f
 var $async$yb=A.y(function(c,d){if(c===1){o.push(d)
 s=p}while(true)switch(s){case 0:p=4
-A.fL("Enviando solicitud a: https://findoutmole-backend.onrender.com/predict")
-n=A.b_g("POST",A.hx("https://findoutmole-backend.onrender.com/predict",0,null))
+A.fL("Enviando solicitud a: http://localhost:3000/predict")
+n=A.b_g("POST",A.hx("http://localhost:3000/predict",0,null))
 n.r.l(0,"Authorization","Bearer "+b)
 j=n.y
 i=A.aGw("image","jpeg",null)
@@ -50318,7 +50318,7 @@ var $async$yM=A.y(function(b,c){if(b===1){o.push(c)
 s=p}while(true)switch(s){case 0:p=4
 k=t.N
 s=7
-return A.H(A.b8s(A.hx("https://findoutmole-backend.onrender.com/diagnostics",0,null),A.ar(["Authorization","Bearer "+a],k,k)),$async$yM)
+return A.H(A.b8s(A.hx("http://localhost:3000/diagnostics",0,null),A.ar(["Authorization","Bearer "+a],k,k)),$async$yM)
 case 7:n=c
 if(n.b===200){k=n
 m=B.de.Cn(A.aRA(A.aQl(k.e)).dG(k.w),null)
@@ -50349,7 +50349,7 @@ var $async$Cp=A.y(function(c,d){if(c===1){p.push(d)
 s=q}while(true)switch(s){case 0:q=3
 m=t.N
 s=6
-return A.H(A.aSp(A.hx("https://findoutmole-backend.onrender.com/diagnostics/"+a,0,null),A.ar(["Authorization","Bearer "+b],m,m)),$async$Cp)
+return A.H(A.aSp(A.hx("http://localhost:3000/diagnostics/"+a,0,null),A.ar(["Authorization","Bearer "+b],m,m)),$async$Cp)
 case 6:o=d
 if(o.b!==200){m=A.cy(J.m(A.aIM(o.gY5()),"detail"))
 throw A.e(m)}q=1
