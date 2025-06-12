@@ -84,6 +84,10 @@ Arranca backend poniendo en la consola de esta carpeta: uvicorn main:app --reloa
 ### Vista del análisis de imagen
 ![Análisis imagen](assets/images/analisis_imagen.png)
 
+### Orientacion diagnostica
+
+![Diagnostico](assets/images/orientación_diagnostica.png)
+
 ### Informe PDF generado automáticamente
 ![Informe PDF](assets/images/orientacion_PDF_generada.png)
 
@@ -95,6 +99,7 @@ Arranca backend poniendo en la consola de esta carpeta: uvicorn main:app --reloa
 
 ### Perfil médico
 ![Perfil médico](assets/images/perfil_medico_editable.png)
+
 
 ### Backend (FastAPI)
 
